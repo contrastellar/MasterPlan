@@ -3,5 +3,7 @@ module MasterPlan {
     requires javafx.fxml;
     requires javafx.graphics;
 
-    opens UI;
+    opens UI to javafx.fxml;
+
+    exports UI;
 }

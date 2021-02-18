@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MasterPlan.iml" filepath="$PROJECT_DIR$/MasterPlan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/MasterPlan.backend.iml" filepath="$PROJECT_DIR$/backend/MasterPlan.backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/frontend/MasterPlan.frontend.iml" filepath="$PROJECT_DIR$/frontend/MasterPlan.frontend.iml" />
     </modules>
   </component>
 </project>

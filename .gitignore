@@ -21,3 +21,11 @@
 
 # Ignore IntelliJ build directory
 /out/
+/mods/
+
+# Project libraries
+/frontend/lib/*
+!/frontend/lib/readme.txt
+
+/backend/lib/*
+!/backend/lib/readme.txt
