@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/testsuite" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/javafx-sdk-15.0.1" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

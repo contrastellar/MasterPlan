@@ -23,7 +23,7 @@
 /out/
 /mods/
 
-# Project libraries
+# Ignore project libraries
 /frontend/lib/*
 !/frontend/lib/readme.txt
 
