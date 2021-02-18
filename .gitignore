@@ -29,3 +29,6 @@
 
 /backend/lib/*
 !/backend/lib/readme.txt
+
+#ignore personal file
+CommandToRun.txt

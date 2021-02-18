@@ -1,0 +1,2 @@
+1) cd desktop/masterplan/masterplan/mods/artifacts/MasterPlan_frontend_jar
+2) java --module-path "C:\Users\etoxii\Desktop\MasterPlan\MasterPlan\frontend\lib\javafx-sdk-15.0.1\lib" --add-modules javafx.controls,javafx.fxml -jar MasterPlan.frontend.jar
