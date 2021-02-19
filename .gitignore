@@ -29,3 +29,6 @@
 
 /backend/lib/*
 !/backend/lib/readme.txt
+
+# Ignore discord plugin
+discord.xml
