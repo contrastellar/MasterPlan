@@ -2,6 +2,6 @@ package MVVM;
 
 public interface IObservable
 {
-    void StartObserve(IObserver observer);
-    void StopObserve(IObserver observer);
+    void startObserve(IObserver observer);
+    void stopObserve(IObserver observer);
 }

@@ -15,18 +15,18 @@ public class Observable<T> implements IObservable, IReadOnly<T>, IWriteOnly<T>
     {
         this.value = value;
         for(IObserver observer : observers)
-            observer.OnChange();
+            observer.onChange();
     }
 
     @Override
-    public void StartObserve(IObserver observer)
+    public void startObserve(IObserver observer)
     {
         observers.add(observer);
-        observer.OnChange();
+        observer.onChange();
     }
 
     @Override
-    public void StopObserve(IObserver observer)
+    public void stopObserve(IObserver observer)
     {
         observers.remove(observer);
     }
