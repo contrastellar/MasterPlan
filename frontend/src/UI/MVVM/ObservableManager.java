@@ -1,4 +1,4 @@
-package com.company.MVVM;
+package UI.MVVM;
 
 import java.util.HashMap;
 import java.util.HashSet;

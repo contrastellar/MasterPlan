@@ -1,4 +1,4 @@
-package com.company.MVVM;
+package UI.MVVM;
 
 public interface IWriteOnly<T> extends IObservable
 {
