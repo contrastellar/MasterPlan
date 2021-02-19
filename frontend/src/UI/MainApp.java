@@ -1,8 +1,9 @@
 package UI;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
+import javafx.event.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -19,9 +20,9 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        AnchorPane root = new AnchorPane();
+        Parent root = FXMLLoader.load(getClass().getResource("MainApp.fxml"));
 
-        Scene scene = new Scene(root, 300, 300, Color.GRAY);
+        Scene scene = new Scene(root, 300, 275, Color.DARKGRAY);
 
         stage.setTitle("MasterPlan");
         stage.setScene(scene);
