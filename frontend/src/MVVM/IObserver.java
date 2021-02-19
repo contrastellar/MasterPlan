@@ -1,4 +1,4 @@
-package UI.MVVM;
+package MVVM;
 
 public interface IObserver
 {
