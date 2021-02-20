@@ -14,7 +14,6 @@ public class Task implements Archivable{
     public final Observable<Boolean> isArchived = new Observable<>(false);
     public final Observable<Calendar> dueDate = new Observable<>();
 
-
     public final Calendar creationDate;
 
 

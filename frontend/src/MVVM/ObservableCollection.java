@@ -16,14 +16,14 @@ public class ObservableCollection<T> implements IObservable, Collection<T>
     }
 
     @Override
-    public void StartObserve(IObserver observer)
+    public void startObserve(IObserver observer)
     {
         observers.add(observer);
-        observer.OnChange();
+        observer.onChange();
     }
 
     @Override
-    public void StopObserve(IObserver observer)
+    public void stopObserve(IObserver observer)
     {
         observers.remove(observer);
     }
@@ -31,7 +31,7 @@ public class ObservableCollection<T> implements IObservable, Collection<T>
     private void updateObservers()
     {
         for(IObserver observer : observers)
-            observer.OnChange();
+            observer.onChange();
     }
 
     @Override
