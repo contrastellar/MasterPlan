@@ -4,34 +4,27 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class ObservableCollection<T> implements IObservable, Collection<T>
-{
+public class ObservableCollection<T> implements IObservable, Collection<T> {
 
-    Collection<T> collection;
-    HashSet<IObserver> observers = new HashSet<>();
+    private final Collection<T> collection;
+    private final HashSet<IListener> listeners = new HashSet<>();
 
-    public ObservableCollection(Collection<T> collection)
-    {
+    public ObservableCollection(Collection<T> collection) {
         this.collection = collection;
     }
 
-    @Override
-    public void startObserve(IObserver observer)
-    {
-        observers.add(observer);
-        observer.onChange();
+    public void startListen(IListener listener) {
+        listeners.add(listener);
+        listener.onChange();
     }
 
-    @Override
-    public void stopObserve(IObserver observer)
-    {
-        observers.remove(observer);
+    public void stopListen(IListener listener) {
+        listeners.remove(listener);
     }
 
-    private void updateObservers()
-    {
-        for(IObserver observer : observers)
-            observer.onChange();
+    private void updateListeners() {
+        for(IListener listener : listeners)
+            listener.onChange();
     }
 
     @Override
@@ -61,21 +54,21 @@ public class ObservableCollection<T> implements IObservable, Collection<T>
 
     @Override
     public <T1> T1[] toArray(T1[] t1s) {
-        return collection.toArray(t1s);
+        return collection.<T1>toArray(t1s);
     }
 
     @Override
     public boolean add(T t) {
-        boolean b = collection.add(t);
-        updateObservers();
-        return b;
+        boolean changed = collection.add(t);
+        if(changed) updateListeners();
+        return changed;
     }
 
     @Override
     public boolean remove(Object o) {
-        boolean b = collection.remove(o);
-        updateObservers();
-        return b;
+        boolean changed = collection.remove(o);
+        if(changed) updateListeners();
+        return changed;
     }
 
     @Override
@@ -85,29 +78,28 @@ public class ObservableCollection<T> implements IObservable, Collection<T>
 
     @Override
     public boolean addAll(Collection<? extends T> collection) {
-
-        boolean b = this.collection.addAll(collection);
-        updateObservers();
-        return b;
+        boolean changed = this.collection.addAll(collection);
+        if(changed) updateListeners();
+        return changed;
     }
 
     @Override
     public boolean removeAll(Collection<?> collection) {
-        boolean b = this.collection.removeAll(collection);
-        updateObservers();
-        return b;
+        boolean changed = this.collection.removeAll(collection);
+        if(changed) updateListeners();
+        return changed;
     }
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        boolean b = this.collection.retainAll(collection);
-        updateObservers();
-        return b;
+        boolean changed = this.collection.retainAll(collection);
+        if(changed) updateListeners();
+        return changed;
     }
 
     @Override
     public void clear() {
         this.collection.clear();
-        updateObservers();
+        updateListeners();
     }
 }

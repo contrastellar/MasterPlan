@@ -1,6 +1,6 @@
 package MVVM;
 
-public interface IObserver
+public interface IListener
 {
     void onChange();
 }

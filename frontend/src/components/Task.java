@@ -6,7 +6,7 @@ import java.util.HashSet;
 import MVVM.Observable;
 import MVVM.ObservableCollection;
 
-public class Task implements Archivable{
+public class Task implements Archivable {
 
     public final Observable<String> name = new Observable<>("");
     public final Observable<String> description = new Observable<>("");

@@ -13,10 +13,16 @@ public class Tag {
     public final Observable<String> name = new Observable<>();
     public final Observable<Color> color = new Observable<>();
 
-    public Tag(String name, Color color) {
+    private Tag(String name, Color color) {
+
+        if(name == null)
+            throw new IllegalArgumentException("name cannot be null");
+
         this.name.setValue(name);
         this.color.setValue(color);
     }
+
+    // TODO: create register method
 
     @Override
     public boolean equals(Object o) {
@@ -28,7 +34,7 @@ public class Tag {
 
         final Tag t = (Tag) o;
 
-        return this.name.getValue().equals(t.name.getValue()) && this.color.getValue().equals(t.color.getValue());
+        return this.name.getValue().equals( t.name.getValue() );
     }
 
     @Override
@@ -36,7 +42,6 @@ public class Tag {
     {
         int hash = 3;
         hash = 53 * hash + (this.name.getValue() != null ? this.name.getValue().hashCode() : 0);
-        hash = 53 * hash + (this.color.getValue() != null ? this.color.getValue().hashCode() : 0);
 
         return hash;
     }
