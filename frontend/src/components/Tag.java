@@ -6,20 +6,29 @@ import javafx.scene.paint.Color;
 
 import java.util.HashSet;
 
-public class Tag {
+public final class Tag {
 
+    /**
+     *
+     */
     public static final ObservableCollection<Tag> ALL_TAGS = new ObservableCollection<>(new HashSet<>());
 
-    public final Observable<String> name = new Observable<>();
-    public final Observable<Color> color = new Observable<>();
+    /**
+     * User identifier name for the tag
+     */
+    public final Observable<String> name;
+
+    /**
+     * User identifier color for the tag
+     */
+    public final Observable<Color> color;
 
     private Tag(String name, Color color) {
-
         if(name == null)
             throw new IllegalArgumentException("name cannot be null");
 
-        this.name.setValue(name);
-        this.color.setValue(color);
+        this.name = new Observable<>(name);
+        this.color = new Observable<>(color);
     }
 
     // TODO: create register method

@@ -154,6 +154,12 @@ public class ObservableList<T> implements IObservable, List<T> {
     }
 
     @Override
+    public void sort(Comparator<? super T> c) {
+        list.sort(c);
+        updateListeners();
+    }
+
+    @Override
     public int indexOf(Object o) {
         return list.indexOf(o);
     }
@@ -177,5 +183,6 @@ public class ObservableList<T> implements IObservable, List<T> {
     public List<T> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
+
 
 }
