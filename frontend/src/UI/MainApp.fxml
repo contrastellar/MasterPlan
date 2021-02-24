@@ -35,7 +35,7 @@
             <Label text="Username:" GridPane.halignment="CENTER" />
             <Label alignment="CENTER" text="Password:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <PasswordField promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login!" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login!" GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="loginButton"/>
             <CheckBox mnemonicParsing="false" text="Remember Me" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </GridPane>
         <!-- Test Text for Logging someone in -->
