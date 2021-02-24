@@ -7,6 +7,8 @@ import javafx.scene.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class MainApp extends Application {
 
     public static void main(String[] args) {
@@ -20,10 +22,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainApp.fxml"));
-
-        Scene scene = new Scene(root, 300, 275, Color.DARKGRAY);
-
+        Scene scene = FXMLLoader.load(getClass().getResource("MainApp.fxml"));
         stage.setTitle("MasterPlan");
         stage.setScene(scene);
         stage.show();
