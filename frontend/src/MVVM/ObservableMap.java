@@ -78,7 +78,12 @@ public class ObservableMap<K, V> implements Map<K, V>, IObservable {
 
     @Override
     public void clear() {
+        boolean changed = (map.size() != 0);
+
         map.clear();
+
+        if( changed )
+            updateListeners();
     }
 
     @Override
