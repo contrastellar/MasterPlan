@@ -26,7 +26,7 @@ public class NavManager {
      * Change scene of window to designated type.
      * @param fxmlFile name of file to move to.
      */
-    public void changeScene(String fxmlFile, Button button) throws NullPointerException, IOException{
+    public void changeScene(String fxmlFile, Button button) throws NullPointerException{
         Stage stage;
         Scene root = null;
         Scene oldScene = button.getScene();
