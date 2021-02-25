@@ -16,12 +16,12 @@ public class ObservableCollection<T> implements IObservable, Collection<T> {
         this.collection = collection;
     }
 
-    public void startListen(IListener listener) {
+    public void addListener(IListener listener) {
         listeners.add(listener);
         listener.onChange();
     }
 
-    public void stopListen(IListener listener) {
+    public void removeListener(IListener listener) {
         listeners.remove(listener);
     }
 

@@ -14,7 +14,7 @@ public class ObservableManager {
         listening = true;
         for(Map.Entry<IObservable, HashSet<IListener>> entry : ObservableToListener.entrySet()) {
             for(IListener listener : entry.getValue())
-                entry.getKey().startListen(listener);
+                entry.getKey().addListener(listener);
         }
     }
 
@@ -22,7 +22,7 @@ public class ObservableManager {
         listening = false;
         for(Map.Entry<IObservable, HashSet<IListener>> entry : ObservableToListener.entrySet()) {
             for(IListener listener : entry.getValue())
-                entry.getKey().stopListen(listener);
+                entry.getKey().removeListener(listener);
         }
     }
 
@@ -31,14 +31,14 @@ public class ObservableManager {
         listeners.add(listener);
 
         if(listening)
-            observable.startListen(listener);
+            observable.addListener(listener);
     }
 
     public void removeListener(IObservable observable, IListener listener) {
         HashSet<IListener> listeners = ObservableToListener.get(observable);
         if(listeners != null) {
             if(listening)
-                observable.stopListen(listener);
+                observable.removeListener(listener);
 
             listeners.remove(listener);
         }
@@ -50,7 +50,7 @@ public class ObservableManager {
             HashSet<IListener> listeners = ObservableToListener.get(observable);
             if(listeners != null) {
                 for(IListener listener : listeners)
-                    observable.stopListen(listener);
+                    observable.removeListener(listener);
             }
         }
 

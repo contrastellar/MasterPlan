@@ -46,8 +46,7 @@ public final class Task implements Completable, Archival {
     }
 
     public Task(String name) {
-        if(name == null)
-            throw new IllegalArgumentException("name cannot be null");
+        setName(name);
 
         creationDate = Calendar.getInstance();
     }
@@ -56,6 +55,7 @@ public final class Task implements Completable, Archival {
     public void setArchive(Boolean isArchived) {
         if(isArchived == null)
             throw new IllegalArgumentException("isArchived cannot be null");
+
         this._isArchived.setValue(isArchived);
     }
 

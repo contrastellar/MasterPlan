@@ -7,6 +7,11 @@ import components.workspaces.listspace.List;
 import java.util.ArrayList;
 
 public class Board {
+    public static final double X_DEFAULT = 0.0,
+                               Y_DEFAULT = 0.0,
+                               W_DEFAULT = 0.0,
+                               H_DEFAULT = 0.0;
+    
     public final List board;
     public final Observable<Double> xPos; // where the left-side of board sits on x-axis
     public final Observable<Double> yPos; // where the right-side of board sits on y-axis
@@ -16,10 +21,10 @@ public class Board {
     // TODO: Check with frontend to see how xPos, yPos, width, and height should be set
     public Board() {
         board = new List();
-        xPos = new Observable<>((double) 0);
-        yPos = new Observable<>((double) 0);
-        width = new Observable<>((double) 300);
-        height = new Observable<>((double) 300);
+        xPos = new Observable<>(X_DEFAULT);
+        yPos = new Observable<>(Y_DEFAULT);
+        width = new Observable<>(W_DEFAULT);
+        height = new Observable<>(H_DEFAULT);
     }
 
 

@@ -15,12 +15,12 @@ public class ObservableMap<K, V> implements Map<K, V>, IObservable, IReadOnlyMap
     }
 
     @Override
-    public void startListen(IListener listener) {
+    public void addListener(IListener listener) {
         listeners.add(listener);
     }
 
     @Override
-    public void stopListen(IListener listener) {
+    public void removeListener(IListener listener) {
         listeners.remove(listener);
     }
 

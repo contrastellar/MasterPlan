@@ -19,14 +19,14 @@ public class Observable<T> implements IObservable, IReadOnly<T>, IWriteOnly<T>
     }
 
     @Override
-    public void startListen(IListener listener)
+    public void addListener(IListener listener)
     {
         listeners.add(listener);
         listener.onChange();
     }
 
     @Override
-    public void stopListen(IListener listener)
+    public void removeListener(IListener listener)
     {
         listeners.remove(listener);
     }

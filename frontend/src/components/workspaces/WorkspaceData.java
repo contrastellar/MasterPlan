@@ -14,16 +14,13 @@ import components.Task.Task;
 public class WorkspaceData {
 
     public class Category {
-        public final Observable<String> name = new Observable<>("");
+        public final Observable<String> name = new Observable<>(null);
         public final ObservableList<Task> tasks = new ObservableList<>(new ArrayList<>());
     }
 
-
-    // TODO: create readonly observable map, include all methods that don't have the updateListeners
+    // should we just use a graph data type? or a modified graph
     private final ObservableMap<Category, ObservableList<Category>> _data = new ObservableMap<>(new HashMap<>());
-
-    // OOPS
-    // public final IReadOnlyMap<Category, IReadOnlyList<Category>> data =  _data;
+    public final IReadOnlyMap<Category, ? extends IReadOnlyList<Category>> data =  _data;
 
     public WorkspaceData() { }
 
@@ -31,10 +28,11 @@ public class WorkspaceData {
         if (_data.containsKey(c))
             return;
 
-        _data.put(c, new ObservableList<Category>( new ArrayList<>() ));
+        _data.put(c, new ObservableList<>( new ArrayList<>() ));
     }
 
     public void addCategoryRelationship(Category c, Collection<Category> relatedCategories) {
+        // TODO: this isn't enough to check for circular relationships (this only checks for self circularity)
         if(relatedCategories.contains(c))
             throw new IllegalArgumentException("Circular relationships are not allowed");
 
@@ -44,9 +42,6 @@ public class WorkspaceData {
 
         addCategory(c);
 
-        if (_data.containsKey(c)) {
-
-        }
-
+        _data.get(c).addAll(relatedCategories);
     }
 }
