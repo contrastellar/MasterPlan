@@ -1,15 +1,12 @@
 package UI;
 
 import javafx.application.Application;
-import javafx.event.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class MainApp extends Application {
+    static NavManager navManager = new NavManager();
 
     public static void main(String[] args) {
         launch(args);
@@ -22,7 +19,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = FXMLLoader.load(getClass().getResource("MainApp.fxml"));
+        Scene scene = FXMLLoader.load(getClass().getResource("Login.fxml"));
         stage.setTitle("MasterPlan");
         stage.setScene(scene);
         stage.show();
@@ -32,4 +29,9 @@ public class MainApp extends Application {
     public void stop() {
         // release UI resources
     }
+
+    public NavManager returnManager(){
+        return navManager;
+    }
+
 }

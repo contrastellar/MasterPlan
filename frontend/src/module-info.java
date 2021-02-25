@@ -6,4 +6,5 @@ module MasterPlan {
     opens UI to javafx.fxml;
 
     exports UI;
+    exports UI.view;
 }
