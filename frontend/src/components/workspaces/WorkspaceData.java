@@ -13,7 +13,7 @@ import components.Task.Task;
  */
 public class WorkspaceData {
 
-    public class Category {
+    public static class Category {
         public final Observable<String> name = new Observable<>(null);
         public final ObservableList<Task> tasks = new ObservableList<>(new ArrayList<>());
     }

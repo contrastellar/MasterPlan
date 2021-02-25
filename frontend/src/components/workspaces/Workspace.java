@@ -28,20 +28,24 @@ public abstract class Workspace implements Archival {
     public final WorkspaceData data;
 
     public Workspace(WorkspaceData data) {
-        this.creationDate = Calendar.getInstance();
+        if(data == null)
+            throw new IllegalArgumentException("WorkspaceData cannot be null");
+
         this.data = data;
+        this.creationDate = Calendar.getInstance();
+    }
+
+    @Override
+    public Boolean isArchived() {
+        return isArchived.getValue();
     }
 
     @Override
     public void setArchive(Boolean isArchived) {
         if(isArchived == null)
             throw new IllegalArgumentException("isArchived cannot be null");
-        this._isArchived.setValue(isArchived);
-    }
 
-    @Override
-    public Boolean isArchived() {
-        return isArchived.getValue();
+        this._isArchived.setValue(isArchived);
     }
 
     public void setName(String name) {
