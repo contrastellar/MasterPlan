@@ -1,5 +1,8 @@
 package MVVM;
 
+import MVVM.IListener;
+import MVVM.IObservable;
+
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;

@@ -9,12 +9,12 @@ public interface Archival {
      *
      * @return
      */
-    boolean isArchived();
+    Boolean isArchived();
 
     /**
      *
      * @param isArchived
      */
-    void setArchive(boolean isArchived);
+    void setArchive(Boolean isArchived);
 
 }

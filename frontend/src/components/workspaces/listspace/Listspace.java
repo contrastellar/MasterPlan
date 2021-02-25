@@ -7,20 +7,12 @@ import components.workspaces.WorkspaceData;
 import java.util.ArrayList;
 
 public final class Listspace extends Workspace {
-
     public final ObservableList<List> lists = new ObservableList<>(new ArrayList<>());
 
-    public Listspace()
-    {
-        super();
+    public Listspace(WorkspaceData data) {
+        super(data);
+
+        // TODO: ?
     }
-
-    @Override
-    public WorkspaceData convertToWorkspaceData() {
-        // TODO
-        return null;
-    }
-
-
 
 }

@@ -2,8 +2,7 @@ package MVVM;
 
 import java.util.*;
 
-public class ObservableList<T> implements IObservable, List<T> {
-
+public class ObservableList<T> implements IObservable, List<T>, IReadOnlyList<T> {
     private final List<T> list;
     private final HashSet<IListener> listeners = new HashSet<>();
 
