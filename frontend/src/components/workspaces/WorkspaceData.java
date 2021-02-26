@@ -1,9 +1,15 @@
 package components.workspaces;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Collection;
 
-import MVVM.*;
 import MVVM.Observable;
+import MVVM.ObservableList;
+import MVVM.ObservableMap;
+import MVVM.IReadOnlyList;
+import MVVM.IReadOnlyMap;
+
 import components.Task.Task;
 
 
@@ -14,7 +20,7 @@ import components.Task.Task;
 public class WorkspaceData {
 
     public static class Category {
-        public final Observable<String> name = new Observable<>(null);
+        public final Observable<String> name = new Observable<>("");
         public final ObservableList<Task> tasks = new ObservableList<>(new ArrayList<>());
     }
 
