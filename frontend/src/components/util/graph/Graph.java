@@ -14,6 +14,10 @@ public class Graph {
     public final CategoryVertex rootVertex;
 
     public Graph(Graph graph, CategoryVertex rootVertex) {
+
+        if(!graph.graph.containsKey(rootVertex))
+            throw new IllegalArgumentException("Cannot set rootVertex to a vertex that isn't in provided graph");
+
         this.graph = graph.graph;
         this.rootVertex = rootVertex;
     }
