@@ -13,7 +13,7 @@ import components.Tag;
 
 
 /**
- *c
+ * Child
  */
 public final class Task implements Completable, Archival {
     /**
@@ -22,7 +22,7 @@ public final class Task implements Completable, Archival {
      * decription:  User description of the task.
      * tags: The corresponding tags for the task.
      * isArchived: The archived state of the task.
-     * isCompleted: The status of a task
+     * isCompleted: The status of a task.
      * creationDate: The date and time when the task was first created.
      * dueDate: OPTIONAL The due date of the task.
      */

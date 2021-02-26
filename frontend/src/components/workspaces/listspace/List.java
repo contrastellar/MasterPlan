@@ -12,8 +12,7 @@ public class List {
 
     public final ObservableList<Task> tasks = new ObservableList<>( new ArrayList<>() );
 
-    public List()
-    {
+    public List() {
 
     }
 }

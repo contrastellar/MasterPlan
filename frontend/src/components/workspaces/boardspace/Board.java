@@ -11,7 +11,7 @@ public class Board {
                                Y_DEFAULT = 0.0,
                                W_DEFAULT = 0.0,
                                H_DEFAULT = 0.0;
-    
+
     public final List board;
     public final Observable<Double> xPos; // where the left-side of board sits on x-axis
     public final Observable<Double> yPos; // where the right-side of board sits on y-axis
