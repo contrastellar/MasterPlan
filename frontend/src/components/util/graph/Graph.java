@@ -20,7 +20,7 @@ public class Graph {
 
     public Graph() {
         graph = new HashMap<>();
-        rootVertex = new CategoryVertex(new Category("Master"));
+        rootVertex = new CategoryVertex(new Category("Main"));
     }
 
     // Allows for additional category attributes
