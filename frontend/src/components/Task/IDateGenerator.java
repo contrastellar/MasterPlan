@@ -2,6 +2,7 @@ package components.Task;
 
 import java.util.Calendar;
 
+// TODO: determine flexible interface
 public interface IDateGenerator {
 
     /**
