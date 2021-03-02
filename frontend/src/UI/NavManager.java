@@ -1,6 +1,5 @@
 package UI;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,24 +13,25 @@ import java.util.Stack;
  */
 public class NavManager {
     Stack<String> navStack;
+    Stage stage;
 
     /**
      * Constructor for the NavManager
      */
-    public NavManager(){
+    public NavManager(Stage stageMade){
         navStack = new Stack<>();
+        stage = stageMade;
     }
 
     /**
      * Change scene of window to designated type.
      * @param fxmlFile name of file to move to.
      */
-    public void changeScene(String fxmlFile, Button button) throws NullPointerException{
+    public void changeScene(String fxmlFile, Button button) {
         Stage stage;
         Scene root = null;
-        Scene oldScene = button.getScene();
         stage = (Stage) button.getScene().getWindow();
-        stage.close();
+        //stage.close();
         try{
             root = FXMLLoader.load(getClass().getResource(fxmlFile));
         } catch (IOException e) {
@@ -55,19 +55,20 @@ public class NavManager {
         Stage stage;
         Scene root = null;
         stage = (Stage) button.getScene().getWindow();
+        navStack.pop();
+        String nextScreen = navStack.pop();
         try{
-            root = FXMLLoader.load(getClass().getResource(navStack.pop()));
+            root = FXMLLoader.load(getClass().getResource(nextScreen));
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IOException. Cannot read file. (Add relevant 'exports' line in module-info.java");
 
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             System.out.println("NullPointerException. Cannot find file.");
-        } finally {
-
-            stage.setScene(root);
-            stage.show();
         }
+        navStack.push(nextScreen);
+        stage.setScene(root);
+        stage.show();
     }
 }

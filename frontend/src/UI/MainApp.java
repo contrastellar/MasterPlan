@@ -6,7 +6,10 @@ import javafx.scene.*;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-    static NavManager navManager = new NavManager();
+    /**
+     * navManager call for the controllers for the views beyond the login screen.
+     */
+    public static NavManager navManager;
 
     public static void main(String[] args) {
         launch(args);
@@ -23,15 +26,12 @@ public class MainApp extends Application {
         stage.setTitle("MasterPlan");
         stage.setScene(scene);
         stage.show();
+        navManager = new NavManager(stage);
     }
 
     @Override
     public void stop() {
         // release UI resources
-    }
-
-    public NavManager returnManager(){
-        return navManager;
     }
 
 }
