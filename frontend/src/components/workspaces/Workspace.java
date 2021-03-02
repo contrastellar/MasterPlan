@@ -1,16 +1,20 @@
 package components.workspaces;
 
+import MVVM.IReadOnly;
 import MVVM.Observable;
-import components.Archivable;
+import components.Archival;
 
-public abstract class Workspace implements Archivable {
+import java.util.Calendar;
 
-    public final Observable<String> name = new Observable<>("");
-    public final Observable<Boolean> isArchived = new Observable<>(false);
+public abstract class Workspace implements Archival {
 
-    public Workspace() { }
+    public final WorkspaceData data;
 
-    public boolean isArchived() { return isArchived.getValue(); }
-    public void setArchive(boolean isArchived) { this.isArchived.setValue(isArchived); }
+    public Workspace(WorkspaceData data) {
+        if(data == null)
+            throw new IllegalArgumentException("WorkspaceData cannot be null");
+
+        this.data = data;
+    }
 
 }

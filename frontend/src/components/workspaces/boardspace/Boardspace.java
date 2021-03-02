@@ -4,13 +4,16 @@ import java.util.ArrayList;
 
 import MVVM.ObservableCollection;
 import components.workspaces.Workspace;
+import components.workspaces.WorkspaceData;
 
-public class Boardspace extends Workspace {
+public final class Boardspace extends Workspace {
 
     public final ObservableCollection<Board> boards = new ObservableCollection<>(new ArrayList<>());
 
-    public Boardspace() {
-        super();
+    public Boardspace(WorkspaceData data) {
+        super(data);
+
+        // TODO: ?
     }
 
 }

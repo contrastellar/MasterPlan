@@ -6,16 +6,37 @@ import javafx.scene.paint.Color;
 
 import java.util.HashSet;
 
-public class Tag {
+public final class Tag {
 
+    /**
+     *
+     */
     public static final ObservableCollection<Tag> ALL_TAGS = new ObservableCollection<>(new HashSet<>());
 
-    public final Observable<String> name = new Observable<>();
-    public final Observable<Color> color = new Observable<>();
+    /**
+     * User identifier name for the tag
+     */
+    public final Observable<String> name;
 
-    public Tag(String name, Color color) {
-        this.name.setValue(name);
-        this.color.setValue(color);
+    /**
+     * User identifier color for the tag
+     */
+    public final Observable<Color> color;
+
+    private Tag(String name, Color color) {
+        if(name == null)
+            throw new IllegalArgumentException("name cannot be null");
+
+        ALL_TAGS.add(this);
+
+        this.name = new Observable<>(name);
+        this.color = new Observable<>(color);
+    }
+
+    // TODO: create register method
+    public void registerNewTag(String name, Color color) {
+      Tag tag = new Tag(name, color);
+      ALL_TAGS.add(tag);
     }
 
     @Override
@@ -28,7 +49,7 @@ public class Tag {
 
         final Tag t = (Tag) o;
 
-        return this.name.getValue().equals(t.name.getValue()) && this.color.getValue().equals(t.color.getValue());
+        return this.name.getValue().equals( t.name.getValue() );
     }
 
     @Override
@@ -36,7 +57,6 @@ public class Tag {
     {
         int hash = 3;
         hash = 53 * hash + (this.name.getValue() != null ? this.name.getValue().hashCode() : 0);
-        hash = 53 * hash + (this.color.getValue() != null ? this.color.getValue().hashCode() : 0);
 
         return hash;
     }

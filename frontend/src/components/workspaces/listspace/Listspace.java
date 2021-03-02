@@ -1,20 +1,18 @@
 package components.workspaces.listspace;
 
-import MVVM.ObservableCollection;
+import MVVM.ObservableList;
 import components.workspaces.Workspace;
+import components.workspaces.WorkspaceData;
 
 import java.util.ArrayList;
 
-public class Listspace extends Workspace {
+public final class Listspace extends Workspace {
+    public final ObservableList<List> lists = new ObservableList<>(new ArrayList<>());
 
-    public final ObservableCollection<List> lists = new ObservableCollection<>(new ArrayList<>());
+    public Listspace(WorkspaceData data) {
+        super(data);
 
-    public Listspace()
-    {
-        super();
+        // TODO: ?
     }
-
-
-
 
 }

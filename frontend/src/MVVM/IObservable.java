@@ -2,6 +2,6 @@ package MVVM;
 
 public interface IObservable
 {
-    void startObserve(IObserver observer);
-    void stopObserve(IObserver observer);
+    void addListener(IListener listener);
+    void removeListener(IListener listener);
 }

@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Observable<T> implements IObservable, IReadOnly<T>, IWriteOnly<T>
 {
-    private final HashSet<IObserver> observers = new HashSet<>();
+    private final HashSet<IListener> listeners = new HashSet<>();
     private T value = null;
 
     public Observable() {  }
@@ -14,20 +14,20 @@ public class Observable<T> implements IObservable, IReadOnly<T>, IWriteOnly<T>
     public void setValue(T value)
     {
         this.value = value;
-        for(IObserver observer : observers)
-            observer.onChange();
+        for(IListener listener : listeners)
+            listener.onChange();
     }
 
     @Override
-    public void startObserve(IObserver observer)
+    public void addListener(IListener listener)
     {
-        observers.add(observer);
-        observer.onChange();
+        listeners.add(listener);
+        listener.onChange();
     }
 
     @Override
-    public void stopObserve(IObserver observer)
+    public void removeListener(IListener listener)
     {
-        observers.remove(observer);
+        listeners.remove(listener);
     }
 }
