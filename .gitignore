@@ -32,3 +32,6 @@
 
 # Ignore discord plugin
 discord.xml
+#ignore my to-do list.
+/frontend/src/UI/TODO.txt
+/frontend/src/UI/HelpfulStuff.txt
