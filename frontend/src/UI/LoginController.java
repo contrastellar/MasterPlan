@@ -12,7 +12,7 @@ public class LoginController { //View-Model (Contains UI Logic)
         actionTarget.setText("Signing you in. Please wait.");
         ConsoleDebug.alert("Transition started.");
         NavManager manager = MainApp.navManager;
-        manager.changeScene("/UI/view/MainView.fxml", loginButton);
+        manager.changeScene("/UI/view/MainView.fxml");
         System.out.println("Transition should've occurred.");
     }
 }

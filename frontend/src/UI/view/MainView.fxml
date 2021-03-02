@@ -1,32 +1,337 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Scene?>
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<!--<?import com.gluonhq.charm.glisten.control.Icon?>-->
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<Scene stylesheets="@MainViewUI.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.view.MainViewController">
-    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0">
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="204.0" layoutY="268.0" text="MAIN VIEW SAMPLE TEXT" textAlignment="CENTER" AnchorPane.bottomAnchor="268.0" AnchorPane.leftAnchor="204.0" AnchorPane.rightAnchor="203.0" AnchorPane.topAnchor="268.0">
-           <font>
-               <Font size="43.0" />
-           </font>
-        </Label>
-      <MenuBar layoutY="2.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Menu">
-            <items>
-              <MenuItem fx:id="newTaskButton" mnemonicParsing="false" onAction="#newTaskWindowOpen" text="New Task" />
-                  <MenuItem fx:id="UserSettings" mnemonicParsing="false" onAction="#SettingsOpen" text="User Settings" />
-                  <MenuItem fx:id="settingsTarget" mnemonicParsing="false" onAction="#UserSettingsOpen" text="App Settings" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <Button fx:id="transButton" layoutX="848.0" layoutY="574.0" mnemonicParsing="false" opacity="0.0" text="Button" />
-    </AnchorPane>
+<?import javafx.scene.Scene?>
+
+<Scene xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.view.SettingsController">
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <BorderPane nodeOrientation="LEFT_TO_RIGHT" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <center>
+                <SplitPane dividerPositions="0.7259358288770054" prefHeight="160.0" prefWidth="200.0" style="-fx-box-border: transparent;" BorderPane.alignment="CENTER">
+                    <items>
+                        <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" />
+                        <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #f5f5f5;">
+                            <children>
+                                <VBox prefHeight="228.0" prefWidth="201.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #dedede;">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <Label text="DESCRIPTION:">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="30.0">
+                                            <children>
+                                                <Label text="Title:">
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField prefHeight="26.0" prefWidth="136.0" style="-fx-border-width: 0 0 0 0; -fx-background-color: white; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" />
+                                                    </HBox.margin>
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </TextField>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="45.0" prefHeight="30.0">
+                                            <children>
+                                                <Label text="Title:">
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField prefHeight="26.0" prefWidth="136.0" style="-fx-border-width: 0 0 0 0; -fx-background-color: white; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0" />
+                                                    </HBox.margin>
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </TextField>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </HBox>
+                                        <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="75.0" prefHeight="30.0">
+                                            <children>
+                                                <Label text="Title:">
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField prefHeight="26.0" prefWidth="136.0" style="-fx-border-width: 0 0 0 0; -fx-background-color: white; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0" />
+                                                    </HBox.margin>
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </TextField>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </HBox>
+                                        <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="105.0" prefHeight="30.0">
+                                            <children>
+                                                <Label text="Title:">
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <TextField prefHeight="26.0" prefWidth="136.0" style="-fx-border-width: 0 0 0 0; -fx-background-color: white; -fx-background-radius: 5;" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0" />
+                                                    </HBox.margin>
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </TextField>
+                                            </children>
+                                            <VBox.margin>
+                                                <Insets bottom="5.0" />
+                                            </VBox.margin>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox layoutX="10.0" layoutY="10.0" prefHeight="66.0" prefWidth="201.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #dedede;">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <Label text="WORKSPACE:">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox alignment="CENTER" prefHeight="30.0">
+                                            <children>
+                                                <ChoiceBox prefHeight="16.0" prefWidth="181.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox layoutX="10.0" layoutY="167.0" prefHeight="102.0" prefWidth="201.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #dedede;">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <Label text="DATES:">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox alignment="CENTER_RIGHT" prefHeight="30.0">
+                                            <children>
+                                                <Label text="Created:">
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <DatePicker prefHeight="26.0" prefWidth="121.0" promptText="Select Date" style="-fx-background-color: white; -fx-font-family: &quot;segoe ui&quot;;" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets bottom="5.0" left="5.0" />
+                                                    </HBox.margin>
+                                                </DatePicker>
+                                            </children>
+                                        </HBox>
+                                        <HBox alignment="CENTER_RIGHT" layoutX="20.0" layoutY="45.0" prefHeight="30.0">
+                                            <children>
+                                                <Label text="Due By:">
+                                                    <font>
+                                                        <Font name="Segoe UI" size="12.0" />
+                                                    </font>
+                                                </Label>
+                                                <DatePicker prefHeight="26.0" prefWidth="121.0" promptText="Select Date" style="-fx-background-color: white; -fx-font-family: &quot;segoe ui&quot;;" HBox.hgrow="ALWAYS">
+                                                    <HBox.margin>
+                                                        <Insets left="5.0" />
+                                                    </HBox.margin>
+                                                </DatePicker>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                                <VBox layoutX="10.0" layoutY="299.0" prefHeight="90.0" prefWidth="201.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #dedede;">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <Label text="STATUS:">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <HBox alignment="CENTER" prefHeight="30.0" />
+                                    </children>
+                                </VBox>
+                                <VBox layoutX="10.0" layoutY="365.0" prefHeight="149.0" prefWidth="201.0" style="-fx-border-width: 0 0 1 0; -fx-border-color: #dedede;" VBox.vgrow="ALWAYS">
+                                    <padding>
+                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                    </padding>
+                                    <children>
+                                        <Label text="TAGS:">
+                                            <VBox.margin>
+                                                <Insets bottom="10.0" />
+                                            </VBox.margin>
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <TextArea prefHeight="200.0" prefWidth="181.0" />
+                                    </children>
+                                </VBox>
+                            </children></VBox>
+                    </items>
+                </SplitPane>
+            </center>
+            <left>
+                <BorderPane prefWidth="150.0" style="-fx-background-color: #3b3d3d;" BorderPane.alignment="CENTER">
+                    <bottom>
+                        <HBox alignment="CENTER" prefHeight="30.0" BorderPane.alignment="CENTER_RIGHT">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" text="PapaBenny" textAlignment="CENTER" textFill="WHITE">
+                                    <padding>
+                                        <Insets bottom="5.0" right="10.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Consolas" size="16.0" />
+                                    </font>
+                                    <graphic>
+                                        <!--<Icon content="ACCOUNT_CIRCLE" style="-fx-text-fill: white;" />-->
+                                    </graphic>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </bottom>
+                    <center>
+                        <VBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
+                            <padding>
+                                <Insets top="10.0" />
+                            </padding>
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 10 0 0 10;" VBox.vgrow="NEVER">
+                                    <graphic>
+                                        <!--<Icon content="COMPUTER" />-->
+                                    </graphic>
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 10 0 0 10;">
+                                    <graphic>
+                                        <!--<Icon content="EMAIL" />-->
+                                    </graphic>
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <Button layoutX="20.0" layoutY="75.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 10 0 0 10;">
+                                    <graphic>
+                                        <!--<Icon content="HISTORY" />-->
+                                    </graphic>
+                                    <VBox.margin>
+                                        <Insets bottom="5.0" />
+                                    </VBox.margin>
+                                </Button>
+                                <Button layoutX="20.0" layoutY="130.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-radius: 10 0 0 10;">
+                                    <graphic>
+                                        <!--<Icon content="PHOTO_ALBUM">
+                                            <padding>
+                                                <Insets bottom="5.0" />
+                                            </padding>
+                                        </Icon>-->
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                    </center>
+                </BorderPane>
+            </left>
+        </BorderPane>
+        <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="-1.0" text="Left status" HBox.hgrow="ALWAYS">
+                    <font>
+                        <Font size="11.0" fx:id="x3" />
+                    </font>
+                    <textFill>
+                        <Color red="0.625" green="0.625" blue="0.625" fx:id="x4" />
+                    </textFill>
+                </Label>
+                <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
+                <Label font="$x3" maxWidth="-1.0" text="Right status" textFill="$x4" HBox.hgrow="NEVER" />
+            </children>
+            <padding>
+                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+            </padding>
+        </HBox>
+    </children>
+</VBox>
 </Scene>

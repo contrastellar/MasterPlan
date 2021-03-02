@@ -27,11 +27,8 @@ public class NavManager {
      * Change scene of window to designated type.
      * @param fxmlFile name of file to move to.
      */
-    public void changeScene(String fxmlFile, Button button) {
-        Stage stage;
+    public void changeScene(String fxmlFile) {
         Scene root = null;
-        stage = (Stage) button.getScene().getWindow();
-        //stage.close();
         try{
             root = FXMLLoader.load(getClass().getResource(fxmlFile));
         } catch (IOException e) {
