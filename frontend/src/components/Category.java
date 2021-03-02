@@ -1,12 +1,13 @@
 package components;
 
 import java.net.URI;
+import java.util.Calendar;
 
 import MVVM.IReadOnly;
 import MVVM.Observable;
 import javafx.scene.paint.Color;
 
-public final class Category extends Vertex {
+public final class Category extends TodoElement {
 
     private final Observable<URI> _backgroundImage = new Observable<>( null );
     public final IReadOnly<URI> backgroundImage = _backgroundImage;

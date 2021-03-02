@@ -1,23 +1,25 @@
 package components.Task;
 
+import MVVM.IReadOnly;
+import MVVM.Observable;
+
+import MVVM.ObservableCollection;
+import components.Completable;
+import components.Tag;
+import components.TodoElement;
+
 import java.util.Calendar;
 import java.util.HashSet;
 
-import MVVM.IReadOnly;
-import MVVM.Observable;
-import MVVM.ObservableCollection;
 
-import components.Completable;
-import components.Tag;
-import components.Vertex;
-
-
-public final class Task extends Vertex implements Completable {
+public final class Task extends TodoElement implements Completable {
 
     public final Observable<Boolean> isCompleted = new Observable<>(false);
     public final Observable<IDateGenerator> dueDate = new Observable<>();
 
-    public Task() { super(); }
+    public Task() {
+        super();
+    }
 
     @Override
     public boolean isCompleted() {

@@ -15,7 +15,7 @@ import components.Tag;
 /**
  *
  */
-public abstract class Vertex implements Archival{
+public abstract class TodoElement implements Archival{
 
     private final Observable<String> _name = new Observable<>("");
     public  final IReadOnly<String> name = _name;
@@ -30,7 +30,7 @@ public abstract class Vertex implements Archival{
 
     public  final Calendar creationDate;
 
-    public Vertex() {
+    public TodoElement() {
         creationDate = Calendar.getInstance();
     }
 

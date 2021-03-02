@@ -23,6 +23,10 @@ public interface IDateGenerator {
      */
     Calendar getDate();
 
+    /**
+     *
+     * @return
+     */
     boolean hasNext();
 
     /**
@@ -30,6 +34,12 @@ public interface IDateGenerator {
      * @return
      */
     Calendar getNext();
+
+    /**
+     *
+     * @return
+     */
+    boolean hasPrev();
 
     /**
      *

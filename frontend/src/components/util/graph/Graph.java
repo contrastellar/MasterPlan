@@ -2,13 +2,12 @@ package components.util.graph;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.SortedSet;
 
 import components.Completable;
-import components.Vertex;
+import components.TodoElement;
 
 // TODO: pretty much everything
-public class Graph<T extends Vertex & Completable, C extends Vertex> {
+public class Graph<T extends TodoElement & Completable, C extends TodoElement> {
 
     // TODO: find a better way
     private interface IBooleanExpression {
@@ -52,7 +51,7 @@ public class Graph<T extends Vertex & Completable, C extends Vertex> {
     }
 
     // TODO: implement SortedSet
-    private final HashMap<Vertex, HashSet<HashSet<Operand>>> graph;
+    private final HashMap<TodoElement, HashSet<HashSet<Operand>>> graph;
 
     public Graph() {
         this.graph = new HashMap<>();
@@ -64,7 +63,7 @@ public class Graph<T extends Vertex & Completable, C extends Vertex> {
         return false;
     }
 
-    private void validateVertex(Vertex v) {
+    private void validateVertex(TodoElement v) {
         if(!graph.containsKey(v))
             throw new IllegalArgumentException("Vertex does not exist in graph");
     }
@@ -79,11 +78,11 @@ public class Graph<T extends Vertex & Completable, C extends Vertex> {
 
     }
 
-    private void checkForCycles(Vertex v1, Vertex v2) {
+    private void checkForCycles(TodoElement v1, TodoElement v2) {
         // if cycle, throw custom exception
     }
 
-    public void addExpression(Vertex v1) {
+    public void addExpression(TodoElement v1) {
 
 
     }
