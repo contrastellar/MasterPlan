@@ -34,10 +34,6 @@ public class NavManager {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("IOException. Cannot read file. (Add relevant 'exports' line in module-info.java");
-
-        } catch (NullPointerException e){
-            e.printStackTrace();
-            System.out.println("NullPointerException. Cannot find file.");
         } finally {
             navStack.push(fxmlFile);
             stage.setScene(root);

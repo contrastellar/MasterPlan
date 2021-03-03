@@ -40,10 +40,20 @@ public abstract class TodoElement implements Archival{
     @Override
     public final boolean isArchived() { return _isArchived.getValue(); }
 
-    public final void setName(String name) { this._name.setValue(name); }
+    public final void setName(String name) {
+        if(name == null)
+            throw new IllegalArgumentException("name cannot be null");
+
+        this._name.setValue(name);
+    }
     public final String getName() { return _name.getValue(); }
 
-    public final void setDescription(String name) { this._description.setValue(name); }
+    public final void setDescription(String name) {
+        if(name == null)
+            throw new IllegalArgumentException("name cannot be null");
+
+        this._description.setValue(name);
+    }
     public final String getDescription() { return this._description.getValue(); }
 
 }

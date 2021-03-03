@@ -12,7 +12,6 @@ public final class Boardspace {
 
     public Boardspace(WorkspaceData data) {
 
-
         // TODO: ?
     }
 
