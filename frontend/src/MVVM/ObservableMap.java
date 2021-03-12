@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ObservableMap<K, V> implements Map<K, V>, IObservable, IReadOnlyMap<K, V> {
+public class ObservableMap<K, V> implements Map<K, V>, IObservable, IReadOnlyObservableMap<K, V> {
 
     private final Map<K, V> map;
     private final HashSet<IListener> listeners = new HashSet<>();
@@ -17,6 +17,7 @@ public class ObservableMap<K, V> implements Map<K, V>, IObservable, IReadOnlyMap
     @Override
     public void addListener(IListener listener) {
         listeners.add(listener);
+        listener.onChange();
     }
 
     @Override

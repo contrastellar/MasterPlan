@@ -1,6 +1,7 @@
 package MVVM;
 
-public interface IListener
-{
+public interface IListener {
+
     void onChange();
+
 }

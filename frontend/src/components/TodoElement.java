@@ -3,14 +3,9 @@ package components;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import MVVM.IObservable;
-import MVVM.IReadOnly;
+import MVVM.IReadOnlyObservable;
 import MVVM.Observable;
 import MVVM.ObservableCollection;
-
-import components.Archival;
-import components.Completable;
-import components.Tag;
 
 /**
  *
@@ -18,15 +13,15 @@ import components.Tag;
 public abstract class TodoElement implements Archival{
 
     private final Observable<String> _name = new Observable<>("");
-    public  final IReadOnly<String> name = _name;
+    public  final IReadOnlyObservable<String> name = _name;
 
     private final Observable<String> _description = new Observable<>("");
-    public  final IReadOnly<String> description = _description;
+    public  final IReadOnlyObservable<String> description = _description;
 
     public  final ObservableCollection<Tag> tags = new ObservableCollection<>(new HashSet<>());
 
     private final Observable<Boolean> _isArchived = new Observable<>(false);
-    public  final IReadOnly<Boolean> isArchived = _isArchived;
+    public  final IReadOnlyObservable<Boolean> isArchived = _isArchived;
 
     public  final Calendar creationDate;
 

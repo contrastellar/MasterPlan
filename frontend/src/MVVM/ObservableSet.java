@@ -1,26 +1,26 @@
 package MVVM;
 
-import MVVM.IListener;
-import MVVM.IObservable;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
-public class ObservableCollection<T> implements IObservable, Collection<T> {
+public class ObservableSet<T> implements IObservable, IReadOnlyObservableSet<T>, Set<T> {
 
+    private final Set<T> set;
     private final HashSet<IListener> listeners = new HashSet<>();
-    private final Collection<T> collection;
 
-    public ObservableCollection(Collection<T> collection) {
-        this.collection = collection;
+    public ObservableSet(Set<T> set) {
+        this.set = set;
     }
 
+    @Override
     public void addListener(IListener listener) {
         listeners.add(listener);
         listener.onChange();
     }
 
+    @Override
     public void removeListener(IListener listener) {
         listeners.remove(listener);
     }
@@ -32,77 +32,78 @@ public class ObservableCollection<T> implements IObservable, Collection<T> {
 
     @Override
     public int size() {
-        return collection.size();
+        return set.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return collection.isEmpty();
+        return set.isEmpty();
     }
 
     @Override
     public boolean contains(Object o) {
-        return collection.contains(o);
+        return set.contains(o);
     }
 
     @Override
     public Iterator<T> iterator() {
-        return collection.iterator();
+        return set.iterator();
     }
 
     @Override
     public Object[] toArray() {
-        return collection.toArray();
+        return set.toArray();
     }
 
     @Override
-    public <T1> T1[] toArray(T1[] t1s) {
-        return collection.<T1>toArray(t1s);
+    public <T1> T1[] toArray(T1[] a) {
+        return set.toArray(a);
     }
 
     @Override
     public boolean add(T t) {
-        boolean changed = collection.add(t);
+        boolean changed = set.add(t);
         if(changed) updateListeners();
         return changed;
     }
 
     @Override
     public boolean remove(Object o) {
-        boolean changed = collection.remove(o);
+        boolean changed = set.remove(o);
         if(changed) updateListeners();
         return changed;
     }
 
     @Override
-    public boolean containsAll(Collection<?> collection) {
-        return this.collection.containsAll(collection);
+    public boolean containsAll(Collection<?> c) {
+        return set.containsAll(c);
     }
 
     @Override
-    public boolean addAll(Collection<? extends T> collection) {
-        boolean changed = this.collection.addAll(collection);
+    public boolean addAll(Collection<? extends T> c) {
+        boolean changed = set.addAll(c);
         if(changed) updateListeners();
         return changed;
     }
 
     @Override
-    public boolean removeAll(Collection<?> collection) {
-        boolean changed = this.collection.removeAll(collection);
+    public boolean retainAll(Collection<?> c) {
+        boolean changed = set.retainAll(c);
         if(changed) updateListeners();
         return changed;
     }
 
     @Override
-    public boolean retainAll(Collection<?> collection) {
-        boolean changed = this.collection.retainAll(collection);
+    public boolean removeAll(Collection<?> c) {
+        boolean changed = set.removeAll(c);
         if(changed) updateListeners();
         return changed;
     }
 
     @Override
     public void clear() {
-        this.collection.clear();
-        updateListeners();
+        boolean changed = (set.size() != 0);
+        set.clear();
+        if(changed) updateListeners();
     }
 }

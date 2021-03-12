@@ -1,26 +1,25 @@
 package components;
 
 import java.net.URI;
-import java.util.Calendar;
 
-import MVVM.IReadOnly;
+import MVVM.IReadOnlyObservable;
 import MVVM.Observable;
 import javafx.scene.paint.Color;
 
 public final class Category extends TodoElement {
 
     private final Observable<URI> _backgroundImage = new Observable<>( null );
-    public final IReadOnly<URI> backgroundImage = _backgroundImage;
+    public final IReadOnlyObservable<URI> backgroundImage = _backgroundImage;
 
     private final Observable<Color> _backgroundColor = new Observable<>( null );
-    public final IReadOnly<Color> backgroundColor = _backgroundColor;
+    public final IReadOnlyObservable<Color> backgroundColor = _backgroundColor;
 
     public Category() {
         super();
     }
 
 
-    /* Getters and Setters */
+    /* getters and setters */
 
     public URI getBackgroundImageURI() { return this._backgroundImage.getValue(); }
     public void setBackgroundImageURI(URI uri) { this._backgroundImage.setValue(uri); }

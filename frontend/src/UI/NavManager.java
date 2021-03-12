@@ -1,6 +1,7 @@
 package UI;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
@@ -12,56 +13,33 @@ import java.util.Stack;
  * A class to handle moving between scenes in the application.
  */
 public class NavManager {
-    Stack<String> navStack;
-    Stage stage;
+    private final Stack<SceneType> navStack = new Stack<>();
+    private final Stage stage;
 
-    /**
-     * Constructor for the NavManager
-     */
     public NavManager(Stage stageMade){
-        navStack = new Stack<>();
         stage = stageMade;
     }
 
     /**
      * Change scene of window to designated type.
-     * @param fxmlFile name of file to move to.
+     * @param scene type of scene to move to
      */
-    public void changeScene(String fxmlFile) {
-        Scene root = null;
-        try{
-            root = FXMLLoader.load(getClass().getResource(fxmlFile));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IOException. Cannot read file. (Add relevant 'exports' line in module-info.java");
-        } finally {
-            navStack.push(fxmlFile);
-            stage.setScene(root);
-            stage.show();
-        }
+    public void changeScene(SceneType scene) throws IOException {
+
+        Scene root = FXMLLoader.load(getClass().getResource(scene.getFilename()));
+        stage.setScene(root);
+
     }
 
     /**
      * Go back one scene, similar to the back button on browsers.
      */
-    public void backScene(Button button){
-        Stage stage;
-        Scene root = null;
-        stage = (Stage) button.getScene().getWindow();
-        navStack.pop();
-        String nextScreen = navStack.pop();
-        try{
-            root = FXMLLoader.load(getClass().getResource(nextScreen));
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("IOException. Cannot read file. (Add relevant 'exports' line in module-info.java");
+    public void backScene(Button button) throws IOException {
+        if(navStack.empty())
+            return;
 
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            System.out.println("NullPointerException. Cannot find file.");
-        }
-        navStack.push(nextScreen);
-        stage.setScene(root);
-        stage.show();
+        SceneType backScene = navStack.pop();
+
+        changeScene(backScene);
     }
 }

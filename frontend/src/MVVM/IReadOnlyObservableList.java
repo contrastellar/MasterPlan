@@ -2,7 +2,7 @@ package MVVM;
 
 import java.util.*;
 
-public interface IReadOnlyList<T> extends IObservable {
+public interface IReadOnlyObservableList<T> extends IObservable {
 
     public int size();
 

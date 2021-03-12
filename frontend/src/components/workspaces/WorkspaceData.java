@@ -7,8 +7,8 @@ import java.util.Collection;
 import MVVM.Observable;
 import MVVM.ObservableList;
 import MVVM.ObservableMap;
-import MVVM.IReadOnlyList;
-import MVVM.IReadOnlyMap;
+import MVVM.IReadOnlyObservableList;
+import MVVM.IReadOnlyObservableMap;
 
 import components.Task.Task;
 
@@ -25,7 +25,7 @@ public class WorkspaceData {
 
     // should we just use a graph data type? or a modified graph
     private final ObservableMap<Category, ObservableList<Category>> _data = new ObservableMap<>(new HashMap<>());
-    public final IReadOnlyMap<Category, ? extends IReadOnlyList<Category>> data =  _data;
+    public final IReadOnlyObservableMap<Category, ? extends IReadOnlyObservableList<Category>> data =  _data;
 
     public WorkspaceData() { }
 

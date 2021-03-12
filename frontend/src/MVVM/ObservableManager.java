@@ -56,4 +56,6 @@ public class ObservableManager {
 
         ObservableToListener.remove(observable);
     }
+
+    public boolean isListening() { return listening; }
 }

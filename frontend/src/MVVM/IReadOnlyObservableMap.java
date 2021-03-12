@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public interface IReadOnlyMap<K, V> extends IObservable {
+public interface IReadOnlyObservableMap<K, V> extends IObservable {
 
     public int size();
 
