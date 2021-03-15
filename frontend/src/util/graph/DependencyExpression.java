@@ -5,7 +5,6 @@ import java.util.Collection;
 public interface DependencyExpression<T> {
 
     boolean isTrue();
-
     Collection<T> getDependencies();
 
     void AND(DependencyExpression<T> dependencyExpression);
