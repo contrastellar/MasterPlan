@@ -15,7 +15,7 @@ public class UserSettingsController {
     @FXML protected void BackPage(){
         ConsoleDebug.debug("Backing up");
         NavManager manager = MainApp.navManager;
-        manager.backScene(transButton);
+        manager.backScene();
         System.out.println("Transition should've occurred.");
     }
 }

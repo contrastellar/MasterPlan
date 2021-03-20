@@ -24,9 +24,14 @@ public class NavManager {
      * Change scene of window to designated type.
      * @param scene type of scene to move to
      */
-    public void changeScene(SceneType scene) throws IOException {
+    public void changeScene(SceneType scene) {
 
-        Scene root = FXMLLoader.load(getClass().getResource(scene.getFilename()));
+        Scene root;
+        try {
+            root = FXMLLoader.load(getClass().getResource(scene.getFilename()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         stage.setScene(root);
 
     }
@@ -34,7 +39,7 @@ public class NavManager {
     /**
      * Go back one scene, similar to the back button on browsers.
      */
-    public void backScene(Button button) throws IOException {
+    public void backScene() {
         if(navStack.empty())
             return;
 

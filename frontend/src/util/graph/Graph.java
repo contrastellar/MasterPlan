@@ -3,93 +3,78 @@ package util.graph;
 import java.util.*;
 
 import components.Category;
-import components.Completable;
 import components.Task.Task;
 import components.TodoElement;
 
-// TODO: pretty much everything
 public class Graph {
 
-    private final SortedSet<Vertex> _graph = new TreeSet<>();
-    public  final ReadOnlyCollection<Vertex> graph;
+    public static class Vertex {
 
-    public final Vertex rootVertex;
+        private final TodoElement element;
 
-    public class Vertex implements Comparable<Vertex>{
+        // private DependencyExpression expr;
+        private final List<Vertex> children = new ArrayList<>();
 
-        private TodoElement e;
-
-        // vertex is said to be invalid if _children == null
-        private DependencyExpression expr;
-
-        // private SortedSet<TodoElement> _children;
-        // public ReadOnlyCollection<TodoElement> children;
-
-        private Vertex(TodoElement e) {
-            if(e == null)
+        private Vertex(TodoElement element) {
+            if(element == null)
                 throw new IllegalArgumentException("element cannot be null");
 
-            this.e = e;
+            this.element = element;
         }
 
-        public boolean isCategory() { return e instanceof Category; }
-        public boolean isTask()     { return e instanceof Task;     }
+        public TodoElement getElement() { return element; }
+        // note: purposefully not including setElement(). Otherwise, you would need to update allElements
 
-        public boolean isValid(){ return _children == null; }
+        private void addChild(Vertex v) { this.children.add(v); }
+        private void removeChild(Vertex v) { this.children.remove(v); }
 
-        public void invalidate(){ _children = null; children = null; }
+        public Iterable<Vertex> getChildren(){ return children; }
 
-        public TodoElement getElement() { return e; }
-
-        private void addChild(Vertex v) {
-            this._children.add(v);
-        }
-
-        private void removeChild(Vertex v) {
-            this._children.remove(v);
-        }
-
-        private void sort(Comparator<Vertex> c) {
-            this._children.sort(c);
-        }
-
-        @Override
-        public int compareTo(Vertex o) {
-            return o.e.creationDate.compareTo(e.creationDate);
-        }
+        private void sort(Comparator<Vertex> c) { this.children.sort(c); }
     }
+
+
+    private final Vertex rootVertex;
+    private final List<Vertex> vertices;
+
+    // TODO: use a bidirectional 1:1 map
+    // something like: http://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/BidiMap.html
+    private final Map<TodoElement, Vertex> elementToVertex;
+
 
     public Graph() {
-        this.graph = new HashMap<>();
+        Category rootCategory = new Category();
+        rootCategory.setName("Main");
 
-        Category c = new Category();
-        c.setName("Main");
+        this.vertices = new ArrayList<>();
+        this.elementToVertex = new HashMap<>();
 
-        this.rootVertex = graph.addCategory(c);
+        this.rootVertex = addVertex(rootCategory);
     }
 
-    public Graph(Graph graph, Category rootCategory) {
-        if(!graph.contains(rootCategory))
-            throw new IllegalArgumentException("root category must be in the given graph");
-
-        this.graph = graph;
-        this.rootCategory = rootCategory;
+    public Graph(Graph graph, Vertex rootVertex) {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     private void validateVertex(Vertex v) {
-        if(!graph.containsKey(v))
-            throw new IllegalArgumentException("Vertex does not exist in graph");
+        // TODO: currently O(n), make O(1)
+        if(!elementToVertex.containsValue(v))
+            throw new IllegalArgumentException("vertex does not exist in graph");
     }
 
-    public Vertex addTask(Task t) {
-        Vertex v = new Vertex(t);
-        graph.add(v);
-        return v;
-    }
+    public Vertex addVertex(TodoElement e) {
 
-    public Vertex addCategory(Category c) {
-        Vertex v = new Vertex(c);
-        graph.add(v);
+        if(e == null)
+            throw new IllegalArgumentException("null element is not allowed");
+
+        if(elementToVertex.containsKey(e))
+            throw new IllegalArgumentException("duplicate elements are not allowed");
+
+        Vertex v = new Vertex(e);
+
+        vertices.add(v);
+        elementToVertex.put(e, v);
+
         return v;
     }
 
@@ -97,42 +82,47 @@ public class Graph {
 
         validateVertex(v);
 
-        v.invalidate();
+        if(v == rootVertex)
+            throw new IllegalArgumentException("can not remove root vertex");
 
-        graph.remove(v);
+        // TODO: find a better way (solution: use doubly linked list)
+        vertices.remove(v);
+        elementToVertex.remove(v.element);
+
+        // TODO: find a better way (solution: ?)
+        for(Vertex vertex : vertices) {
+            vertex.children.remove(v);
+        }
     }
 
-    // true - can get to end from start
-    // false - not ^^
-    private boolean DFS(Vertex v1, Vertex v2) {
+    private void ensureNoCycles(Vertex v1, Vertex v2) {
 
+        if(DFS(v1, v2))
+            throw new IllegalArgumentException("cycles are not allowed");
+
+    }
+
+    // returns true if Vertex v1 is reachable from Vertex v2
+    private boolean DFS(Vertex v1, Vertex v2) {
         if(v1.equals(v2))
             return true;
 
         for(Vertex v : v1.children)
-            DFS(v, v2);
+            if(DFS(v1, v)) return true;
 
         return false;
     }
 
-    private void checkForCycles(Vertex v1, Vertex v2) throws GraphCycleException {
-        if(DFS(v2, v1))
-            throw new GraphCycleException();
+    public void addDirectedEdge(Vertex from, Vertex to) {
+        validateVertex(from);
+        validateVertex(to);
+
+        ensureNoCycles(from, to);
+
+        from.children.add(to);
     }
 
-    public void addEdge(Vertex v1, Vertex v2) throws GraphCycleException {
-
-        validateVertex(v1);
-        validateVertex(v2);
-
-        checkForCycles(v1, v2);
-
-        v1.addChild(v2);
-
-    }
-
-    public void removeEdge(Vertex v1, Vertex v2) {
-
+    public void removeDirectedEdge(Vertex v1, Vertex v2) {
         validateVertex(v1);
         validateVertex(v2);
 
@@ -140,15 +130,13 @@ public class Graph {
     }
 
     public void sort(Comparator<Vertex> c) {
-        graph.sort(c);
-        for(Vertex v : graph) {
+        for(Vertex v : vertices)
             v.sort(c);
-        }
     }
 
-    public void sortVertex(Vertex v, Comparator<Vertex> c) {
-        v.sort(c);
-    }
+    public Iterable<Vertex> getVertices() { return vertices; }
+
+    public Vertex getRootVertex() { return rootVertex; }
 
     public static class GraphCycleException extends Exception {  }
 

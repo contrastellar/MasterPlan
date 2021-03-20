@@ -3,6 +3,7 @@ package UI.view;
 import UI.ConsoleDebug;
 import UI.MainApp;
 import UI.NavManager;
+import UI.SceneType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -12,14 +13,14 @@ public class MainViewController {
     @FXML protected void UserSettingsOpen() {
         ConsoleDebug.alert("Transition to User Settings started.");
         NavManager manager = MainApp.navManager;
-        manager.changeScene("/UI/view/UserSettings.fxml");
+        manager.changeScene(SceneType.USER_SETTINGS_SCENE);
         System.out.println("Transition should've occurred.");
     }
 
     @FXML protected void SettingsOpen() {
         ConsoleDebug.alert("Transition to Settings started.");
         NavManager manager = MainApp.navManager;
-        manager.changeScene("/UI/view/SettingsView.fxml");
+        manager.changeScene(SceneType.USER_SETTINGS_VIEW_SCENE);
         System.out.println("Transition should've occurred.");
     }
 
