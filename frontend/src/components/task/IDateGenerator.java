@@ -1,4 +1,4 @@
-package components.Task;
+package components.task;
 
 import java.util.Calendar;
 

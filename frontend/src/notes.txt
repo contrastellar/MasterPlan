@@ -70,3 +70,36 @@ A = {T}
 
 {D}
 ~{Z}
+
+------------------- NO LONGER RELEVANT ^^ -------------------------
+
+BoardSpace Representation:
+
+            rootVertex
+                 |
+        c1 - c2 - c3 - t1 - t2
+
+The ListSpace representation doesn't add any graph information.
+
+    |c1|      |c2| ... t1, t2
+
+
+The graph class can be exposed to U/I
+
+
+TODO List:
+
+High Priority:
+- Boardspace.java
+- Unit tests Graph, Observables, and BoardSpace
+
+
+
+
+
+Low Priority:
+A Possible solution to our O(n^2) problem in Graph.removeVertex:
+    Fix the .mergesort() / .split() in DoublyLinkedList.
+    Add DoublyLinkedList to the graph class, and an outgoing and an incoming edge set at each.
+    Unit test DoublyLinkedList.java
+    Add bidirectional map to the graph class.

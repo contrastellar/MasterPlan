@@ -10,7 +10,7 @@ import MVVM.ObservableMap;
 import MVVM.IReadOnlyObservableList;
 import MVVM.IReadOnlyObservableMap;
 
-import components.Task.Task;
+import components.task.Task;
 
 
 /**

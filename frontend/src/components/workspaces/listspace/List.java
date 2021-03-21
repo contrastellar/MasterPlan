@@ -2,7 +2,7 @@ package components.workspaces.listspace;
 
 import MVVM.Observable;
 import MVVM.ObservableList;
-import components.Task.Task;
+import components.task.Task;
 
 import java.util.ArrayList;
 
