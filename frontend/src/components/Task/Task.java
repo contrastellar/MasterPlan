@@ -1,15 +1,9 @@
 package components.Task;
 
-import MVVM.IReadOnly;
-import MVVM.Observable;
+import components.util.observable.Observable;
 
-import MVVM.ObservableCollection;
 import components.Completable;
-import components.Tag;
 import components.TodoElement;
-
-import java.util.Calendar;
-import java.util.HashSet;
 
 
 public final class Task extends TodoElement implements Completable {

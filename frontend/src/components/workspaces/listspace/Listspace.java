@@ -1,7 +1,6 @@
 package components.workspaces.listspace;
 
-import MVVM.ObservableList;
-import components.workspaces.Workspace;
+import components.util.observable.ObservableList;
 import components.workspaces.WorkspaceData;
 
 import java.util.ArrayList;

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collection;
 
-import MVVM.Observable;
-import MVVM.ObservableList;
-import MVVM.ObservableMap;
-import MVVM.IReadOnlyList;
-import MVVM.IReadOnlyMap;
+import components.util.observable.Observable;
+import components.util.observable.ObservableList;
+import components.util.observable.ObservableMap;
+import components.util.observable.IReadOnlyList;
+import components.util.observable.IReadOnlyMap;
 
 import components.Task.Task;
 

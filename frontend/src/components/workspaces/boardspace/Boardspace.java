@@ -2,8 +2,7 @@ package components.workspaces.boardspace;
 
 import java.util.ArrayList;
 
-import MVVM.ObservableCollection;
-import components.workspaces.Workspace;
+import components.util.observable.ObservableCollection;
 import components.workspaces.WorkspaceData;
 
 public final class Boardspace {

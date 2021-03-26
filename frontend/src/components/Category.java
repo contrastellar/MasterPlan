@@ -1,10 +1,9 @@
 package components;
 
 import java.net.URI;
-import java.util.Calendar;
 
-import MVVM.IReadOnly;
-import MVVM.Observable;
+import components.util.observable.IReadOnly;
+import components.util.observable.Observable;
 import javafx.scene.paint.Color;
 
 public final class Category extends TodoElement {
