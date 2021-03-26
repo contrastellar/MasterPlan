@@ -1,0 +1,32 @@
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import ui.window.toolbar.tab.Tab?>
+<?import ui.custom.icon.Icon?>
+
+<!-- Toolbar with tab menu and user bar -->
+<?import javafx.geometry.Insets?>
+<BorderPane styleClass="toolbarContainer" stylesheets="@Toolbar.css" fx:controller="ui.window.toolbar.ToolbarController" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Tab Bar -->
+    <center>
+            <VBox fx:id="tabBar" alignment="TOP_RIGHT">
+                <Tab fx:id="homeTab" icon="home.svg" text="HOME" iconColor="white"/>
+                <Tab fx:id="workspaceTab" icon="folder-open.svg" text="WORKSPACE" iconColor="white"/>
+                <Tab fx:id="settingsTab" icon="cogs.svg" text="SETTINGS" iconColor="white"/>
+                <Tab icon="archive.svg" text="ARCHIVE" iconColor="white"/>
+            </VBox>
+    </center>
+
+    <!-- User Bar -->
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="30.0">
+            <Icon icon="account_circle.svg" iconColor="white"/>
+<!--            <Label text="BENNY" textAlignment="CENTER">-->
+<!--                <HBox.margin> <Insets left="5"/> </HBox.margin>-->
+<!--            </Label>-->
+        </HBox>
+    </bottom>
+
+</BorderPane>

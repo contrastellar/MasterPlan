@@ -1,0 +1,5 @@
+/* Global Styling */
+.root {
+    -fx-font-family: "Segoe UI";
+    -fx-background-color: white;
+}
