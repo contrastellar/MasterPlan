@@ -53,6 +53,8 @@ public class MainViewController {
             case "SETTINGS":
                 mainContainer.setCenter(new VBox());
                 break;
+            case "WORKSPACE":
+                mainContainer.setCenter(new VBox());
         }
         currentView = activeTab;
     }
