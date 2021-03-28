@@ -1,7 +1,7 @@
 package util.vector;
 
-import MVVM.IListener;
-import MVVM.IObservable;
+import components.observable.IListener;
+import components.observable.IObservable;
 
 import java.util.HashSet;
 

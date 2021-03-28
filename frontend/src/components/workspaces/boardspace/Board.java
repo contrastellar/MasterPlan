@@ -1,6 +1,6 @@
 package components.workspaces.boardspace;
 
-import MVVM.Observable;
+import components.observable.Observable;
 import util.graph.Graph;
 
 public class Board {

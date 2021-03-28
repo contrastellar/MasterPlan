@@ -1,7 +1,7 @@
 package components;
 
-import MVVM.Observable;
-import MVVM.ObservableCollection;
+import components.observable.Observable;
+import components.observable.ObservableCollection;
 import javafx.scene.paint.Color;
 
 import java.util.HashSet;

@@ -1,6 +1,6 @@
 package components.task;
 
-import MVVM.Observable;
+import components.observable.Observable;
 
 import components.Completable;
 import components.TodoElement;

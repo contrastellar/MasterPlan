@@ -3,9 +3,9 @@ package components;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import MVVM.IReadOnlyObservable;
-import MVVM.Observable;
-import MVVM.ObservableCollection;
+import components.observable.IReadOnlyObservable;
+import components.observable.Observable;
+import components.observable.ObservableCollection;
 
 /**
  *

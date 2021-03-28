@@ -1,0 +1,24 @@
+<?import javafx.scene.Scene?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+
+<Scene fx:controller="ui.window.MainViewController" stylesheets="@MainView.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="600.0" prefWidth="900.0">
+
+        <!-- Main Container -->
+        <BorderPane fx:id="mainContainer" VBox.vgrow="ALWAYS">
+
+            <!-- Toolbar -->
+            <left>
+                <fx:include fx:id="toolbar" source="./toolbar/Toolbar.fxml"/>
+            </left>
+
+            <!-- Center view -->
+            <center/>
+
+        </BorderPane>
+
+        <!-- Status Bar -->
+        <fx:include fx:id="statusbar" source="statusbar/StatusBar.fxml"/>
+    </VBox>
+</Scene>

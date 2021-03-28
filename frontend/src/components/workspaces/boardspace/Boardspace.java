@@ -2,7 +2,7 @@ package components.workspaces.boardspace;
 
 import java.util.ArrayList;
 
-import MVVM.ObservableList;
+import components.observable.ObservableList;
 import components.Category;
 import components.TodoElement;
 import components.task.Task;
