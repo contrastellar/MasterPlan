@@ -1,4 +1,4 @@
-package MVVM;
+package observables;
 
 public class ObservableUnitTest {
 }

@@ -1,11 +1,6 @@
 package components.workspaces.boardspace;
 
 import MVVM.Observable;
-import MVVM.ObservableList;
-import components.workspaces.listspace.List;
-import util.graph.Graph;
-
-import java.util.ArrayList;
 
 public class Board {
     public static final double X_DEFAULT = 0.0,

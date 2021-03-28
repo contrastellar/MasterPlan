@@ -1,6 +1,6 @@
 package util.vector;
 
-public class Vec2D implements IReadOnlyVec2D {
+public class Vec2D implements IVec2D {
 
     private double x, y;
 
@@ -43,12 +43,26 @@ public class Vec2D implements IReadOnlyVec2D {
         this.y -= dY;
     }
 
-    public static double dot(Vec2D v1, Vec2D v2) {
-        return (v1.x * v2.x) + (v2.y * v2.y);
-    }
-
     public double dot(Vec2D v) {
         return (this.x * v.x) + (this.y * v.y);
+    }
+
+    public static Vec2D mul(Vec2D v, double c) {
+        return new Vec2D(v.x * c, v.y * c);
+    }
+
+    public void mul(double c) {
+        this.x *= c;
+        this.y *= c;
+    }
+
+    public static Vec2D div(Vec2D v, double c) {
+        return new Vec2D(v.x / c, v.y / c);
+    }
+
+    public void div(double c) {
+        this.x /= c;
+        this.y /= c;
     }
 
     public double mag() {

@@ -2,168 +2,284 @@ package util.graph;
 
 import java.util.*;
 
-import components.Category;
-import components.TodoElement;
+public class Graph<T> implements IGraph<T> {
 
-public class Graph implements IGraph {
+    public class Vertex implements IVertex<T> {
 
-    // static becuase vertices are shared amongst all graph classes
-    public static class Vertex implements IVertex {
+        private final T element;
+        private final List<Vertex> outVertices = new LinkedList<>();
+        private final List<Vertex> inVertices = new LinkedList<>();
 
-        private final TodoElement element;
-
-        // private DependencyExpression expr;
-        // private final List<Vertex> children = new ArrayList<>();
-        private final ArrayList<Vertex> children = new ArrayList<>();
-
-        private Vertex(TodoElement element) {
-            if(element == null)
-                throw new IllegalArgumentException("element cannot be null");
-
+        public Vertex(T element) {
             this.element = element;
         }
 
-        public TodoElement getElement() { return element; }
-        // note: purposefully not including setElement(). Otherwise, you would need to update elementToVertex
+        @Override
+        public void sort(Comparator<T> c) {
+            Comparator<Vertex> cVertex = (v1, v2) -> c.compare(v1.element, v2.element);
 
-        private void addChild(Vertex v) { this.children.add(v); }
-        private void removeChild(Vertex v) { this.children.remove(v); }
+            outVertices.sort(cVertex);
+        }
 
-        public Iterable<Vertex> getChildren(){ return children; }
+        @Override
+        public void sortRecursive(Comparator<T> c) {
+            Comparator<Vertex> cVertex = (v1, v2) -> c.compare(v1.element, v2.element);
 
-        private void sort(Comparator<Vertex> c) { this.children.sort(c); }
+            sortRecursive(cVertex, new HashSet<>());
+        }
+
+        private void sortRecursive(Comparator<Vertex> c, Set<Vertex> sorted) {
+            if(sorted.contains(this))
+                return;
+            else
+                sorted.add(this);
+
+            inVertices.sort(c);
+            outVertices.sort(c);
+
+            for(Vertex v : outVertices)
+                v.sortRecursive(c, sorted);
+        }
+
+        @Override
+        public List<Vertex> query(IQuery<T> queryFunc) {
+
+            ArrayList<Vertex> queryRes = new ArrayList<>();
+
+            for(Vertex v : outVertices)
+                if(queryFunc.query(v.element))
+                    queryRes.add(v);
+
+            return queryRes;
+        }
+
+        @Override
+        public List<Vertex> queryRecursive(IQuery<T> queryFunc) {
+            ArrayList<Vertex> queryRes = new ArrayList<>();
+            HashSet<Vertex> queried = new HashSet<>();
+
+            queryRecursive(queryFunc, queryRes, queried);
+
+            return queryRes;
+        }
+
+        private void queryRecursive(IQuery<T> queryFunc, List<Vertex> queryRes, Set<Vertex> queried) {
+            if(queried.contains(this))
+                return;
+            else
+                queried.add(this);
+
+            for(Vertex v : outVertices)
+                if(queryFunc.query(v.element))
+                    queryRes.add(v);
+        }
+
+        private void addDirectedEdge(Vertex v) {
+            outVertices.add(v);
+            v.inVertices.add(this);
+        }
+
+        private void removeDirectedEdge(Vertex v) {
+            outVertices.remove(v);
+            v.inVertices.remove(this);
+        }
+
+        @Override
+        public T getElement() { return element; }
+
+        @Override
+        public Iterable<Vertex> getOutVertices() { return outVertices; }
+
+        @Override
+        public Iterable<Vertex> getInVertices() { return inVertices; }
+
+        @Override
+        public Graph<T> getGraph() { return Graph.this; }
+
     }
-
 
     private final Vertex rootVertex;
-    private final List<Vertex> vertices;
+    private final Map<T, Vertex> elementToVertex = new HashMap<>();
 
-    // TODO: use a bidirectional 1:1 map
-    // something like: http://commons.apache.org/proper/commons-collections/apidocs/org/apache/commons/collections4/BidiMap.html
-    private final Map<TodoElement, Vertex> elementToVertex;
+    public Graph(T rootElement) {
+        if(rootElement == null)
+            throw new IllegalArgumentException("rootElement can not be null");
 
-
-    public Graph() {
-        Category rootCategory = new Category();
-        rootCategory.setName("Main");
-
-        this.vertices = new ArrayList<>();
-        this.elementToVertex = new HashMap<>();
-
-        this.rootVertex = addVertex(rootCategory);
+        rootVertex = new Vertex(rootElement);
     }
 
-    public Graph(Graph graph, Vertex rootVertex) {
+    private Vertex validateIVertex(IVertex<T> v) {
+        if(!(v instanceof Graph.Vertex))
+            throw new IllegalArgumentException("given vertex is not an instance of Graph.Vertex");
 
-        if(graph == null)
-            throw new IllegalArgumentException("graph can not be null");
-
-        if(rootVertex == null)
-            throw new IllegalArgumentException("rootVertex can not be null");
-
-        if(!graph.vertices.contains(rootVertex))
-            throw new IllegalArgumentException("rootVertex must be a vertex from the given graph");
-
-        this.vertices = graph.vertices;
-        this.elementToVertex = graph.elementToVertex;
-        this.rootVertex = rootVertex;
-
-        throw new UnsupportedOperationException("not implemented yet");
+        return (Vertex) v;
     }
 
-    // O(n)
     private void validateVertex(Vertex v) {
-        // TODO: currently O(n), make O(1)
-        if(!elementToVertex.containsValue(v))
-            throw new IllegalArgumentException("vertex does not exist in graph");
+
+        if(v == null)
+            throw new IllegalArgumentException("given vertex can not be null");
+
+        if(elementToVertex.get(v.getElement()) != v)
+            throw new IllegalArgumentException("given vertex does not exist in graph");
+
     }
 
-    // amortized O(1)
-    public Vertex addVertex(TodoElement e) {
+    @Override
+    public Vertex addVertex(T element) {
+        if(element == null)
+            throw new IllegalArgumentException("element can not be null");
 
-        if(e == null)
-            throw new IllegalArgumentException("null element is not allowed");
+        Vertex vertex;
 
-        if(elementToVertex.containsKey(e))
-            throw new IllegalArgumentException("duplicate elements are not allowed");
+        if((vertex = elementToVertex.get(element)) != null)
+            return vertex;
 
-        Vertex v = new Vertex(e);
-
-        vertices.add(v);
-        elementToVertex.put(e, v);
-
-        return v;
+        return new Vertex(element);
     }
 
-    // O(n^2)
+    @Override
+    public void removeVertex(IVertex<T> v) {
+        Vertex vertex = validateIVertex(v);
+
+        removeVertex(vertex);
+    }
+
     public void removeVertex(Vertex v) {
-
         validateVertex(v);
 
         if(v == rootVertex)
-            throw new IllegalArgumentException("can not remove root vertex");
+            throw new IllegalArgumentException("given vertex is root vertex; can not remove root vertex");
 
-        // TODO: find a better way (solution: use doubly linked list)
-        vertices.remove(v);
         elementToVertex.remove(v.element);
-
-        // TODO: find a better way (solution: ?) (currently O(n^2)
-        for(Vertex vertex : vertices) {
-            vertex.children.remove(v);
-        }
     }
 
-    // O(V + E), or O(n)
-    private void ensureNoCycles(Vertex v1, Vertex v2) {
-
-        if(DFS(v1, v2))
-            throw new IllegalArgumentException("cycles are not allowed");
-
-    }
-
-    // O(V + E), or O(n)
-    // returns true if Vertex v1 is reachable from Vertex v2
+    // returns true if v2 is reachable from v1, false otherwise
     private boolean DFS(Vertex v1, Vertex v2) {
-        if(v1.equals(v2))
-            return true;
+        return DFS(v1, v2, new HashSet<>());
+    }
 
-        for(Vertex v : v1.children)
-            if(DFS(v1, v)) return true;
+    // returns true if v2 is reachable from v1, false otherwise
+    private boolean DFS(Vertex v1, Vertex v2, Set<Vertex> visited) {
+        if(visited.contains(v2))
+            return false;
+
+        if(v1 == v2)
+            return true;
+        else
+            visited.add(v2);
+
+        for(Vertex v : v2.outVertices)
+            if(DFS(v1, v))
+                return true;
 
         return false;
     }
 
-    // O(n + n + n + 1) = O(n)
-    public void addDirectedEdge(Vertex from, Vertex to) {
-        validateVertex(from);
-        validateVertex(to);
-
-        ensureNoCycles(from, to);
-
-        from.children.add(to);
+    private void checkForCircularity(Vertex v1, Vertex v2) {
+        if( DFS(v1, v2) )
+            throw new IllegalArgumentException("v1 is reachable from v2, circularity detected");
     }
 
-    // O(n + n + n) = O(n)
+    @Override
+    public void addDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
+        Vertex vertex1 = validateIVertex(v1);
+        Vertex vertex2 = validateIVertex(v2);
+
+        addDirectedEdge(vertex1, vertex2);
+    }
+
+    public void addDirectedEdge(Vertex v1, Vertex v2) {
+        validateVertex(v1);
+        validateVertex(v2);
+
+        checkForCircularity(v1, v2);
+
+        v1.addDirectedEdge(v2);
+    }
+
+    @Override
+    public void removeDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
+        Vertex vertex1 = validateIVertex(v1);
+        Vertex vertex2 = validateIVertex(v2);
+
+        removeDirectedEdge(vertex1, vertex2);
+    }
+
     public void removeDirectedEdge(Vertex v1, Vertex v2) {
         validateVertex(v1);
         validateVertex(v2);
 
-        v1.removeChild(v2);
+        v1.removeDirectedEdge(v2);
     }
 
-    // O(?) -> not good
-    public void sort(Comparator<Vertex> c) {
+    @Override
+    public void sort(Comparator<T> c) {
+        // TODO: sort elementsToVertex (or the backing of getVertices())
 
-        vertices.sort(c);
-
-        for(Vertex v : vertices)
+        for(Vertex v : getVertices())
             v.sort(c);
+
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
-    public Iterable<Vertex> getVertices() { return vertices; }
+    @Override
+    public void sort(Comparator<T> c, IVertex<T> v) {
+        Vertex vertex = validateIVertex(v);
+        sort(c, vertex);
+    }
+
+    public void sort(Comparator<T> c, Vertex v) {
+        validateVertex(v);
+        v.sort(c);
+    }
+
+    @Override
+    public void sortRecursive(Comparator<T> c, IVertex<T> v) {
+        Vertex vertex = validateIVertex(v);
+        sortRecursive(c, vertex);
+    }
+
+    public void sortRecursive(Comparator<T> c, Vertex v) {
+        validateVertex(v);
+        v.sortRecursive(c);
+    }
+
+    @Override
+    public List<Vertex> query(IQuery<T> queryFunc) {
+        ArrayList<Vertex> queryRes = new ArrayList<>();
+
+        for(Vertex v : getVertices())
+            if(queryFunc.query(v.element))
+                queryRes.add(v);
+
+        return queryRes;
+    }
+
+    @Override
+    public List<Vertex> query(IQuery<T> queryFunc, IVertex<T> v) {
+        Vertex vertex = validateIVertex(v);
+        return query(queryFunc, vertex);
+    }
+
+    public List<Vertex> query(IQuery<T> queryFunc, Vertex v) {
+        validateVertex(v);
+        return v.query(queryFunc);
+    }
+
+    @Override
+    public List<Vertex> queryRecursive(IQuery<T> queryFunc, IVertex<T> v) {
+        Vertex vertex = validateIVertex(v);
+        return queryRecursive(queryFunc, vertex);
+    }
+
+    public List<Vertex> queryRecursive(IQuery<T> queryFunc, Vertex v) {
+        validateVertex(v);
+        return v.query(queryFunc);
+    }
+
+    @Override
+    public Iterable<Vertex> getVertices() { return elementToVertex.values(); }
 
     public Vertex getRootVertex() { return rootVertex; }
-
-    public static class GraphCycleException extends Exception {  }
-
 }

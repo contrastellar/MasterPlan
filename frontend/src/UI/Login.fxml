@@ -14,6 +14,9 @@
 <?import javafx.scene.text.Text?>
 
 <!--View -->
+<?import UI.IconControl?>
+<?import javafx.scene.control.skin.TabPaneSkin.TabContentRegion?>
+<?import UI.TabControl?>
 <Scene stylesheets="@Login.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.LoginController">
     <AnchorPane prefHeight="347.0" prefWidth="478.0">
         <Label alignment="CENTER" layoutX="158.0" layoutY="14.0" prefHeight="74.0" prefWidth="165.0" text="MasterPlan Login">
@@ -41,5 +44,6 @@
         </GridPane>
         <!-- Test Text for Logging someone in -->
         <Text fx:id="actionTarget" layoutX="226.0" layoutY="262.0" textAlignment="CENTER" />
+
     </AnchorPane>
 </Scene>

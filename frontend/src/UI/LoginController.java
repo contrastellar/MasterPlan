@@ -2,6 +2,7 @@ package UI;
 
 import javafx.fxml.*;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 
 public class LoginController { //View-Model (Contains UI Logic)
@@ -16,7 +17,6 @@ public class LoginController { //View-Model (Contains UI Logic)
 
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
 
 
     }

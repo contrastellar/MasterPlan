@@ -2,14 +2,10 @@ package components.workspaces.boardspace;
 
 import java.util.ArrayList;
 
-import MVVM.ObservableCollection;
 import MVVM.ObservableList;
 import components.Category;
 import components.TodoElement;
 import components.task.Task;
-import components.workspaces.Workspace;
-import components.workspaces.WorkspaceData;
-import util.graph.Graph;
 
 public final class Boardspace {
 
@@ -25,7 +21,7 @@ public final class Boardspace {
         if(e instanceof Category) {
             // create new board
         }
-        if(e instanceof Task) {
+        else if(e instanceof Task) {
             // add e to dangling tasks
         }
 

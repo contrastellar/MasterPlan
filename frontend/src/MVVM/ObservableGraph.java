@@ -1,21 +1,20 @@
 package MVVM;
 
 import components.TodoElement;
-import util.graph.Graph;
-import util.graph.IGraph;
+import util.graph.IGraphReadOnly;
+import util.graph.IGraphWriteOnly;
 
 import java.util.Comparator;
 import java.util.HashSet;
 
 // TODO
-public class ObservableGraph implements IObservable, IGraph {
+public class ObservableGraph implements IObservable, IGraphReadOnly, IGraphWriteOnly {
+
     private final IGraph graph;
     private final HashSet<IListener> listeners = new HashSet<>();
 
-
     public ObservableGraph(IGraph graph) {
         this.graph = graph;
-        throw new UnsupportedOperationException("Not implemented yet");
     }
 
     /* IObservable methods */
