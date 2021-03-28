@@ -5,9 +5,6 @@ Put all frontend related libraries in this directory with the following names:
     JavaFX 15.0.1 ( https://gluonhq.com/products/javafx/ )
         dir name: javafx-sdk-15.0.1
 
-    Common Collections4 4.4 ( http://commons.apache.org/proper/commons-collections/download_collections.cgi )
-        dir name: commons-collections4-4.4
-
     JUnit 4.13.2 ( https://search.maven.org/remotecontent?filepath=junit/junit/4.13.2/junit-4.13.2.jar,
                    https://search.maven.org/remotecontent?filepath=org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar )
         dir name: junit-4.13.2
