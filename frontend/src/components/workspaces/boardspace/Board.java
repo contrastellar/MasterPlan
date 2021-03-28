@@ -1,6 +1,7 @@
 package components.workspaces.boardspace;
 
 import MVVM.Observable;
+import util.graph.Graph;
 
 public class Board {
     public static final double X_DEFAULT = 0.0,

@@ -1,81 +1,78 @@
 package MVVM;
 
 import components.TodoElement;
-import util.graph.IGraphReadOnly;
-import util.graph.IGraphWriteOnly;
+import util.graph.*;
 
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 
 // TODO
-public class ObservableGraph implements IObservable, IGraphReadOnly, IGraphWriteOnly {
+public class ObservableGraph<T> implements IObservable, IGraphReadOnly<T>, IGraphWriteOnly<T> {
 
-    private final IGraph graph;
-    private final HashSet<IListener> listeners = new HashSet<>();
 
-    public ObservableGraph(IGraph graph) {
-        this.graph = graph;
-    }
-
-    /* IObservable methods */
     @Override
     public void addListener(IListener listener) {
-        listeners.add(listener);
-        listener.onChange();
+
     }
 
     @Override
     public void removeListener(IListener listener) {
-        listeners.remove(listener);
-    }
 
-    
-    private void updateListeners() {
-        for(IListener listener : listeners)
-            listener.onChange();
-    }
-
-    /* IGraphWriteOnly methods */
-    @Override
-    public Graph.Vertex addVertex(TodoElement e) {
-        Graph.Vertex v = graph.addVertex(e);
-        updateListeners();
-        return v;
     }
 
     @Override
-    public void removeVertex(Graph.Vertex v) {
-        graph.removeVertex(v);
-        updateListeners();
+    public List<? extends IVertex<T>> query(IQuery<T> queryFunc) {
+        return null;
     }
 
     @Override
-    public void addDirectedEdge(Graph.Vertex from, Graph.Vertex to) {
-        graph.addDirectedEdge(from, to);
-        updateListeners();
+    public List<? extends IVertex<T>> query(IQuery<T> queryFunc, IVertex<T> v) {
+        return null;
     }
 
     @Override
-    public void removeDirectedEdge(Graph.Vertex v1, Graph.Vertex v2) {
-        graph.removeDirectedEdge(v1, v2);
-        updateListeners();
+    public List<? extends IVertex<T>> queryRecursive(IQuery<T> queryFunc, IVertex<T> v) {
+        return null;
     }
 
     @Override
-    public void sort(Comparator<Graph.Vertex> c) {
-        graph.sort(c);
-        updateListeners();
-    }
-
-    /* IGraphReadOnly methods */
-    @Override
-    public Iterable<Graph.Vertex> getVertices() {
-        return graph.getVertices();
+    public Iterable<? extends IVertex<T>> getVertices() {
+        return null;
     }
 
     @Override
-    public Graph.Vertex getRootVertex() {
-        return graph.getRootVertex();
+    public IVertex<T> addVertex(T t) {
+        return null;
     }
 
+    @Override
+    public void removeVertex(IVertex<T> v) {
+
+    }
+
+    @Override
+    public void addDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
+
+    }
+
+    @Override
+    public void removeDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
+
+    }
+
+    @Override
+    public void sort(Comparator<T> c) {
+
+    }
+
+    @Override
+    public void sort(Comparator<T> c, IVertex<T> v) {
+
+    }
+
+    @Override
+    public void sortRecursive(Comparator<T> c, IVertex<T> v) {
+
+    }
 }
