@@ -1,3 +1,5 @@
+package ui;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -16,7 +18,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = FXMLLoader.load(getClass().getResource("ui/window/MainView.fxml"));
+        Scene scene = FXMLLoader.load(getClass().getResource("window/MainView.fxml"));
         stage.setTitle("MasterPlan");
         stage.setScene(scene);
         stage.show();
