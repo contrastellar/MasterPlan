@@ -25,8 +25,16 @@ public abstract class TodoElement implements Archival{
 
     public  final Calendar creationDate;
 
+    /* constructors */
     public TodoElement() {
         creationDate = Calendar.getInstance();
+    }
+    public TodoElement(String name) {
+        creationDate = Calendar.getInstance();
+        if(name == null)
+            throw new IllegalArgumentException("name cannot be null");
+
+        this._name.setValue(name);
     }
 
     /* Getters and Setters */

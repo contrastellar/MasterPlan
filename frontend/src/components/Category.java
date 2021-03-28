@@ -18,6 +18,10 @@ public final class Category extends TodoElement {
         super();
     }
 
+    public Category(String name) {
+        super(name);
+    }
+
 
     /* getters and setters */
 

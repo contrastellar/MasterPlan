@@ -14,6 +14,9 @@ public final class Task extends TodoElement implements Completable {
     public Task() {
         super();
     }
+    public Task(String name) {
+        super(name);
+    }
 
     @Override
     public boolean isCompleted() {

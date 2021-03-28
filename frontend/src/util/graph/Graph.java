@@ -106,6 +106,7 @@ public class Graph<T> implements IGraph<T> {
             throw new IllegalArgumentException("rootElement can not be null");
 
         rootVertex = new Vertex(rootElement);
+        elementToVertex.put(rootElement, rootVertex);
     }
 
     private Vertex validateIVertex(IVertex<T> v) {
@@ -132,10 +133,29 @@ public class Graph<T> implements IGraph<T> {
 
         Vertex vertex;
 
+        // this statement ensures a 1-1 mapping between elements and vertices
         if((vertex = elementToVertex.get(element)) != null)
             return vertex;
 
-        return new Vertex(element);
+        vertex = new Vertex(element);
+        rootVertex.addDirectedEdge(vertex);
+        elementToVertex.put(element, vertex);
+        return vertex;
+    }
+
+    public Vertex addVertex(T element, Vertex parentVertex) {
+        if(element == null)
+            throw new IllegalArgumentException("element can not be null");
+
+        validateVertex(parentVertex);
+
+        if(elementToVertex.containsKey(element))
+            throw new IllegalArgumentException("duplicate elements are not allowed");
+
+        Vertex vertex = new Vertex(element);
+        parentVertex.addDirectedEdge(vertex);
+
+        return vertex;
     }
 
     @Override
