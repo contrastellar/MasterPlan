@@ -13,7 +13,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-
+//TODO confirm that the sort test is working once sort is implemented
 /**
  * This class performs an extensive testing of our util.Graph structure
  *
