@@ -54,11 +54,12 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
     }
 
     protected Iterable<ObservableVertex<T>> convertIterableToObsVertex(Iterable<? extends IVertex<T>> vertices) {
-        return new Iterable<ObservableVertex<T>>() {
-            private final Iterator<? extends IVertex<T>> iterator = graph.getVertices().iterator();
+        return new Iterable<>() {
+            private final Iterator<? extends IVertex<T>> iterator = vertices.iterator();
+
             @Override
             public Iterator<ObservableVertex<T>> iterator() {
-                return new Iterator<ObservableVertex<T>>() {
+                return new Iterator<>() {
                     @Override
                     public boolean hasNext() {
                         return iterator.hasNext();
@@ -112,7 +113,10 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
         if(!vertexToObservable.containsValue(v)) {
             obsV = new ObservableVertex<>(this, v);
             vertexToObservable.put(v, obsV);
-        } else obsV = vertexToObservable.get(v);
+        }
+        else {
+            obsV = vertexToObservable.get(v);
+        }
 
         updateListeners();
 

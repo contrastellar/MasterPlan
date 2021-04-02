@@ -1,6 +1,5 @@
 package components.observable;
 
-
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +9,6 @@ import util.graph.IGraph;
 import util.graph.IQuery;
 import util.graph.IVertex;
 
-// TODO: Observable
 public class ObservableVertex<T> implements IObservable, IVertex<T> {
 
     protected final IVertex<T> vertex;
