@@ -2,6 +2,15 @@ package util.graph;
 
 import java.util.*;
 
+/*
+    Graph<TodoElement, Vertex<TodoElement>> graph
+
+    ObservableGraph<TodoElement> obsGraph = new ObservableGraph<>()
+
+    Graph<TodoElement, ObvservableVertex<TodoElement>>
+
+*/
+
 public class Graph<T> implements IGraph<T> {
 
     public class Vertex implements IVertex<T> {
@@ -74,12 +83,12 @@ public class Graph<T> implements IGraph<T> {
                     queryRes.add(v);
         }
 
-        private void addDirectedEdge(Vertex v) {
+        protected void addDirectedEdge(Vertex v) {
             outVertices.add(v);
             v.inVertices.add(this);
         }
 
-        private void removeDirectedEdge(Vertex v) {
+        protected void removeDirectedEdge(Vertex v) {
             outVertices.remove(v);
             v.inVertices.remove(this);
         }
