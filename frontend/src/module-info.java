@@ -5,6 +5,8 @@ module MasterPlan {
 
     opens ui to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.account.login to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.account.login.toolbar to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.account.login.toolbar.toolbarTab to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.account.settings to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.custom.icon to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.taskboard to javafx.graphics, javafx.controls, javafx.fxml;

@@ -14,12 +14,9 @@
 <?import javafx.scene.text.Text?>
 
 <!--View -->
-<?import UI.IconControl?>
-<?import javafx.scene.control.skin.TabPaneSkin.TabContentRegion?>
-<?import UI.TabControl?>
-<Scene stylesheets="@Login.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.LoginController">
-    <AnchorPane prefHeight="347.0" prefWidth="478.0">
-        <Label alignment="CENTER" layoutX="158.0" layoutY="14.0" prefHeight="74.0" prefWidth="165.0" text="MasterPlan Login">
+<fx:root type="javafx.scene.control.SplitPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+        <Label alignment="CENTER" layoutX="158.0" layoutY="14.0" text="MasterPlan Login">
             <font>
                 <Font size="20.0" />
             </font>
@@ -39,11 +36,11 @@
             <Label text="Username:" GridPane.halignment="CENTER" />
             <Label alignment="CENTER" text="Password:" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
             <PasswordField promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button defaultButton="true" mnemonicParsing="false" onAction="#handleSubmitButtonAction" text="Login!" GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="loginButton"/>
+
+            <Button defaultButton="true" mnemonicParsing="false"  text="Login!" GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="loginButton"/>
             <CheckBox mnemonicParsing="false" text="Remember Me" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </GridPane>
         <!-- Test Text for Logging someone in -->
         <Text fx:id="actionTarget" layoutX="226.0" layoutY="262.0" textAlignment="CENTER" />
 
-    </AnchorPane>
-</Scene>
+</fx:root>

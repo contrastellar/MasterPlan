@@ -1,0 +1,18 @@
+<!-- Toolbar with tab menu and user bar -->
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import ui.custom.icon.Icon?>
+<?import ui.window.toolbar.tab.Tab?>
+<?import ui.account.login.toolbar.toolbarTab.ToolbarTab?>
+<BorderPane styleClass="toolbarContainer" stylesheets="@Toolbar.css" fx:controller="ui.account.login.toolbar.ToolbarController" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Tab Bar -->
+    <center>
+            <VBox fx:id="tabBar" alignment="TOP_RIGHT">
+                <ToolbarTab fx:id="loginTab" text="LOGIN" iconColor="white"/>
+                <ToolbarTab fx:id="createTab"  text="CREATE" iconColor="white"/>
+            </VBox>
+    </center>
+
+</BorderPane>
