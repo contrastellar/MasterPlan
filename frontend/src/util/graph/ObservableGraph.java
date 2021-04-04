@@ -184,10 +184,13 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         changeVertex.removedEdges = new ArrayList<>();
         changeVertex.removedEdges.add(obsV);
 
+        // TODO: graph.getInVertices(v) always returns an iterable with no elements
         for(var vertex : graph.getInVertices(v)) {
             ObservableVertex<T> obsVertex = vertexToObservable.get(vertex);
             obsVertex.updateListeners(changeVertex);
         }
+
+        throw new UnsupportedOperationException("implemented incorrectly");
 
     }
 
