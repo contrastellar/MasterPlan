@@ -1,0 +1,699 @@
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<?import ui.custom.icon.Icon?>
+
+<?import ui.taskboard.listview.category.Category?>
+<VBox stylesheets="@ListView.css"
+      fx:id="listContainer"
+      fx:controller="ui.taskboard.listview.ListViewController"
+      xmlns="http://javafx.com/javafx/15.0.1"
+      xmlns:fx="http://javafx.com/fxml/1">
+
+      <!-- Top Bar -->
+      <HBox fx:id="topBar" styleClass="bottomBorder" prefHeight="70.0">
+         <!-- Selected Category Info -->
+         <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+            <Label text="Personal TODO's" textFill="#eb9090"><font><Font name="Segoe UI Bold" size="18.0" /></font></Label>
+            <Label text="6 Categories, 13 Tasks" textFill="#cecece"/>
+         </VBox>
+
+         <!-- Category Icon -->
+         <VBox fx:id="catIcon" alignment="CENTER"><Icon icon="home.svg" iconColor="#eb9090"/></VBox>
+      </HBox>
+
+      <VBox fx:id="taskList">
+         <Category/>
+         <Category/>
+      </VBox>
+
+
+<!--            <VBox GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">-->
+<!--               <children>-->
+<!--                  <GridPane>-->
+<!--                     <columnConstraints>-->
+<!--                        <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />-->
+<!--                        <ColumnConstraints hgrow="ALWAYS" />-->
+<!--                        <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />-->
+<!--                     </columnConstraints>-->
+<!--                     <rowConstraints>-->
+<!--                        <RowConstraints prefHeight="15.0" vgrow="SOMETIMES" />-->
+<!--                        <RowConstraints prefHeight="15.0" vgrow="SOMETIMES" />-->
+<!--                        <RowConstraints />-->
+<!--                     </rowConstraints>-->
+<!--                     <children>-->
+
+<!--                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">-->
+<!--                           <children>-->
+<!--                              <Label text="&gt;&#45;&#45;" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+
+<!--                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">-->
+<!--                           <children>-->
+<!--                              <Label text="Essay">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Black" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="5.0" right="5.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">-->
+<!--                           <children>-->
+<!--                              <Label text="[]  []" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets right="5.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <VBox prefHeight="0.0" prefWidth="520.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">-->
+<!--                           <children>-->
+<!--                              <HBox alignment="CENTER" prefHeight="20.0" style="-fx-border-width: 0 0 1 0;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="22.0" text="[  ]" textFill="#eb9090" HBox.hgrow="NEVER">-->
+<!--                                       <font>-->
+<!--                                          <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-width: 0 0 1 0;" HBox.hgrow="ALWAYS">-->
+<!--                                       <children>-->
+<!--                                          <Label alignment="CENTER" ellipsisString=" ..." text="Drive to a random palm tree and hang oneself because honestly" textOverrun="WORD_ELLIPSIS" HBox.hgrow="ALWAYS">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI" size="11.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                    </HBox>-->
+<!--                                    <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">-->
+<!--                                       <children>-->
+<!--                                          <HBox alignment="CENTER" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                             <children>-->
+<!--                                                <Label alignment="CENTER" text="random   X" textFill="#6d6767">-->
+<!--                                                   <font>-->
+<!--                                                      <Font size="10.0" />-->
+<!--                                                   </font>-->
+<!--                                                </Label>-->
+<!--                                             </children>-->
+<!--                                             <padding>-->
+<!--                                                <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                             </padding>-->
+<!--                                             <HBox.margin>-->
+<!--                                                <Insets right="5.0" />-->
+<!--                                             </HBox.margin>-->
+<!--                                          </HBox>-->
+<!--                                          <HBox alignment="CENTER" layoutX="91.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                             <children>-->
+<!--                                                <Label alignment="CENTER" text="tree   X" textFill="#6d6767">-->
+<!--                                                   <font>-->
+<!--                                                      <Font size="10.0" />-->
+<!--                                                   </font>-->
+<!--                                                </Label>-->
+<!--                                             </children>-->
+<!--                                             <padding>-->
+<!--                                                <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                             </padding>-->
+<!--                                             <HBox.margin>-->
+<!--                                                <Insets right="5.0" />-->
+<!--                                             </HBox.margin>-->
+<!--                                          </HBox>-->
+<!--                                          <HBox alignment="CENTER" layoutX="128.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                             <children>-->
+<!--                                                <Label alignment="CENTER" text="hang   X" textFill="#6d6767">-->
+<!--                                                   <font>-->
+<!--                                                      <Font size="10.0" />-->
+<!--                                                   </font>-->
+<!--                                                </Label>-->
+<!--                                             </children>-->
+<!--                                             <padding>-->
+<!--                                                <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                             </padding>-->
+<!--                                          </HBox>-->
+<!--                                       </children>-->
+<!--                                       <padding>-->
+<!--                                          <Insets left="10.0" />-->
+<!--                                       </padding>-->
+<!--                                    </HBox>-->
+<!--                                    <HBox alignment="CENTER_RIGHT" prefWidth="50.0">-->
+<!--                                       <children>-->
+<!--                                          <Label text="[]  []" textFill="#eb9090">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                    </HBox>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />-->
+<!--                                 </padding>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="20.0" style="-fx-border-width: 0 0 1 0;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="22.0" text="[  ]" textFill="#eb9090" HBox.hgrow="NEVER">-->
+<!--                                       <font>-->
+<!--                                          <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-alignment: left;" HBox.hgrow="ALWAYS">-->
+<!--                                       <children>-->
+<!--                                          <Label alignment="CENTER" ellipsisString=" ..." text="Research palm tree origin" textOverrun="LEADING_ELLIPSIS" HBox.hgrow="ALWAYS">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI" size="11.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                    </HBox>-->
+<!--                                    <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">-->
+<!--                                       <children>-->
+<!--                                          <HBox alignment="CENTER" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                             <children>-->
+<!--                                                <Label alignment="CENTER" text="research" textFill="#6d6767">-->
+<!--                                                   <font>-->
+<!--                                                      <Font size="10.0" />-->
+<!--                                                   </font>-->
+<!--                                                </Label>-->
+<!--                                             </children>-->
+<!--                                             <padding>-->
+<!--                                                <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                             </padding>-->
+<!--                                             <HBox.margin>-->
+<!--                                                <Insets right="5.0" />-->
+<!--                                             </HBox.margin>-->
+<!--                                          </HBox>-->
+<!--                                          <HBox alignment="CENTER" layoutX="91.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                             <children>-->
+<!--                                                <Label alignment="CENTER" text="palm" textFill="#6d6767">-->
+<!--                                                   <font>-->
+<!--                                                      <Font size="10.0" />-->
+<!--                                                   </font>-->
+<!--                                                </Label>-->
+<!--                                             </children>-->
+<!--                                             <padding>-->
+<!--                                                <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                             </padding>-->
+<!--                                             <HBox.margin>-->
+<!--                                                <Insets right="5.0" />-->
+<!--                                             </HBox.margin>-->
+<!--                                          </HBox>-->
+<!--                                          <HBox alignment="CENTER" layoutX="128.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                             <children>-->
+<!--                                                <Label alignment="CENTER" text="origin" textFill="#6d6767">-->
+<!--                                                   <font>-->
+<!--                                                      <Font size="10.0" />-->
+<!--                                                   </font>-->
+<!--                                                </Label>-->
+<!--                                             </children>-->
+<!--                                             <padding>-->
+<!--                                                <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                             </padding>-->
+<!--                                          </HBox>-->
+<!--                                       </children>-->
+<!--                                       <padding>-->
+<!--                                          <Insets left="10.0" />-->
+<!--                                       </padding>-->
+<!--                                    </HBox>-->
+<!--                                    <HBox alignment="CENTER_RIGHT" prefWidth="50.0">-->
+<!--                                       <children>-->
+<!--                                          <Label text="[]  []" textFill="#eb9090">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                    </HBox>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />-->
+<!--                                 </padding>-->
+<!--                              </HBox>-->
+<!--                           </children>-->
+<!--                        </VBox>-->
+<!--                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">-->
+<!--                           <children>-->
+<!--                              <Label text="4 Remaining" textFill="#cecece">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="5.0" right="5.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                     </children>-->
+<!--                     <padding>-->
+<!--                        <Insets top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </GridPane>-->
+<!--                  <HBox alignment="CENTER" prefHeight="20.0" style="-fx-border-width: 0 0 1 0;">-->
+<!--                     <children>-->
+<!--                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="22.0" text="[  ]" textFill="#eb9090" HBox.hgrow="NEVER">-->
+<!--                           <font>-->
+<!--                              <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                           </font>-->
+<!--                        </Label>-->
+<!--                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-alignment: left;" HBox.hgrow="ALWAYS">-->
+<!--                           <children>-->
+<!--                              <Label alignment="CENTER" ellipsisString=" ..." text="Draft palm tree essay" textOverrun="LEADING_ELLIPSIS" HBox.hgrow="ALWAYS">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI" size="11.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">-->
+<!--                           <children>-->
+<!--                              <HBox alignment="CENTER" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="draft" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="91.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="essay" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="128.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="palm" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                              </HBox>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="10.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_RIGHT" prefWidth="50.0">-->
+<!--                           <children>-->
+<!--                              <Label text="[]  []" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                     </children>-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </HBox>-->
+<!--                  <GridPane layoutX="10.0" layoutY="10.0">-->
+<!--                     <columnConstraints>-->
+<!--                        <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />-->
+<!--                        <ColumnConstraints hgrow="ALWAYS" />-->
+<!--                        <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />-->
+<!--                     </columnConstraints>-->
+<!--                     <rowConstraints>-->
+<!--                        <RowConstraints prefHeight="15.0" vgrow="SOMETIMES" />-->
+<!--                        <RowConstraints prefHeight="15.0" vgrow="SOMETIMES" />-->
+<!--                        <RowConstraints />-->
+<!--                     </rowConstraints>-->
+<!--                     <children>-->
+<!--                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">-->
+<!--                           <children>-->
+<!--                              <Label text="&gt;&#45;&#45;" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">-->
+<!--                           <children>-->
+<!--                              <Label text="Discussion">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Black" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="5.0" right="5.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">-->
+<!--                           <children>-->
+<!--                              <Label text="[]  []" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets right="5.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <VBox prefHeight="0.0" prefWidth="520.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">-->
+<!--                           <children>-->
+<!--                              <GridPane>-->
+<!--                                 <columnConstraints>-->
+<!--                                    <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />-->
+<!--                                    <ColumnConstraints hgrow="ALWAYS" />-->
+<!--                                    <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />-->
+<!--                                 </columnConstraints>-->
+<!--                                 <rowConstraints>-->
+<!--                                    <RowConstraints prefHeight="15.0" vgrow="SOMETIMES" />-->
+<!--                                    <RowConstraints prefHeight="15.0" vgrow="SOMETIMES" />-->
+<!--                                    <RowConstraints />-->
+<!--                                 </rowConstraints>-->
+<!--                                 <children>-->
+<!--                                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">-->
+<!--                                       <children>-->
+<!--                                          <Label text="&gt;&#45;&#45;" textFill="#eb9090">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                    </HBox>-->
+<!--                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">-->
+<!--                                       <children>-->
+<!--                                          <Label text="Review">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI Black" size="12.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                       <padding>-->
+<!--                                          <Insets left="5.0" right="5.0" />-->
+<!--                                       </padding>-->
+<!--                                    </HBox>-->
+<!--                                    <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">-->
+<!--                                       <children>-->
+<!--                                          <Label text="[]  []" textFill="#eb9090">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                       <padding>-->
+<!--                                          <Insets right="5.0" />-->
+<!--                                       </padding>-->
+<!--                                    </HBox>-->
+<!--                                    <VBox prefHeight="0.0" prefWidth="520.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />-->
+<!--                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">-->
+<!--                                       <children>-->
+<!--                                          <Label text="0 Remaining" textFill="#cecece">-->
+<!--                                             <font>-->
+<!--                                                <Font name="Segoe UI" size="12.0" />-->
+<!--                                             </font>-->
+<!--                                          </Label>-->
+<!--                                       </children>-->
+<!--                                       <padding>-->
+<!--                                          <Insets left="5.0" right="5.0" />-->
+<!--                                       </padding>-->
+<!--                                    </HBox>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets top="5.0" />-->
+<!--                                 </padding>-->
+<!--                              </GridPane>-->
+<!--                           </children>-->
+<!--                        </VBox>-->
+<!--                        <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">-->
+<!--                           <children>-->
+<!--                              <Label text="0 Remaining" textFill="#cecece">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="5.0" right="5.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                     </children>-->
+<!--                     <padding>-->
+<!--                        <Insets top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </GridPane>-->
+<!--                  <HBox alignment="CENTER" prefHeight="20.0" style="-fx-border-width: 0 0 1 0;">-->
+<!--                     <children>-->
+<!--                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="22.0" text="[  ]" textFill="#eb9090" HBox.hgrow="NEVER">-->
+<!--                           <font>-->
+<!--                              <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                           </font>-->
+<!--                        </Label>-->
+<!--                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-alignment: left;" HBox.hgrow="ALWAYS">-->
+<!--                           <children>-->
+<!--                              <Label alignment="CENTER" ellipsisString=" ..." text="Revise draft" textOverrun="LEADING_ELLIPSIS" HBox.hgrow="ALWAYS">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI" size="11.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">-->
+<!--                           <children>-->
+<!--                              <HBox alignment="CENTER" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="revise" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="91.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="draft" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="10.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_RIGHT" prefWidth="50.0">-->
+<!--                           <children>-->
+<!--                              <Label text="[]  []" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                     </children>-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </HBox>-->
+<!--                  <HBox alignment="CENTER" layoutX="10.0" layoutY="210.0" prefHeight="20.0" style="-fx-border-width: 0 0 1 0;">-->
+<!--                     <children>-->
+<!--                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="22.0" text="[  ]" textFill="#eb9090" HBox.hgrow="NEVER">-->
+<!--                           <font>-->
+<!--                              <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                           </font>-->
+<!--                        </Label>-->
+<!--                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-alignment: left;" HBox.hgrow="ALWAYS">-->
+<!--                           <children>-->
+<!--                              <Label alignment="CENTER" ellipsisString=" ..." text="Do peer review with Tristan" textOverrun="LEADING_ELLIPSIS" HBox.hgrow="ALWAYS">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI" size="11.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">-->
+<!--                           <children>-->
+<!--                              <HBox alignment="CENTER" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="research" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="91.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="palm" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="128.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="origin" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                              </HBox>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="10.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_RIGHT" prefWidth="50.0">-->
+<!--                           <children>-->
+<!--                              <Label text="[]  []" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                     </children>-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </HBox>-->
+<!--                  <HBox alignment="CENTER" layoutX="10.0" layoutY="239.0" prefHeight="20.0" style="-fx-border-width: 0 0 1 0;">-->
+<!--                     <children>-->
+<!--                        <Label alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="22.0" text="[  ]" textFill="#eb9090" HBox.hgrow="NEVER">-->
+<!--                           <font>-->
+<!--                              <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                           </font>-->
+<!--                        </Label>-->
+<!--                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-alignment: left;" HBox.hgrow="ALWAYS">-->
+<!--                           <children>-->
+<!--                              <Label alignment="CENTER" ellipsisString=" ..." text="Sumbit paper to canvas" textOverrun="LEADING_ELLIPSIS" HBox.hgrow="ALWAYS">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI" size="11.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="NEVER">-->
+<!--                           <children>-->
+<!--                              <HBox alignment="CENTER" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="submit" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="91.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="paper" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets right="5.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </HBox>-->
+<!--                              <HBox alignment="CENTER" layoutX="128.0" layoutY="10.0" style="-fx-background-color: #cccccc; -fx-background-radius: 10;">-->
+<!--                                 <children>-->
+<!--                                    <Label alignment="CENTER" text="canvas" textFill="#6d6767">-->
+<!--                                       <font>-->
+<!--                                          <Font size="10.0" />-->
+<!--                                       </font>-->
+<!--                                    </Label>-->
+<!--                                 </children>-->
+<!--                                 <padding>-->
+<!--                                    <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />-->
+<!--                                 </padding>-->
+<!--                              </HBox>-->
+<!--                           </children>-->
+<!--                           <padding>-->
+<!--                              <Insets left="10.0" />-->
+<!--                           </padding>-->
+<!--                        </HBox>-->
+<!--                        <HBox alignment="CENTER_RIGHT" prefWidth="50.0">-->
+<!--                           <children>-->
+<!--                              <Label text="[]  []" textFill="#eb9090">-->
+<!--                                 <font>-->
+<!--                                    <Font name="Segoe UI Bold" size="12.0" />-->
+<!--                                 </font>-->
+<!--                              </Label>-->
+<!--                           </children>-->
+<!--                        </HBox>-->
+<!--                     </children>-->
+<!--                     <padding>-->
+<!--                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />-->
+<!--                     </padding>-->
+<!--                  </HBox>-->
+<!--               </children>-->
+<!--               <GridPane.margin>-->
+<!--                  <Insets />-->
+<!--               </GridPane.margin>-->
+<!--            </VBox>-->
+</VBox>
