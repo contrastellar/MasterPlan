@@ -1,5 +1,6 @@
 package util.graph;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,10 +16,20 @@ public class ObservableVertexChange<T> {
     public boolean getSorted() { return sorted; }
     public Comparator<T> getSortingComparator() { return sortingComparator; }
 
-    public Iterable<ObservableVertex<T>> getAddedEdges() { return addedEdges; }
+    public Iterable<ObservableVertex<T>> getAddedEdges() {
+        if(addedEdges == null)
+            addedEdges = new ArrayList<>();
+        return addedEdges;
+    }
+
     public int addedEdgesSize() { return addedEdges.size(); }
 
-    public Iterable<ObservableVertex<T>> getRemovedEdges() { return removedEdges; }
+    public Iterable<ObservableVertex<T>> getRemovedEdges() {
+        if(removedEdges == null)
+            removedEdges = new ArrayList<>();
+        return removedEdges;
+    }
+
     public int removedEdgesSize() { return removedEdges.size(); }
 
 }

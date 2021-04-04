@@ -197,7 +197,6 @@ public class Graph<T> implements IGraph<T> {
 
     @Override
     public List<Vertex> query(IQuery<T> queryFunc) {
-
         ArrayList<Vertex> queryRes = new ArrayList<>();
 
         for(Vertex v : this.getVertices())
