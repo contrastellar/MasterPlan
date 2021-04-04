@@ -1,14 +1,15 @@
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.text.Text?>
 
 <!-- Split Pane containing the workspace view and edit bar !-->
-<fx:root type="javafx.scene.control.SplitPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.725" style="-fx-box-border: transparent;">
+<fx:root type="javafx.scene.control.SplitPane"
+         fx:id="viewContainer"
+         stylesheets="@TaskView.css"
+         xmlns="http://javafx.com/javafx/15.0.1"
+         xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.725">
 
     <!-- Task View -->
-    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: white">
-        <Text>Task View</Text>
-    </HBox>
+    <fx:include fx:id="taskview" source="listview/ListView.fxml"/>
+
 
     <!-- Task EditBar -->
     <fx:include fx:id="editbar" source="taskedit/EditBar.fxml"/>

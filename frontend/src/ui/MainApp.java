@@ -18,8 +18,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Scene scene = FXMLLoader.load(getClass().getResource("account/login/LoginView.fxml"));
-        //Scene scene = FXMLLoader.load(getClass().getResource("window/MainView.fxml"));
+        // Scene scene = FXMLLoader.load(getClass().getResource("account/login/LoginView.fxml"));
+        Scene scene = FXMLLoader.load(getClass().getResource("window/MainView.fxml"));
         stage.setTitle("MasterPlan");
         stage.setScene(scene);
         stage.show();

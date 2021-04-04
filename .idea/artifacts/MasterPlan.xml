@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="MasterPlan.frontend:jar">
+  <artifact type="jar" name="MasterPlan">
     <output-path>$PROJECT_DIR$/mods/artifacts/MasterPlan</output-path>
     <root id="archive" name="MasterPlan.frontendjar">
       <element id="extracted-dir" path="$PROJECT_DIR$/frontend/lib/javafx-sdk-15.0.1/lib/javafx.web.jar" path-in-jar="/" />
