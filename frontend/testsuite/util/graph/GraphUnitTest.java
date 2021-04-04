@@ -20,14 +20,15 @@ import static org.junit.Assert.*;
  * @author Daniel Henderson
  */
 public class GraphUnitTest {
+
     Graph<TodoElement> graph;
     Task t1, t2;
-    Graph<TodoElement>.Vertex v1, v2;
+    Graph.VertexAdjListAdjList v1, v2;
 
 
     @Before
     public void setUp() {
-        graph = new Graph<>(new Category("Test"));
+        graph = new Graph<>();
         t1 = new Task("1");
         t2 = new Task("2");
         v1 = graph.addVertex(t1);
@@ -57,8 +58,8 @@ public class GraphUnitTest {
     @Test
     /** Adds v1 again to test that the IllegalArgumentException is thrown **/
     public void addVertexTest3() {
-            var v = graph.addVertex(v1.getElement());
-            assertEquals(v, v1);
+        var v = graph.addVertex(v1.getElement());
+        assertEquals(v, v1);
     }
 
     @Test
@@ -79,7 +80,7 @@ public class GraphUnitTest {
     @Test
     /** Ensures that there is a one-to-one mapping between added vertices and vertices in the graph **/
     public void getVerticesTest() {
-        HashSet<Graph<TodoElement>.Vertex> vertices = new HashSet<>();
+        HashSet<Graph.VertexAdjListAdjList> vertices = new HashSet<>();
         vertices.add(v1);
         vertices.add(v2);
         vertices.add(graph.getRootVertex());
@@ -152,14 +153,16 @@ public class GraphUnitTest {
             prev = v.getElement();
         }
     }
+
     /** Testing a query for a specific TodoElement t1 **/
     @Test
     public void queryTest() {
         IQuery<TodoElement> query = (element) -> { return element == t1; };
 
-        List<Graph<TodoElement>.Vertex> queryRes = graph.query(query);
+        List<Graph.VertexAdjListAdjList> queryRes = graph.query(query);
 
         assertTrue(queryRes.contains(v1));
         assertEquals(1, queryRes.size());
     }
+
 }

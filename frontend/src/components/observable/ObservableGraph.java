@@ -10,10 +10,13 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
 
     private final IGraph<T> graph;
     private final Set<IListener> listeners = new HashSet<>();
-    private final Map<IVertex<T>, ObservableVertex<T>> vertexToObservable = new HashMap<>();
+    private final Map<IVertexAdjList<T>, ObservableVertexAdjList<T>> vertexToObservable = new HashMap<>();
 
     public ObservableGraph(IGraph<T> graph) {
         this.graph = graph;
+
+        for(IVertexAdjList<T> v : graph.getVertices())
+            vertexToObservable.put(v, new ObservableVertexAdjList<>(this, v));
     }
 
     @Override // IObservable
@@ -32,33 +35,33 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
             listener.onChange();
     }
 
-    private ObservableVertex<T> validateVertex(IVertex<T> v) {
-        ObservableVertex<T> retV;
+    protected ObservableVertexAdjList<T> validateVertex(IVertexAdjList<T> v) {
+        ObservableVertexAdjList<T> retV;
 
         if((retV = vertexToObservable.get(v)) != null)
             return retV;
 
-        if(!(v instanceof ObservableVertex))
+        if(!(v instanceof ObservableVertexAdjList))
             throw new IllegalArgumentException("v is not an ObservableVertex");
 
-        return (ObservableVertex <T>) v;
+        return (ObservableVertexAdjList<T>) v;
     }
 
-    protected List<ObservableVertex<T>> convertListToObsVertex(List<? extends IVertex<T>> vertices){
-        ArrayList<ObservableVertex<T>> retList = new ArrayList<>();
+    protected List<ObservableVertexAdjList<T>> convertListToObsVertex(List<? extends IVertexAdjList<T>> vertices){
+        ArrayList<ObservableVertexAdjList<T>> retList = new ArrayList<>();
 
-        for(IVertex<T> vertex : vertices)
+        for(IVertexAdjList<T> vertex : vertices)
             retList.add(vertexToObservable.get(vertex));
 
         return retList;
     }
 
-    protected Iterable<ObservableVertex<T>> convertIterableToObsVertex(Iterable<? extends IVertex<T>> vertices) {
+    protected Iterable<ObservableVertexAdjList<T>> convertIterableToObsVertex(Iterable<? extends IVertexAdjList<T>> vertices) {
         return new Iterable<>() {
-            private final Iterator<? extends IVertex<T>> iterator = vertices.iterator();
+            private final Iterator<? extends IVertexAdjList<T>> iterator = vertices.iterator();
 
             @Override
-            public Iterator<ObservableVertex<T>> iterator() {
+            public Iterator<ObservableVertexAdjList<T>> iterator() {
                 return new Iterator<>() {
                     @Override
                     public boolean hasNext() {
@@ -66,7 +69,7 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
                     }
 
                     @Override
-                    public ObservableVertex<T> next() {
+                    public ObservableVertexAdjList<T> next() {
                         return vertexToObservable.get(iterator().next());
                     }
                 };
@@ -75,43 +78,23 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
     }
 
     @Override // IGraph
-    public List<ObservableVertex<T>> query(IQuery<T> queryFunc) {
+    public List<ObservableVertexAdjList<T>> query(IQuery<T> queryFunc) {
         return convertListToObsVertex( graph.query(queryFunc) );
     }
 
     @Override // IGraph
-    public List<ObservableVertex<T>> query(IQuery<T> queryFunc, IVertex<T> v) {
-        ObservableVertex<T> obsV = validateVertex(v);
-        return this.query(queryFunc, obsV);
-    }
-
-    public List<ObservableVertex<T>> query(IQuery<T> queryFunc, ObservableVertex<T> v) {
-        return convertListToObsVertex( graph.query(queryFunc, v.vertex) );
-    }
-
-    @Override // IGraph
-    public List<ObservableVertex<T>> queryRecursive(IQuery<T> queryFunc, IVertex<T> v) {
-        ObservableVertex<T> obsV = validateVertex(v);
-        return this.queryRecursive(queryFunc, obsV);
-    }
-
-    public List<ObservableVertex<T>> queryRecursive(IQuery<T> queryFunc, ObservableVertex<T> v) {
-        return convertListToObsVertex( graph.queryRecursive(queryFunc, v.vertex) );
-    }
-
-    @Override // IGraph
-    public Iterable<ObservableVertex<T>> getVertices() {
+    public Iterable<ObservableVertexAdjList<T>> getVertices() {
         return convertIterableToObsVertex(graph.getVertices());
     }
 
     @Override // IGraph
-    public ObservableVertex<T> addVertex(T t) {
-        IVertex<T> v = graph.addVertex(t);
+    public ObservableVertexAdjList<T> addVertex(T t) {
+        IVertexAdjList<T> v = graph.addVertex(t);
 
-        ObservableVertex<T> obsV;
+        ObservableVertexAdjList<T> obsV;
 
         if(!vertexToObservable.containsValue(v)) {
-            obsV = new ObservableVertex<>(this, v);
+            obsV = new ObservableVertexAdjList<>(this, v);
             vertexToObservable.put(v, obsV);
         }
         else {
@@ -124,54 +107,19 @@ public class ObservableGraph<T> implements IObservable, IGraph<T>{
     }
 
     @Override // IGraph
-    public void removeVertex(IVertex<T> v) {
-        ObservableVertex<T> obsV = validateVertex(v);
+    public void removeVertex(IVertexAdjList<T> v) {
+        ObservableVertexAdjList<T> obsV = validateVertex(v);
 
-        graph.removeVertex(obsV.vertex);
+        graph.removeVertex(obsV.vRep);
         vertexToObservable.remove(obsV);
 
         updateListeners();
-    }
-
-    @Override // IGraph
-    public void addDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
-        ObservableVertex<T> obsV1 = validateVertex(v1);
-        ObservableVertex<T> obsV2 = validateVertex(v2);
-
-        graph.addDirectedEdge(obsV1.vertex, obsV2.vertex);
-
-        updateListeners();
-    }
-
-    @Override // IGraph
-    public void removeDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
-        ObservableVertex<T> obsV1 = validateVertex(v1);
-        ObservableVertex<T> obsV2 = validateVertex(v2);
-
-        graph.addDirectedEdge(obsV1.vertex, obsV2.vertex);
-
-        updateListeners();
+        obsV.updateListeners();
     }
 
     @Override // IGraph
     public void sort(Comparator<T> c) {
         graph.sort(c);
-        updateListeners();
-    }
-
-    @Override // IGraph
-    public void sort(Comparator<T> c, IVertex<T> v) {
-        ObservableVertex<T> obsV = validateVertex(v);
-
-        graph.sort(c, obsV.vertex);
-        updateListeners();
-    }
-
-    @Override // IGraph
-    public void sortRecursive(Comparator<T> c, IVertex<T> v) {
-        ObservableVertex<T> obsV = validateVertex(v);
-
-        graph.sortRecursive(c, obsV.vertex);
         updateListeners();
     }
 }

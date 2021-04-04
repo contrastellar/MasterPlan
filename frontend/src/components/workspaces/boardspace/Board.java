@@ -1,30 +1,41 @@
 package components.workspaces.boardspace;
 
+import components.Category;
+import components.TodoElement;
 import components.observable.Observable;
+import components.observable.ObservableVertexAdjList;
 import util.graph.Graph;
+import util.graph.IVertexAdjList;
+import util.vector.ObservableVec2D;
+import util.vector.Vec2D;
 
 public class Board {
+    // TODO: Change defaults
     public static final double X_DEFAULT = 0.0,
                                Y_DEFAULT = 0.0,
                                W_DEFAULT = 0.0,
                                H_DEFAULT = 0.0;
 
-    public final Observable<Double> xPos; // where the left-side of board sits on x-axis
-    public final Observable<Double> yPos; // where the right-side of board sits on y-axis
-    public final Observable<Double> width; // should depend on number of tasks in the board
-    public final Observable<Double> height; // should depend on number of tasks in the board
-
-    public final Graph graph;
+    public final ObservableVec2D pos = new ObservableVec2D(new Vec2D(X_DEFAULT, Y_DEFAULT));;
+    public final ObservableVec2D dim = new ObservableVec2D(new Vec2D(W_DEFAULT, H_DEFAULT));;
+    public final ObservableVertexAdjList<TodoElement> rootVertex;
 
     // TODO: Check with frontend to see how xPos, yPos, width, and height should be set
-    public Board(Graph graph) {
+    protected Board(ObservableVertexAdjList<TodoElement> rootVertex) { // the
+        if(!(rootVertex.getElement() instanceof Category))
+            throw new IllegalArgumentException("Board() - rootVertex.getElement() must be of type Category");
 
-        this.graph = graph;
+        this.rootVertex = rootVertex;
+    }
 
-        xPos = new Observable<>(X_DEFAULT);
-        yPos = new Observable<>(Y_DEFAULT);
-        width = new Observable<>(W_DEFAULT);
-        height = new Observable<>(H_DEFAULT);
+    public Board(ObservableVertexAdjList<TodoElement> rootVertex, double x, double y, double w, double h) {
+        this.rootVertex = rootVertex;
+
+        if(!(rootVertex.getElement() instanceof Category))
+            throw new IllegalArgumentException("Board() - rootVertex.getElement() must be of type Category");
+
+        pos.set(x, y);
+        dim.set(w, h);
     }
 
 

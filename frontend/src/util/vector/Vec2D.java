@@ -19,6 +19,18 @@ public class Vec2D implements IVec2D {
         return new Vec2D(v1.x + v2.x, v1.y + v2.y);
     }
 
+    @Override
+    public void set(Vec2D vec) {
+        this.x = vec.x;
+        this.y = vec.y;
+    }
+
+    @Override
+    public void set(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void add(Vec2D vec) {
         this.x += vec.x;
         this.y += vec.y;

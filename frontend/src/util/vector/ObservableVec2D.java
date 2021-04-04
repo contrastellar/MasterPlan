@@ -41,6 +41,18 @@ public class ObservableVec2D implements IVec2D, IObservable {
     }
 
     @Override
+    public void set(Vec2D vec) {
+        this.vec.set(vec);
+        updateListeners();
+    }
+
+    @Override
+    public void set(double x, double y) {
+        this.vec.set(x, y);
+        updateListeners();;
+    }
+
+    @Override
     public void add(Vec2D vec) {
         this.vec.add(vec);
         updateListeners();

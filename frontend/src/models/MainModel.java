@@ -10,7 +10,7 @@ public class MainModel {
 
     public MainModel() {
         // deserialize graph
-        Graph<TodoElement> _graph = new Graph<>(null);
+        Graph<TodoElement> _graph = new Graph<>();
 
         this.graph = new ObservableGraph<>(_graph);
     }
