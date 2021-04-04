@@ -52,7 +52,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         return (ObservableVertex<T>) v;
     }
 
-    protected List<ObservableVertex<T>> convertListToObsVertex(List<? extends IVertex<T>> vertices) {
+    protected List<ObservableVertex<T>> convertIterableToObsVertexList(Iterable<? extends IVertex<T>> vertices) {
         ArrayList<ObservableVertex<T>> retList = new ArrayList<>();
 
         for(IVertex<T> vertex : vertices)
@@ -104,17 +104,17 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public List<ObservableVertex<T>> query(IQuery<T> queryFunc) {
-        return convertListToObsVertex(graph.query(queryFunc));
+        return convertIterableToObsVertexList(graph.query(queryFunc));
     }
 
     @Override
     public List<ObservableVertex<T>> query(IQuery<T> queryFunc, IVertex<T> v) {
-        return convertListToObsVertex(graph.query(queryFunc, v));
+        return convertIterableToObsVertexList(graph.query(queryFunc, v));
     }
 
     @Override
     public List<ObservableVertex<T>> queryReachable(IQuery<T> queryFunc, IVertex<T> v) {
-        return convertListToObsVertex(graph.queryReachable(queryFunc, v));
+        return convertIterableToObsVertexList(graph.queryReachable(queryFunc, v));
     }
 
     @Override
@@ -172,6 +172,12 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     public void removeVertex(IVertex<T> v) {
         ObservableVertex<T> obsV = validateVertex(v);
 
+        ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
+        changeVertex.removedEdges = new ArrayList<>();
+        changeVertex.removedEdges.add(obsV);
+
+        List<ObservableVertex<T>> obsVertices = convertIterableToObsVertexList(graph.getInVertices(v));
+
         graph.removeVertex(v);
 
         ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
@@ -180,17 +186,8 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
         updateListeners(changeGraph);
 
-        ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
-        changeVertex.removedEdges = new ArrayList<>();
-        changeVertex.removedEdges.add(obsV);
-
-        // TODO: graph.getInVertices(v) always returns an iterable with no elements
-        for(var vertex : graph.getInVertices(v)) {
-            ObservableVertex<T> obsVertex = vertexToObservable.get(vertex);
+        for(var obsVertex : obsVertices)
             obsVertex.updateListeners(changeVertex);
-        }
-
-        throw new UnsupportedOperationException("implemented incorrectly");
 
     }
 
