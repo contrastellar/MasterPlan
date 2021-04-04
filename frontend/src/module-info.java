@@ -15,4 +15,6 @@ module MasterPlan {
     opens ui.window.statusbar to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.window.toolbar to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.window.toolbar.tab to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.taskboard.listview to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.taskboard.listview.category to javafx.graphics, javafx.controls, javafx.fxml;
 }
