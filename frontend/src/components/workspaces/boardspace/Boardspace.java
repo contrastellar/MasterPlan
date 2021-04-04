@@ -49,21 +49,21 @@ public final class Boardspace {
 
     public void addBoard(Category category, Vec2D pos, Vec2D dim) {
         var vertex = rootVertex.getGraph().addVertex(category, rootVertex);
-        Board board = new Board(vertex, pos, dim);
-        boards.add(board);
-        vertexToBoard.put(vertex, board);
+        Board board = vertexToBoard.get(vertex);
+
+        board.pos.set(pos);
+        board.dim.set(dim);
     }
 
     public void addBoard(Category category, double x, double y, double w, double h) {
         var vertex = rootVertex.getGraph().addVertex(category, rootVertex);
-        Board board = new Board(vertex, x, y, w, h);
-        boards.add(board);
-        vertexToBoard.put(vertex, board);
+        Board board = vertexToBoard.get(vertex);
+
+        board.pos.set(x, y);
+        board.dim.set(w, h);
     }
 
     public void removeBoard(Board board) {
-        boards.remove(board);
-        vertexToBoard.remove(board.getRootVertex());
         rootVertex.getGraph().removeDirectedEdge(rootVertex, board.getRootVertex());
     }
 
