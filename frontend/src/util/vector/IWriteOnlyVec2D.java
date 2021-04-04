@@ -1,6 +1,10 @@
 package util.vector;
 
 public interface IWriteOnlyVec2D {
+
+    void set(Vec2D vec);
+    void set(double x, double y);
+
     void add(Vec2D vec);
     void add(double dX, double dY);
 

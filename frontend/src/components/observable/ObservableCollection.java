@@ -4,27 +4,29 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 
-public class ObservableCollection<T> implements IObservable, Collection<T> {
+public class ObservableCollection<T> implements IObservable<Collection<T>>, Collection<T> {
 
-    private final HashSet<IListener> listeners = new HashSet<>();
+    private final HashSet<IListener<Collection<T>>> listeners = new HashSet<>();
     private final Collection<T> collection;
 
     public ObservableCollection(Collection<T> collection) {
         this.collection = collection;
     }
 
-    public void addListener(IListener listener) {
+    @Override
+    public void startListen(IListener<Collection<T>> listener) {
         listeners.add(listener);
-        listener.onChange();
+        listener.onChange(this);
     }
 
-    public void removeListener(IListener listener) {
+    @Override
+    public void stopListen(IListener<Collection<T>> listener) {
         listeners.remove(listener);
     }
 
     private void updateListeners() {
-        for(IListener listener : listeners)
-            listener.onChange();
+        for(IListener<Collection<T>> listener : listeners)
+            listener.onChange(this);
     }
 
     @Override

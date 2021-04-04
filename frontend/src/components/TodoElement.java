@@ -1,11 +1,11 @@
 package components;
 
-import java.util.Calendar;
-import java.util.HashSet;
-
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.observable.ObservableCollection;
+
+import java.util.Calendar;
+import java.util.HashSet;
 
 /**
  *
@@ -29,12 +29,10 @@ public abstract class TodoElement implements Archival{
     public TodoElement() {
         creationDate = Calendar.getInstance();
     }
+
     public TodoElement(String name) {
         creationDate = Calendar.getInstance();
-        if(name == null)
-            throw new IllegalArgumentException("name cannot be null");
-
-        this._name.setValue(name);
+        setName(name);
     }
 
     /* Getters and Setters */

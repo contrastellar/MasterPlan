@@ -1,33 +1,36 @@
 package components.observable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
-public interface IReadOnlyObservableList<T> extends IObservable {
+public interface IReadOnlyObservableList<T> extends IObservable<ObservableList<T>> {
 
-    public int size();
+    int size();
 
-    public boolean isEmpty();
+    boolean isEmpty();
 
-    public boolean contains(Object o);
+    boolean contains(Object o);
 
-    public Iterator<T> iterator();
+    Iterator<T> iterator();
 
-    public Object[] toArray();
+    Object[] toArray();
 
-    public <T1> T1[] toArray(T1[] a);
+    <T1> T1[] toArray(T1[] a);
 
-    public boolean containsAll(Collection<?> c);
+    boolean containsAll(Collection<?> c);
 
-    public T get(int index);
+    T get(int index);
 
-    public int indexOf(Object o);
+    int indexOf(Object o);
 
-    public int lastIndexOf(Object o);
+    int lastIndexOf(Object o);
 
-    public ListIterator<T> listIterator();
+    ListIterator<T> listIterator();
 
-    public ListIterator<T> listIterator(int index);
+    ListIterator<T> listIterator(int index);
 
-    public List<T> subList(int fromIndex, int toIndex);
+    List<T> subList(int fromIndex, int toIndex);
 
 }

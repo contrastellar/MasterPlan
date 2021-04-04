@@ -2,183 +2,87 @@ package util.graph;
 
 import java.util.*;
 
-/*
-    Graph<TodoElement, Vertex<TodoElement>> graph
-
-    ObservableGraph<TodoElement> obsGraph = new ObservableGraph<>()
-
-    Graph<TodoElement, ObvservableVertex<TodoElement>>
-
-*/
-
 public class Graph<T> implements IGraph<T> {
 
     public class Vertex implements IVertex<T> {
 
         private final T element;
-        private final List<Vertex> outVertices = new LinkedList<>();
         private final List<Vertex> inVertices = new LinkedList<>();
+        private final List<Vertex> outVertices = new LinkedList<>();
 
-        public Vertex(T element) {
-            this.element = element;
+        public Vertex (T element) { this.element = element; }
+
+        @Override
+        public T getElement() {
+            return element;
         }
 
         @Override
-        public void sort(Comparator<T> c) {
-            Comparator<Vertex> cVertex = (v1, v2) -> c.compare(v1.element, v2.element);
-
-            outVertices.sort(cVertex);
+        public IGraph<T> getGraph() {
+            return Graph.this;
         }
-
-        @Override
-        public void sortRecursive(Comparator<T> c) {
-            Comparator<Vertex> cVertex = (v1, v2) -> c.compare(v1.element, v2.element);
-
-            sortRecursive(cVertex, new HashSet<>());
-        }
-
-        private void sortRecursive(Comparator<Vertex> c, Set<Vertex> sorted) {
-            if(sorted.contains(this))
-                return;
-            else
-                sorted.add(this);
-
-            inVertices.sort(c);
-            outVertices.sort(c);
-
-            for(Vertex v : outVertices)
-                v.sortRecursive(c, sorted);
-        }
-
-        @Override
-        public List<Vertex> query(IQuery<T> queryFunc) {
-
-            ArrayList<Vertex> queryRes = new ArrayList<>();
-
-            for(Vertex v : outVertices)
-                if(queryFunc.query(v.element))
-                    queryRes.add(v);
-
-            return queryRes;
-        }
-
-        @Override
-        public List<Vertex> queryRecursive(IQuery<T> queryFunc) {
-            ArrayList<Vertex> queryRes = new ArrayList<>();
-            HashSet<Vertex> queried = new HashSet<>();
-
-            queryRecursive(queryFunc, queryRes, queried);
-
-            return queryRes;
-        }
-
-        private void queryRecursive(IQuery<T> queryFunc, List<Vertex> queryRes, Set<Vertex> queried) {
-            if(queried.contains(this))
-                return;
-            else
-                queried.add(this);
-
-            for(Vertex v : outVertices)
-                if(queryFunc.query(v.element))
-                    queryRes.add(v);
-        }
-
-        protected void addDirectedEdge(Vertex v) {
-            outVertices.add(v);
-            v.inVertices.add(this);
-        }
-
-        protected void removeDirectedEdge(Vertex v) {
-            outVertices.remove(v);
-            v.inVertices.remove(this);
-        }
-
-        @Override
-        public T getElement() { return element; }
-
-        @Override
-        public Iterable<Vertex> getOutVertices() { return outVertices; }
-
-        @Override
-        public Iterable<Vertex> getInVertices() { return inVertices; }
-
-        @Override
-        public Graph<T> getGraph() { return Graph.this; }
-
     }
 
-    private final Vertex rootVertex;
+
     private final Map<T, Vertex> elementToVertex = new HashMap<>();
 
-    public Graph(T rootElement) {
-        if(rootElement == null)
-            throw new IllegalArgumentException("rootElement can not be null");
 
-        rootVertex = new Vertex(rootElement);
-        elementToVertex.put(rootElement, rootVertex);
-    }
+    public Graph() { }
 
-    private Vertex validateIVertex(IVertex<T> v) {
-        if(!(v instanceof Graph.Vertex))
-            throw new IllegalArgumentException("given vertex is not an instance of Graph.Vertex");
 
-        return (Vertex) v;
+    private Vertex validateVertex(IVertex<T> iVertex) {
+        if(!(iVertex instanceof Graph.Vertex))
+            throw new IllegalArgumentException("Graph.validateVertex() - given vertex is not of type Graph.Vertex");
+
+        return (Vertex) iVertex;
     }
 
     private void validateVertex(Vertex v) {
-
-        if(v == null)
-            throw new IllegalArgumentException("given vertex can not be null");
-
-        if(elementToVertex.get(v.getElement()) != v)
-            throw new IllegalArgumentException("given vertex does not exist in graph");
-
+        if(elementToVertex.get(v.element) != v)
+            throw new IllegalArgumentException("Graph.validateVertex() - given vertex does not exist in graph");
     }
 
     @Override
     public Vertex addVertex(T element) {
         if(element == null)
-            throw new IllegalArgumentException("element can not be null");
+            throw new IllegalArgumentException("Graph.addVertex() - element can not be null.");
 
-        Vertex vertex;
+        if(elementToVertex.containsKey(element))
+            throw new IllegalArgumentException("Graph.addVertex() - element already exists in graph; duplicate elements are not allowed.");
 
-        // this statement ensures a 1-1 mapping between elements and vertices
-        if((vertex = elementToVertex.get(element)) != null)
-            return vertex;
+        Vertex vertex = new Vertex(element);
 
-        vertex = new Vertex(element);
-        rootVertex.addDirectedEdge(vertex);
         elementToVertex.put(element, vertex);
+
         return vertex;
     }
 
-    public Vertex addVertex(T element, Vertex parentVertex) {
-        if(element == null)
-            throw new IllegalArgumentException("element can not be null");
+    @Override
+    public IVertex<T> addVertex(T element, IVertex<T> inVertex) {
+        Vertex vertex = addVertex(element);
+        addDirectedEdge(inVertex, vertex);
+        return vertex;
+    }
 
-        validateVertex(parentVertex);
+    @Override
+    public IVertex<T> addVertex(T element, Iterable<IVertex<T>> inVertices) {
+        Vertex vertex = addVertex(element);
 
-        if(elementToVertex.containsKey(element))
-            throw new IllegalArgumentException("duplicate elements are not allowed");
-
-        Vertex vertex = new Vertex(element);
-        parentVertex.addDirectedEdge(vertex);
+        for(var inVertex : inVertices)
+            addDirectedEdge(inVertex, vertex);
 
         return vertex;
     }
 
     @Override
     public void removeVertex(IVertex<T> v) {
-        Vertex vertex = validateIVertex(v);
-
+        Vertex vertex = validateVertex(v);
         removeVertex(vertex);
     }
 
     public void removeVertex(Vertex v) {
-        validateVertex(v);
-
-        if(v == rootVertex)
-            throw new IllegalArgumentException("given vertex is root vertex; can not remove root vertex");
+        for(Vertex inV : v.inVertices)
+            removeDirectedEdge(inV, v);
 
         elementToVertex.remove(v.element);
     }
@@ -212,8 +116,8 @@ public class Graph<T> implements IGraph<T> {
 
     @Override
     public void addDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
-        Vertex vertex1 = validateIVertex(v1);
-        Vertex vertex2 = validateIVertex(v2);
+        Vertex vertex1 = validateVertex(v1);
+        Vertex vertex2 = validateVertex(v2);
 
         addDirectedEdge(vertex1, vertex2);
     }
@@ -224,13 +128,14 @@ public class Graph<T> implements IGraph<T> {
 
         checkForCircularity(v1, v2);
 
-        v1.addDirectedEdge(v2);
+        v1.outVertices.add(v2);
+        v2.inVertices.add(v2);
     }
 
     @Override
     public void removeDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
-        Vertex vertex1 = validateIVertex(v1);
-        Vertex vertex2 = validateIVertex(v2);
+        Vertex vertex1 = validateVertex(v1);
+        Vertex vertex2 = validateVertex(v2);
 
         removeDirectedEdge(vertex1, vertex2);
     }
@@ -239,46 +144,62 @@ public class Graph<T> implements IGraph<T> {
         validateVertex(v1);
         validateVertex(v2);
 
-        v1.removeDirectedEdge(v2);
+        v1.outVertices.remove(v2);
+        v2.inVertices.remove(v1);
     }
 
     @Override
     public void sort(Comparator<T> c) {
-        // TODO: sort elementsToVertex (or the backing of getVertices())
-
-        for(Vertex v : getVertices())
-            v.sort(c);
-
-        throw new UnsupportedOperationException("not implemented yet");
+        throw new UnsupportedOperationException("Graph.sort() - not implemented yet");
     }
 
     @Override
     public void sort(Comparator<T> c, IVertex<T> v) {
-        Vertex vertex = validateIVertex(v);
+        Vertex vertex = validateVertex(v);
         sort(c, vertex);
     }
 
     public void sort(Comparator<T> c, Vertex v) {
         validateVertex(v);
-        v.sort(c);
+
+        Comparator<Vertex> vComparator = (v1, v2) -> c.compare(v1.element, v2.element);
+
+        v.outVertices.sort(vComparator);
+        v.inVertices.sort(vComparator);
     }
 
     @Override
-    public void sortRecursive(Comparator<T> c, IVertex<T> v) {
-        Vertex vertex = validateIVertex(v);
-        sortRecursive(c, vertex);
+    public void sortReachable(Comparator<T> c, IVertex<T> v) {
+        Vertex vertex = validateVertex(v);
+        sortReachable(c, vertex);
     }
 
-    public void sortRecursive(Comparator<T> c, Vertex v) {
+    public void sortReachable(Comparator<T> c, Vertex v) {
         validateVertex(v);
-        v.sortRecursive(c);
+
+        Comparator<Vertex> vComparator = (v1, v2) -> c.compare(v1.element, v2.element);
+
+        sortReachable(vComparator, v, new HashSet<>());
+    }
+
+    private void sortReachable(Comparator<Vertex> vComparator, Vertex v, Set<Vertex> sorted) {
+        if(sorted.contains(v))
+            return;
+        else
+            sorted.add(v);
+
+        v.outVertices.sort(vComparator);
+        v.inVertices.sort(vComparator);
+
+        for(Vertex vOut : v.outVertices)
+            sortReachable(vComparator, vOut, sorted);
     }
 
     @Override
     public List<Vertex> query(IQuery<T> queryFunc) {
         ArrayList<Vertex> queryRes = new ArrayList<>();
 
-        for(Vertex v : getVertices())
+        for(Vertex v : this.getVertices())
             if(queryFunc.query(v.element))
                 queryRes.add(v);
 
@@ -287,28 +208,103 @@ public class Graph<T> implements IGraph<T> {
 
     @Override
     public List<Vertex> query(IQuery<T> queryFunc, IVertex<T> v) {
-        Vertex vertex = validateIVertex(v);
+        Vertex vertex = validateVertex(v);
         return query(queryFunc, vertex);
     }
 
     public List<Vertex> query(IQuery<T> queryFunc, Vertex v) {
         validateVertex(v);
-        return v.query(queryFunc);
+
+        ArrayList<Vertex> queryRes = new ArrayList<>();
+
+        for(Vertex vOut : v.outVertices)
+            if(queryFunc.query(vOut.element))
+                queryRes.add(vOut);
+
+        return queryRes;
     }
 
     @Override
-    public List<Vertex> queryRecursive(IQuery<T> queryFunc, IVertex<T> v) {
-        Vertex vertex = validateIVertex(v);
-        return queryRecursive(queryFunc, vertex);
+    public List<Vertex> queryReachable(IQuery<T> queryFunc, IVertex<T> v) {
+        Vertex vertex = validateVertex(v);
+        return queryReachable(queryFunc, vertex);
     }
 
-    public List<Vertex> queryRecursive(IQuery<T> queryFunc, Vertex v) {
+    public List<Vertex> queryReachable(IQuery<T> queryFunc, Vertex v) {
         validateVertex(v);
-        return v.query(queryFunc);
+
+        List<Vertex> queryRes = new ArrayList<>();
+        Set<Vertex> queried = new HashSet<>();
+
+        queryReachable(queryRes, queryFunc, v, queried);
+
+        return queryRes;
+    }
+
+    private void queryReachable(List<Vertex> queryRes, IQuery<T> queryFunc, Vertex v, Set<Vertex> queried) {
+        if(queried.contains(v))
+            return;
+        else
+            queried.add(v);
+
+        if(queryFunc.query(v.element))
+            queryRes.add(v);
+
+        for(Vertex vOut : v.outVertices)
+            queryReachable(queryRes, queryFunc, vOut, queried);
     }
 
     @Override
-    public Iterable<Vertex> getVertices() { return elementToVertex.values(); }
+    public Iterable<Vertex> getOutVertices(IVertex<T> v) {
+        Vertex vertex = validateVertex(v);
+        return getOutVertices(vertex);
+    }
 
-    public Vertex getRootVertex() { return rootVertex; }
+    public Iterable<Vertex> getOutVertices(Vertex v) {
+        validateVertex(v);
+        return v.outVertices;
+    }
+
+    @Override
+    public int getOutDegree(IVertex<T> v) {
+        Vertex vertex = validateVertex(v);
+        return getOutDegree(vertex);
+    }
+
+    public int getOutDegree(Vertex v) {
+        validateVertex(v);
+        return v.outVertices.size();
+    }
+
+    @Override
+    public Iterable<Vertex> getInVertices(IVertex<T> v) {
+        Vertex vertex = validateVertex(v);
+        return getInVertices(vertex);
+    }
+
+    public Iterable<Vertex> getInVertices(Vertex v) {
+        validateVertex(v);
+        return v.inVertices;
+    }
+
+    @Override
+    public int getInDegree(IVertex<T> v) {
+        Vertex vertex = validateVertex(v);
+        return getInDegree(vertex);
+    }
+
+    public int getInDegree(Vertex v) {
+        validateVertex(v);
+        return v.inVertices.size();
+    }
+
+    @Override
+    public Iterable<Vertex> getVertices() {
+        return elementToVertex.values();
+    }
+
+    public int size() {
+        return elementToVertex.size();
+    }
+
 }

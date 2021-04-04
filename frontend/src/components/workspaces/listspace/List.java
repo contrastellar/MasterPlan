@@ -1,16 +1,10 @@
 package components.workspaces.listspace;
 
-import components.observable.Observable;
-import components.observable.ObservableList;
 import components.task.Task;
 
 import java.util.ArrayList;
 
 public class List {
-
-    public final Observable<String> name = new Observable<>("");
-
-    public final ObservableList<Task> tasks = new ObservableList<>( new ArrayList<>() );
 
     public List() {
 

@@ -5,9 +5,9 @@ import components.observable.IObservable;
 
 import java.util.HashSet;
 
-public class ObservableVec2D implements IVec2D, IObservable {
+public class ObservableVec2D implements IVec2D, IObservable<ObservableVec2D> {
 
-    private final HashSet<IListener> listeners = new HashSet<>();
+    private final HashSet<IListener<ObservableVec2D>> listeners = new HashSet<>();
     private final IVec2D vec;
 
     public ObservableVec2D(IVec2D vec) {
@@ -15,19 +15,19 @@ public class ObservableVec2D implements IVec2D, IObservable {
     }
 
     @Override
-    public void addListener(IListener listener) {
+    public void startListen(IListener<ObservableVec2D> listener) {
         listeners.add(listener);
-        listener.onChange();
+        listener.onChange(this);
     }
 
     @Override
-    public void removeListener(IListener listener) {
+    public void stopListen(IListener<ObservableVec2D> listener) {
         listeners.remove(listener);
     }
 
     private void updateListeners() {
-        for(IListener listener : listeners)
-            listener.onChange();
+        for(IListener<ObservableVec2D> listener : listeners)
+            listener.onChange(this);
     }
 
     @Override
@@ -38,6 +38,18 @@ public class ObservableVec2D implements IVec2D, IObservable {
     @Override
     public double getY() {
         return vec.getY();
+    }
+
+    @Override
+    public void set(Vec2D vec) {
+        this.vec.set(vec);
+        updateListeners();
+    }
+
+    @Override
+    public void set(double x, double y) {
+        this.vec.set(x, y);
+        updateListeners();;
     }
 
     @Override

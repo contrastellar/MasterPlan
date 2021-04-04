@@ -1,8 +1,8 @@
 package models;
 
 import components.TodoElement;
-import components.observable.ObservableGraph;
 import util.graph.Graph;
+import util.graph.ObservableGraph;
 
 public class MainModel {
 
@@ -10,7 +10,7 @@ public class MainModel {
 
     public MainModel() {
         // deserialize graph
-        Graph<TodoElement> _graph = new Graph<>(null);
+        Graph<TodoElement> _graph = new Graph<>();
 
         this.graph = new ObservableGraph<>(_graph);
     }

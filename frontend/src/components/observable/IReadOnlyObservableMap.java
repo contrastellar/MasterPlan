@@ -2,11 +2,10 @@ package components.observable;
 
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public interface IReadOnlyObservableMap<K, V> extends IObservable {
+public interface IReadOnlyObservableMap<K, V> extends IObservable<ObservableMap<K, V>> {
 
     public int size();
 

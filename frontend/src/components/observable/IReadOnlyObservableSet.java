@@ -3,7 +3,7 @@ package components.observable;
 import java.util.Collection;
 import java.util.Iterator;
 
-public interface IReadOnlyObservableSet<T> extends IObservable{
+public interface IReadOnlyObservableSet<T> extends IObservable<ObservableSet<T>> {
 
     public int size();
 

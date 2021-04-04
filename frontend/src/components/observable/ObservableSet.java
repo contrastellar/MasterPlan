@@ -5,29 +5,29 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ObservableSet<T> implements IObservable, IReadOnlyObservableSet<T>, Set<T> {
+public class ObservableSet<T> implements IObservable<ObservableSet<T>>, IReadOnlyObservableSet<T>, Set<T> {
 
     private final Set<T> set;
-    private final HashSet<IListener> listeners = new HashSet<>();
+    private final HashSet<IListener<ObservableSet<T>>> listeners = new HashSet<>();
 
     public ObservableSet(Set<T> set) {
         this.set = set;
     }
 
     @Override
-    public void addListener(IListener listener) {
+    public void startListen(IListener<ObservableSet<T>> listener) {
         listeners.add(listener);
-        listener.onChange();
+        listener.onChange(this);
     }
 
     @Override
-    public void removeListener(IListener listener) {
+    public void stopListen(IListener<ObservableSet<T>> listener) {
         listeners.remove(listener);
     }
 
     private void updateListeners() {
-        for(IListener listener : listeners)
-            listener.onChange();
+        for(IListener<ObservableSet<T>> listener : listeners)
+            listener.onChange(this);
     }
 
     @Override

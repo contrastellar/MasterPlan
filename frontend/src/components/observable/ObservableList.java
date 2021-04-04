@@ -2,28 +2,31 @@ package components.observable;
 
 import java.util.*;
 
-public class ObservableList<T> implements IObservable, List<T>, IReadOnlyObservableList<T> {
+public class ObservableList<T> implements IObservable<ObservableList<T>>, List<T>, IReadOnlyObservableList<T> {
+
     private final List<T> list;
-    private final HashSet<IListener> listeners = new HashSet<>();
+    private final HashSet<IListener<ObservableList<T>>> listeners = new HashSet<>();
+
 
     public ObservableList(List<T> list) {
         this.list = list;
     }
 
-    @Override
-    public void addListener(IListener listener) {
-        listeners.add(listener);
-        listener.onChange();
-    }
-
-    @Override
-    public void removeListener(IListener listener) {
-        listeners.remove(listener);
-    }
 
     private void updateListeners() {
-        for(IListener listener : listeners)
-            listener.onChange();
+        for(IListener<ObservableList<T>> listener : listeners)
+            listener.onChange(this);
+    }
+
+    @Override
+    public void startListen(IListener<ObservableList<T>> listener) {
+        listeners.add(listener);
+        listener.onChange(this);
+    }
+
+    @Override
+    public void stopListen(IListener<ObservableList<T>> listener) {
+        listeners.remove(listener);
     }
 
     @Override
@@ -183,6 +186,7 @@ public class ObservableList<T> implements IObservable, List<T>, IReadOnlyObserva
     public List<T> subList(int fromIndex, int toIndex) {
         return list.subList(fromIndex, toIndex);
     }
+
 
 
 }

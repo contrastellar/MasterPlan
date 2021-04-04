@@ -5,56 +5,107 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class ObservableManager {
-    private final HashMap<IObservable, HashSet<IListener>> ObservableToListener = new HashMap<>();
+
+    public static class ObservableListenerPair<T> {
+
+        private final IObservable<T> observable;
+        private final HashSet<IListener<T>> listeners = new HashSet<>();
+
+        public ObservableListenerPair(IObservable<T> observable) {
+            this.observable = observable;
+        }
+
+        public void addListener(IListener<T> listener) {
+            listeners.add(listener);
+        }
+
+        public void removeListener(IListener<T> listener) {
+            listeners.remove(listener);
+        }
+
+        public void removeAllListeners() {
+            listeners.clear();
+        }
+
+        public void startListen() {
+            for(IListener<T> listener : this.listeners)
+                observable.startListen(listener);
+        }
+
+        public void stopListen() {
+            for(IListener<T> listener : this.listeners)
+                observable.stopListen(listener);
+        }
+
+        public boolean isListenersEmpty() {
+            return listeners.size() == 0;
+        }
+    }
+
+
+    private final Map<IObservable<?>, ObservableListenerPair<?>> observableToPair = new HashMap<>();
     private boolean listening = false;
+
 
     public ObservableManager() {  }
 
+
     public void startListen() {
         listening = true;
-        for(Map.Entry<IObservable, HashSet<IListener>> entry : ObservableToListener.entrySet()) {
-            for(IListener listener : entry.getValue())
-                entry.getKey().addListener(listener);
-        }
+
+        for(ObservableListenerPair<?> pair : observableToPair.values())
+            pair.startListen();
     }
 
     public void stopListen() {
         listening = false;
-        for(Map.Entry<IObservable, HashSet<IListener>> entry : ObservableToListener.entrySet()) {
-            for(IListener listener : entry.getValue())
-                entry.getKey().removeListener(listener);
-        }
+        for(ObservableListenerPair<?> pair : observableToPair.values())
+            pair.stopListen();
     }
 
-    public void addListener(IObservable observable, IListener listener) {
-        HashSet<IListener> listeners = ObservableToListener.computeIfAbsent(observable, k -> new HashSet<>());
-        listeners.add(listener);
+    @SuppressWarnings("unchecked")
+    private <T> ObservableListenerPair<T> getPair(IObservable<?> observable) {
+        return (ObservableListenerPair<T>) observableToPair.get(observable);
+    }
+
+    public <T> void addListener(IObservable<T> observable, IListener<T> listener) {
+        ObservableListenerPair<T> pair;
+
+        if( (pair = getPair(observable)) == null) {
+            pair = new ObservableListenerPair<>(observable);
+            observableToPair.put(observable, pair);
+        }
+
+        pair.addListener(listener);
 
         if(listening)
-            observable.addListener(listener);
+            observable.startListen(listener);
     }
 
-    public void removeListener(IObservable observable, IListener listener) {
-        HashSet<IListener> listeners = ObservableToListener.get(observable);
-        if(listeners != null) {
-            if(listening)
-                observable.removeListener(listener);
+    public <T> void removeListener(IObservable<T> observable, IListener<T> listener) {
 
-            listeners.remove(listener);
-        }
+        ObservableListenerPair<T> pair = getPair(observable);
+
+        if(pair == null)
+            throw new IllegalArgumentException("ObservableManager.removeListener() - the given observable does not exist in this ObservableManager");
+
+        pair.removeListener(listener);
+
+        // if the pair isn't being used for any listeners, remove it from the map
+        if(pair.isListenersEmpty())
+            observableToPair.remove(observable);
+
+
+        observable.stopListen(listener);
     }
 
-    public void removeAllListeners(IObservable observable)
-    {
-        if(listening) {
-            HashSet<IListener> listeners = ObservableToListener.get(observable);
-            if(listeners != null) {
-                for(IListener listener : listeners)
-                    observable.removeListener(listener);
-            }
-        }
+    public void removeAllListeners(IObservable<?> observable) {
+        ObservableListenerPair<?> pair = observableToPair.get(observable);
 
-        ObservableToListener.remove(observable);
+        if(listening)
+            pair.stopListen();
+
+        observableToPair.remove(observable);
     }
 
     public boolean isListening() { return listening; }
