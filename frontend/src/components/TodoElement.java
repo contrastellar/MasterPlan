@@ -1,11 +1,11 @@
 package components;
 
-import java.util.Calendar;
-import java.util.HashSet;
-
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.observable.ObservableCollection;
+
+import java.util.Calendar;
+import java.util.HashSet;
 
 /**
  *

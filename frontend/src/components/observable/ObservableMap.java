@@ -5,29 +5,29 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ObservableMap<K, V> implements Map<K, V>, IObservable, IReadOnlyObservableMap<K, V> {
+public class ObservableMap<K, V> implements Map<K, V>, IObservable<ObservableMap<K, V>>, IReadOnlyObservableMap<K, V> {
 
     private final Map<K, V> map;
-    private final HashSet<IListener> listeners = new HashSet<>();
+    private final HashSet<IListener<ObservableMap<K, V>>> listeners = new HashSet<>();
 
     public ObservableMap(Map<K, V> map) {
         this.map = map;
     }
 
     @Override
-    public void addListener(IListener listener) {
+    public void startListen(IListener<ObservableMap<K, V>> listener) {
         listeners.add(listener);
-        listener.onChange();
+        listener.onChange(this);
     }
 
     @Override
-    public void removeListener(IListener listener) {
+    public void stopListen(IListener<ObservableMap<K, V>> listener) {
         listeners.remove(listener);
     }
 
     private void updateListeners() {
-        for(IListener listener : listeners)
-            listener.onChange();
+        for(IListener<ObservableMap<K, V>> listener : listeners)
+            listener.onChange(this);
     }
 
     @Override

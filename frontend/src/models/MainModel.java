@@ -1,8 +1,8 @@
 package models;
 
 import components.TodoElement;
-import components.observable.ObservableGraph;
 import util.graph.Graph;
+import util.graph.ObservableGraph;
 
 public class MainModel {
 

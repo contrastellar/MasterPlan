@@ -1,9 +1,9 @@
 package components.observable;
 
-public interface IObservable {
+public interface IObservable<T> {
 
-    void addListener(IListener listener);
+    void startListen(IListener<T> listener);
 
-    void removeListener(IListener listener);
+    void stopListen(IListener<T> listener);
 
 }

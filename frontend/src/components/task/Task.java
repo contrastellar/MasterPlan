@@ -1,9 +1,8 @@
 package components.task;
 
-import components.observable.Observable;
-
 import components.Completable;
 import components.TodoElement;
+import components.observable.Observable;
 
 
 public final class Task extends TodoElement implements Completable {

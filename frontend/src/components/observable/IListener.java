@@ -1,7 +1,7 @@
 package components.observable;
 
-public interface IListener {
+public interface IListener<ChangeInfo> {
 
-    void onChange();
+    void onChange(ChangeInfo changeInfo);
 
 }
