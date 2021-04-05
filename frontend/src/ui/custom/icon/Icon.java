@@ -24,7 +24,7 @@ public class Icon extends Region {
     public final double ICON_SIZE_DEFAULT = 20;
 
     public Icon() {
-        this.getStylesheets().add("./ui/custom/icon/Icon.css");
+        this.getStylesheets().add(getClass().getResource("Icon.css").toExternalForm());
         setShape(icon);
         setIconColor(Color.WHITE);
         setIconSize(ICON_SIZE_DEFAULT);
