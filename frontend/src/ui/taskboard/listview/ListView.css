@@ -1,0 +1,12 @@
+#listContainer {
+    -fx-background-color: white;
+}
+
+#topBar > VBox {
+    -fx-padding: 10;
+}
+
+.bottomBorder {
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #cccccc;
+}

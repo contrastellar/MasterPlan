@@ -1,7 +1,7 @@
 package components;
 
-import MVVM.Observable;
-import MVVM.ObservableCollection;
+import components.observable.Observable;
+import components.observable.ObservableCollection;
 import javafx.scene.paint.Color;
 
 import java.util.HashSet;
@@ -27,11 +27,17 @@ public final class Tag {
         if(name == null)
             throw new IllegalArgumentException("name cannot be null");
 
+        ALL_TAGS.add(this);
+
         this.name = new Observable<>(name);
         this.color = new Observable<>(color);
     }
 
     // TODO: create register method
+    public void registerNewTag(String name, Color color) {
+      Tag tag = new Tag(name, color);
+      ALL_TAGS.add(tag);
+    }
 
     @Override
     public boolean equals(Object o) {

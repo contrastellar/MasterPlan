@@ -1,0 +1,32 @@
+/* Tab Button */
+.toggle-button {
+    -fx-max-width: INFINITY;
+    -fx-pref-height: 50;
+    -fx-background-color: transparent;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-border-width: 0;
+
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+
+    -fx-content-display: Top;
+}
+
+/* Active class for Tab Button */
+.active {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+/* Active Tab Button hover */
+.active:hover {
+    -fx-border-width: 0;
+}
+
+/* Tab Button hover */
+toggle-button:hover {
+    -fx-border-width: 0 0 0 5;
+    -fx-border-color: red;
+}

@@ -1,0 +1,63 @@
+<?import javafx.scene.Scene?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.BorderPane?>
+
+<?import ui.window.toolbar.tab.Tab?>
+<?import javafx.scene.layout.HBox?>
+<?import ui.custom.icon.Icon?>
+<?import javafx.scene.control.ToggleGroup?>
+
+<?import javafx.geometry.Insets?>
+<Scene fx:controller="ui.window.MainViewController" stylesheets="@MainView.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <VBox prefHeight="600.0" prefWidth="900.0">
+
+        <!-- Main Container -->
+        <BorderPane fx:id="mainContainer" VBox.vgrow="ALWAYS">
+
+            <left>
+                <!-- Toolbar -->
+                <BorderPane styleClass="toolbarContainer" stylesheets="@toolbar/Toolbar.css" maxWidth="40" >
+
+                    <!-- Tab Bar -->
+                    <top>
+                        <VBox alignment="CENTER" >
+
+                            <padding>
+                                <Insets bottom="10"/>
+                            </padding>
+
+                            <fx:define>
+                                <ToggleGroup fx:id="tabToggleGroup" />
+                            </fx:define>
+
+                            <Tab icon="home.svg" iconSize="30" unselectedIconColor="cadetblue"
+                                 onAction="#switchViewToListSpace" toggleGroup="$tabToggleGroup" selected="true" />
+                            <Tab icon="folder-open.svg" iconSize="30" unselectedIconColor="cadetblue"
+                                 onAction="#switchViewToWorkspace" toggleGroup="$tabToggleGroup" />
+                            <Tab icon="cogs.svg" iconSize="30" unselectedIconColor="cadetblue"
+                                 onAction="#switchViewToSettings" toggleGroup="$tabToggleGroup"  />
+                            <Tab icon="archive.svg" iconSize="30" unselectedIconColor="cadetblue"
+                                 onAction="#switchViewToArchive" toggleGroup="$tabToggleGroup" />
+
+                        </VBox>
+                    </top>
+
+                    <!-- User Bar -->
+                    <bottom>
+                        <HBox alignment="CENTER" prefHeight="30.0">
+                            <Icon icon="account_circle.svg" iconColor="white" iconSize="30"/>
+                        </HBox>
+                    </bottom>
+
+                </BorderPane>
+            </left>
+
+            <!-- Center view -->
+            <center/>
+
+        </BorderPane>
+
+        <!-- Status Bar -->
+        <fx:include fx:id="statusbar" source="statusbar/StatusBar.fxml"/>
+    </VBox>
+</Scene>

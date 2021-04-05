@@ -15,6 +15,6 @@ public interface Completable {
      *
      * @param isComplete
      */
-    public void setComplete(boolean isComplete);
+    void setCompleted(boolean isComplete);
 
 }

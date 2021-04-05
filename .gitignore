@@ -11,6 +11,7 @@
 .idea/tasks.xml
 .idea/dictionaries
 .idea/shelf
+.idea/compiler.xml
 
 # Ignore Sensitive or high-churn files:
 .idea/dataSources.ids

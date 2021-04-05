@@ -1,0 +1,53 @@
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.geometry.Insets?>
+
+<?import ui.custom.icon.Icon?>
+
+<?import ui.taskboard.listview.ListViewContainer?>
+<fx:root type="javafx.scene.layout.GridPane"
+         stylesheets="@CategoryView.css"
+         styleClass="bottomBorder"
+         xmlns="http://javafx.com/javafx/15.0.1"
+         xmlns:fx="http://javafx.com/fxml/1">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />
+        <ColumnConstraints hgrow="ALWAYS" />
+        <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />
+    </columnConstraints>
+
+    <rowConstraints>
+        <RowConstraints prefHeight="20.0"/>
+        <RowConstraints prefHeight="20.0"/>
+    </rowConstraints>
+
+    <!-- Drop down icon (row 0, col 0) -->
+    <HBox alignment="CENTER" >
+        <Icon icon="angle-down.svg" iconColor="#cecece"  rotate="-90" iconSize="10"/>
+    </HBox>
+
+    <!-- Category title (row 0, col 1) -->
+    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+        <Label fx:id="categoryName" text="Category Name Placeholder"/>
+    </HBox>
+
+    <!-- Category buttons (row 0, col 2) -->
+    <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2">
+        <Icon icon="bookmark.svg" iconColor="#cecece" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
+        <Icon icon="archive.svg" iconColor="#cecece" iconSize="10"/>
+    </HBox>
+
+    <!-- Status of category (row 1, col 1) -->
+    <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder" textFill="#cecece"/>
+    </HBox>
+
+    <!-- Sub list (row 2, col 1, colspan 2) -->
+
+
+</fx:root>
