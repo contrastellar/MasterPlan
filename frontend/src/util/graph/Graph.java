@@ -65,16 +65,6 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public IVertex<T> addVertex(T element, Iterable<IVertex<T>> inVertices) {
-        Vertex vertex = addVertex(element);
-
-        for(var inVertex : inVertices)
-            addDirectedEdge(inVertex, vertex);
-
-        return vertex;
-    }
-
-    @Override
     public void removeVertex(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
         removeVertex(vertex);

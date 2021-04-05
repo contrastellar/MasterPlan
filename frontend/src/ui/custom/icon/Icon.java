@@ -1,9 +1,12 @@
 package ui.custom.icon;
 
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
 
 import java.io.File;
@@ -14,62 +17,37 @@ import java.nio.file.Paths;
 /**
  * Icon Custom Component
  */
-public class Icon extends VBox {
-    @FXML private SVGPath icon;                 // Icon SVG path shape
-    @FXML private Region region;                // Region containing icon
+public class Icon extends Region {
 
-    private String iconColor;                   // Current icon color
-    private String defaultColor;                // Original icon color
-    private boolean isDefaultColor = false;     // Flag to save original icon color
+    private final SVGPath icon = new SVGPath();
 
-    /**
-     * Constructs Icon component with loader
-     */
+    public final double ICON_SIZE_DEFAULT = 20;
+
     public Icon() {
-        // Set fxml root and controller to this instance
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Icon.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        // Attempt to load resource
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
+        setShape(icon);
+        setIconColor(Color.WHITE);
+        setIconSize(ICON_SIZE_DEFAULT);
     }
 
-    /**
-     * Set iconColor attribute
-     * <Icon iconColor="white"/>
-     * @param color color string ('white', '#ffffff', etc.)
-     */
-    public void setIconColor(String color) {
-        // Stores original color
-        if (!isDefaultColor) {
-            defaultColor = color;
-            isDefaultColor = true;
-        }
-
-        // Set icon style
-        iconColor = color;
-        region.setStyle("-fx-background-color: " + iconColor);
+    public void setIconSize(double size) {
+        setMinWidth(size);
+        setMinHeight(size);
+        setPrefWidth(size);
+        setPrefHeight(size);
+        setMaxWidth(size);
+        setMaxHeight(size);
     }
 
-    /**
-     * Returns current color of icon
-     * @return current color as String
-     */
-    public String getIconColor() {
-        return iconColor;
+    public double getIconSize() {
+        return getWidth();
     }
 
-    /**
-     * Resets icon color to original color
-     */
-    public void resetIconColor() {
-        iconColor = defaultColor;
-        setIconColor(iconColor);
+    public void setIconColor(Color iconColor) {
+        setBackground(new Background(new BackgroundFill(iconColor, CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    public Color getIconColor() {
+        return (Color) getBackground().getFills().get(0).getFill();
     }
 
     /**
@@ -78,13 +56,14 @@ public class Icon extends VBox {
      */
     public void setIcon(String filename) {
         File file = new File("frontend/assets/icons/" + filename);
-        String fileData = "";
+        String fileData;
+
         try {
             fileData = Files.readString(Paths.get(file.getPath()));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        icon.contentProperty().set(fileData);
+        icon.setContent(fileData);
     }
 
     /**
@@ -92,6 +71,6 @@ public class Icon extends VBox {
      * @return icon shape as SVG String
      */
     public String getIcon() {
-        return icon.contentProperty().getValue();
+        return icon.getContent();
     }
 }

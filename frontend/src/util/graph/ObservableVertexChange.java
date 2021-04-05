@@ -22,7 +22,7 @@ public class ObservableVertexChange<T> {
         return addedEdges;
     }
 
-    public int addedEdgesSize() { return addedEdges.size(); }
+    public int addedEdgesSize() { return addedEdges == null ? 0 : addedEdges.size(); }
 
     public Iterable<ObservableVertex<T>> getRemovedEdges() {
         if(removedEdges == null)
@@ -30,6 +30,6 @@ public class ObservableVertexChange<T> {
         return removedEdges;
     }
 
-    public int removedEdgesSize() { return removedEdges.size(); }
+    public int removedEdgesSize() { return removedEdges == null ? 0 : removedEdges.size(); }
 
 }

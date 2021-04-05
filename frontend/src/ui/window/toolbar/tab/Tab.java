@@ -1,108 +1,108 @@
 package ui.window.toolbar.tab;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.RadioButton;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import ui.custom.icon.Icon;
-import java.io.IOException;
 
 /**
  * Custom toolbar tab component containing a button with an icon
  */
-public class Tab extends HBox {
-    @FXML private Button button;    // Nested Tab Button
-    @FXML private Icon icon;        // Button Icon
+public class Tab extends RadioButton {
+
+    private final Icon icon;
+
+    private Color unselectedIconColor = Color.BLACK;
+    private Color unselectedTextColor = Color.BLACK;
+
+    private Color selectedIconColor = Color.WHITE;
+    private Color selectedTextColor = Color.WHITE;
+
 
     /**
      * Constructs Tab component with loader
      */
     public Tab() {
-        // Set fxml root and controller to this instance
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tab.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
+        this.icon = new Icon();
+        setGraphic(icon);
 
-        // Attempt to load resource
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
+        icon.setIconColor(unselectedIconColor);
+        this.setTextFill(unselectedTextColor);
+
+        getStyleClass().remove("radio-button");
+        getStyleClass().add("toggle-button");
+
+        setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+
+        selectedProperty().addListener(this::selectedChanged);
+        setContentDisplay(ContentDisplay.TOP);
+    }
+
+    private void selectedChanged(ObservableValue<? extends Boolean> observableValue, boolean prevVal, boolean newVal) {
+        if(newVal) {
+            // setBackground(new Background(new BackgroundFill(unselectedIconColor, CornerRadii.EMPTY, Insets.EMPTY)));
+            icon.setIconColor(selectedIconColor);
+            this.setTextFill(selectedTextColor);
+        }
+        else {
+            // setBackground(new Background(new BackgroundFill(selectedTextColor, CornerRadii.EMPTY, Insets.EMPTY)));
+            icon.setIconColor(unselectedIconColor);
+            this.setTextFill(unselectedTextColor);
         }
     }
 
-    /**
-     * Adds active style class to active and sets active icon color
-     */
-    public void setActive() {
-        button.getStyleClass().add("active");
-        icon.setIconColor("black");
+    public double getIconSize() {
+        return icon.getIconSize();
     }
 
-    /**
-     * Removes active class from Tab
-     */
-    public void removeActive() {
-       for (int i = 0; i < button.getStyleClass().size(); i++)
-           if (button.getStyleClass().get(i) == "active")
-               button.getStyleClass().remove(i);
+    public void setIconSize(double size) {
+        icon.setIconSize(size);
     }
 
-    /**
-     * Resets Tab icon color to original
-     */
-    public void resetIconColor() {
-        icon.resetIconColor();
+    public Color getSelectedIconColor() {
+        return selectedIconColor;
     }
 
-    /**
-     * Gets onAction EventHandler
-     * @return EventHandler<ActionEvent> handler
-     */
-    public final EventHandler<ActionEvent> getOnAction() {
-        return button.getOnAction();
+    public void setSelectedIconColor(Color selectedIconColor) {
+        this.selectedIconColor = selectedIconColor;
+        if(isSelected())
+            icon.setIconColor(selectedIconColor);
     }
 
-    /**
-     * Sets button on action handler
-     * @param handler handler EventHandler<ActionEvent>
-     */
-    public final void setOnAction(EventHandler<ActionEvent> handler) {
-        button.setOnAction(handler);
+    public Color getSelectedTextColor() {
+        return selectedTextColor;
     }
 
-    /**
-     * Gets text of Tab Button
-     * @return text
-     */
-    public String getText() {
-        return button.getText();
+    public void setSelectedTextColor(Color selectedTextColor) {
+        this.selectedTextColor = selectedTextColor;
+        if(isSelected())
+            this.setTextFill(selectedTextColor);
     }
 
-    /**
-     * Sets text of Tab Button
-     * @param text text
-     */
-    public void setText(String text) {
-        button.setText(text);
+    public Color getUnselectedIconColor() {
+        return unselectedIconColor;
     }
 
-    /**
-     * Sets icon color from string
-     * @param color string ('white', '#ffffff', etc.)
-     */
-    public void setIconColor(String color) {
-        icon.setIconColor(color);
+    public void setUnselectedIconColor(Color unselectedIconColor) {
+        this.unselectedIconColor = unselectedIconColor;
+        if(!isSelected()) {
+            icon.setIconColor(unselectedIconColor);
+        }
     }
 
-    /**
-     * Gets current icon color
-     * @return color as String
-     */
-    public String getIconColor() {
-        return icon.getIconColor();
+    public Color getUnselectedTextColor() {
+        return unselectedTextColor;
+    }
+
+    public void setUnselectedTextColor(Color unselectedTextColor) {
+        this.unselectedTextColor = unselectedTextColor;
+        if(!isSelected())
+            this.setTextFill(unselectedTextColor);
     }
 
     /**

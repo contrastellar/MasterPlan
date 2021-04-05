@@ -30,7 +30,7 @@ public class ObservableGraphChange<T> {
     }
 
     public int addedVerticesSize() {
-        return addedVertices.size();
+        return addedVertices == null ? 0 : addedVertices.size();
     }
 
     public Iterable<? extends IVertex<T>> getRemovedVertices() {
@@ -40,7 +40,7 @@ public class ObservableGraphChange<T> {
     }
 
     public int removedVerticesSize() {
-        return removedVertices.size();
+        return removedVertices == null ? 0 : removedVertices.size();
     }
 
 }

@@ -12,10 +12,10 @@
     <!-- Tab Bar -->
     <center>
             <VBox fx:id="tabBar" alignment="TOP_RIGHT">
-                <Tab fx:id="homeTab" icon="home.svg" text="HOME" iconColor="white"/>
-                <Tab fx:id="workspaceTab" icon="folder-open.svg" text="WORKSPACE" iconColor="white"/>
-                <Tab fx:id="settingsTab" icon="cogs.svg" text="SETTINGS" iconColor="white"/>
-                <Tab icon="archive.svg" text="ARCHIVE" iconColor="white"/>
+                <Tab fx:id="homeTab" icon="home.svg" text="HOME" />
+                <Tab fx:id="workspaceTab" icon="folder-open.svg" text="WORKSPACE"/>
+                <Tab fx:id="settingsTab" icon="cogs.svg" text="SETTINGS" />
+                <Tab icon="archive.svg" text="ARCHIVE" />
             </VBox>
     </center>
 

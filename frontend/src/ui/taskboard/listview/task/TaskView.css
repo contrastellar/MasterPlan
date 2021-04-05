@@ -1,0 +1,11 @@
+Label {
+    -fx-font-size: 14;
+}
+
+HBox {
+    -fx-padding: 0 5 0 5;
+}
+
+#catContainer {
+    -fx-padding: 5 0 5 0;
+}

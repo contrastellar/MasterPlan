@@ -6,8 +6,7 @@
          xmlns="http://javafx.com/javafx/15.0.1"
          xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.725">
 
-
-    <!-- Runtime: Task View -->
+    <!-- Runtime: ListView -->
 
     <!-- Task EditBar -->
     <fx:include fx:id="editbar" source="taskedit/EditBar.fxml"/>

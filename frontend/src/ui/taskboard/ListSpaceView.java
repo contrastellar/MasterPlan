@@ -1,7 +1,8 @@
 package ui.taskboard;
 
 import components.Category;
-import javafx.collections.ObservableList;
+import components.TodoElement;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import ui.taskboard.listview.ListView;
@@ -14,29 +15,40 @@ import java.io.IOException;
  */
 public class ListSpaceView extends SplitPane {
 
+    private final ListView listView;
 
-    private final ObservableVertex<Category> rootCategory;
+    private final ObservableVertex<TodoElement> rootCategory;
 
     /**
      * Constructs Taskview component with loader
      */
-    public ListSpaceView(ObservableVertex<Category> rootCategory) {
+    public ListSpaceView(ObservableVertex<TodoElement> rootCategory) {
+
+        if(rootCategory == null)
+            throw new IllegalArgumentException("ListSpaceView() - rootCategory can not be null");
+
+        if(!(rootCategory.getElement() instanceof Category))
+            throw new IllegalArgumentException("ListSpaceView() - rootCategory.getElement() must be of type Category");
+
         this.rootCategory = rootCategory;
 
-        // Set fxml root and controller to this instance
+        loadFXML();
+
+        listView = new ListView();
+        listView.setRootVertex(rootCategory);
+
+        getItems().add(0, listView);
+    }
+
+    private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListSpaceView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
-        // Attempt to load resource
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-    }
-
-    private void initialize() {
-        getChildren().add(0, new ListView(rootCategory));
     }
 }

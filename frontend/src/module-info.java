@@ -4,9 +4,6 @@ module MasterPlan {
     requires javafx.graphics;
 
     opens ui to javafx.graphics, javafx.controls, javafx.fxml;
-    opens ui.account.login to javafx.graphics, javafx.controls, javafx.fxml;
-    opens ui.account.login.toolbar to javafx.graphics, javafx.controls, javafx.fxml;
-    opens ui.account.login.toolbar.toolbarTab to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.account.settings to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.custom.icon to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.taskboard to javafx.graphics, javafx.controls, javafx.fxml;
@@ -17,4 +14,5 @@ module MasterPlan {
     opens ui.window.toolbar.tab to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.taskboard.listview to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.taskboard.listview.category to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.taskboard.listview.task to javafx.graphics, javafx.controls, javafx.fxml;
 }

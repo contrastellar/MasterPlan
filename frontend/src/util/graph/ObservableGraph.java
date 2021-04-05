@@ -84,22 +84,26 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public Iterable<ObservableVertex<T>> getOutVertices(IVertex<T> v) {
-        return convertIterableToObsVertex(graph.getOutVertices(v));
+        ObservableVertex<T> obsV = validateVertex(v);
+        return convertIterableToObsVertex(graph.getOutVertices(obsV.vertex));
     }
 
     @Override
     public int getOutDegree(IVertex<T> v) {
-        return graph.getOutDegree(v);
+        ObservableVertex<T> obsV = validateVertex(v);
+        return graph.getOutDegree(obsV.vertex);
     }
 
     @Override
     public Iterable<ObservableVertex<T>> getInVertices(IVertex<T> v) {
-        return convertIterableToObsVertex(graph.getInVertices(v));
+        ObservableVertex<T> obsV = validateVertex(v);
+        return convertIterableToObsVertex(graph.getInVertices(obsV.vertex));
     }
 
     @Override
     public int getInDegree(IVertex<T> v) {
-        return graph.getInDegree(v);
+        ObservableVertex<T> obsV = validateVertex(v);
+        return graph.getInDegree(obsV.vertex);
     }
 
     @Override
@@ -109,12 +113,14 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public List<ObservableVertex<T>> query(IQuery<T> queryFunc, IVertex<T> v) {
-        return convertIterableToObsVertexList(graph.query(queryFunc, v));
+        ObservableVertex<T> obsV = validateVertex(v);
+        return convertIterableToObsVertexList(graph.query(queryFunc, obsV.vertex));
     }
 
     @Override
     public List<ObservableVertex<T>> queryReachable(IQuery<T> queryFunc, IVertex<T> v) {
-        return convertIterableToObsVertexList(graph.queryReachable(queryFunc, v));
+        ObservableVertex<T> obsV = validateVertex(v);
+        return convertIterableToObsVertexList(graph.queryReachable(queryFunc, obsV.vertex));
     }
 
     @Override
@@ -140,30 +146,23 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
-        IVertex<T> vertex = graph.addVertex(element, inVertex);
+        ObservableVertex<T> obsInVertex = validateVertex(inVertex);
+
+        IVertex<T> vertex = graph.addVertex(element, obsInVertex.vertex);
         ObservableVertex<T> obsVertex = new ObservableVertex<>(this, vertex);
         vertexToObservable.put(vertex, obsVertex);
 
-        ObservableGraphChange<T> change = new ObservableGraphChange<>();
-        change.addedVertices = new ArrayList<>();
-        change.addedVertices.add(vertex);
+        ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
+        changeGraph.addedVertices = new ArrayList<>();
+        changeGraph.addedVertices.add(vertex);
 
-        updateListeners(change);
+        updateListeners(changeGraph);
 
-        return obsVertex;
-    }
+        ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
+        changeVertex.addedEdges = new ArrayList<>();
+        changeVertex.addedEdges.add(obsVertex);
 
-    @Override
-    public ObservableVertex<T> addVertex(T element, Iterable<IVertex<T>> inVertices) {
-        IVertex<T> vertex = graph.addVertex(element, inVertices);
-        ObservableVertex<T> obsVertex = new ObservableVertex<>(this, vertex);
-        vertexToObservable.put(vertex, obsVertex);
-
-        ObservableGraphChange<T> change = new ObservableGraphChange<>();
-        change.addedVertices = new ArrayList<>();
-        change.addedVertices.add(vertex);
-
-        updateListeners(change);
+        obsInVertex.updateListeners(changeVertex);
 
         return obsVertex;
     }
@@ -178,7 +177,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
         List<ObservableVertex<T>> obsVertices = convertIterableToObsVertexList(graph.getInVertices(v));
 
-        graph.removeVertex(v);
+        graph.removeVertex(obsV.vertex);
 
         ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
         changeGraph.removedVertices = new ArrayList<>();
@@ -196,7 +195,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         ObservableVertex<T> obsV1 = validateVertex(v1);
         ObservableVertex<T> obsV2 = validateVertex(v2);
 
-        graph.addDirectedEdge(v1, v2);
+        graph.addDirectedEdge(obsV1.vertex, obsV2.vertex);
 
         ObservableVertexChange<T> change = new ObservableVertexChange<>();
         change.addedEdges = new ArrayList<>();
@@ -210,7 +209,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         ObservableVertex<T> obsV1 = validateVertex(v1);
         ObservableVertex<T> obsV2 = validateVertex(v2);
 
-        graph.removeDirectedEdge(v1, v2);
+        graph.removeDirectedEdge(obsV1.vertex, obsV2.vertex);
 
         ObservableVertexChange<T> change = new ObservableVertexChange<>();
         change.removedEdges = new ArrayList<>();
@@ -233,7 +232,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     public void sort(Comparator<T> c, IVertex<T> v) {
         ObservableVertex<T> obsV = validateVertex(v);
 
-        graph.sort(c, v);
+        graph.sort(c, obsV.vertex);
 
         ObservableVertexChange<T> change = new ObservableVertexChange<>();
         change.sorted = true;
@@ -245,7 +244,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     @Override
     public void sortReachable(Comparator<T> c, IVertex<T> v) {
         ObservableVertex<T> obsV = validateVertex(v);
-        graph.sortReachable(c, v);
+        graph.sortReachable(c, obsV.vertex);
 
         ObservableVertexChange<T> change = new ObservableVertexChange<>();
         change.sorted = true;

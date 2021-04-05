@@ -1,5 +1,5 @@
 /* Tab Button */
-Button {
+.toggle-button {
     -fx-max-width: INFINITY;
     -fx-pref-height: 50;
     -fx-background-color: transparent;
@@ -26,7 +26,7 @@ Button {
 }
 
 /* Tab Button hover */
-Button:hover {
+toggle-button:hover {
     -fx-border-width: 0 0 0 5;
     -fx-border-color: red;
 }

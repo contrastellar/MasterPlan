@@ -11,26 +11,24 @@
 <fx:root type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="ui.taskboard.listview.ListViewHeader"
-         prefHeight="400.0" prefWidth="600.0">
+         styleClass="bottomBorder"
+         prefHeight="40.0">
 
         <!-- Selected Category Info -->
         <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
 
            <Label fx:id="headerName"
                   text="Category Name" textFill="#eb9090">
-
                <font> <Font name="Segoe UI Bold" size="18.0" /> </font>
-
            </Label>
 
-           <Label text="6 Categories, 13 Tasks" textFill="#cecece"/>
+           <Label fx:id="categoryContents" text="category contents placeholder" textFill="#cecece"/>
 
         </VBox>
 
         <!-- Category Icon -->
         <VBox fx:id="catIcon" alignment="CENTER">
-            <Icon icon="home.svg" iconColor="#eb9090"/>
+            <Icon icon="home.svg" iconColor="#eb9090" iconSize="30"/>
         </VBox>
 
 </fx:root>

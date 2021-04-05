@@ -24,14 +24,6 @@ public interface IGraphWriteOnly<T> {
     IVertex<T> addVertex(T element, IVertex<T> inVertex);
 
     /**
-     * Adds element to the graph and returns a vertex corresponding to that element which as incoming vertices inVertices.
-     * @param element the element to add to the graph
-     * @param inVertices the vertices to add directed edges to the returned vertex
-     * @return the vertex that was added to the graph and contains element
-     */
-    IVertex<T> addVertex(T element, Iterable<IVertex<T>> inVertices);
-
-    /**
      * Removes v from the graph and all corresponding directed edges that connect to v
      * @param v the vertex to remove from the graph
      */
