@@ -32,8 +32,6 @@ public class CategoryView extends GridPane {
 
         loadFXML();
 
-        _rootCategory.startListen(this::onRootCategoryChange);
-
         listViewContainer = new ListViewContainer();
 
         GridPane.setColumnIndex(listViewContainer, 1);
@@ -41,6 +39,8 @@ public class CategoryView extends GridPane {
         GridPane.setRowIndex(listViewContainer, 2);
 
         getChildren().add(listViewContainer);
+
+        _rootCategory.startListen(this::onRootCategoryChange);
     }
 
     private void loadFXML() {

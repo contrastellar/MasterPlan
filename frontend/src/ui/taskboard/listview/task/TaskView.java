@@ -37,8 +37,6 @@ public class TaskView extends GridPane {
 
         loadFXML();
 
-        _rootTask.startListen(this::onRootTaskChange);
-
         listViewContainer = new ListViewContainer();
 
         GridPane.setColumnIndex(listViewContainer, 1);
@@ -46,6 +44,8 @@ public class TaskView extends GridPane {
         GridPane.setRowIndex(listViewContainer, 2);
 
         getChildren().add(listViewContainer);
+
+        _rootTask.startListen(this::onRootTaskChange);
     }
 
     private void loadFXML() {

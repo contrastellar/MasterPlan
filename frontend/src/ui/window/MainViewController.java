@@ -27,7 +27,6 @@ public class MainViewController {
 
     @FXML
     private void switchViewToListSpace() {
-        mainModel.obsGraph.addVertex(new Task("Test"), mainModel.obsRootVertex);
         mainContainer.setCenter(listSpaceView);
     }
 
