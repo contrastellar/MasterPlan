@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class ListSpaceView extends SplitPane {
 
-    private final ListView listView;
+    public final ListView listView;
 
     private final ObservableVertex<TodoElement> rootCategory;
 

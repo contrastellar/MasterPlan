@@ -4,7 +4,9 @@
 <fx:root type="javafx.scene.control.SplitPane"
          stylesheets="@ListSpaceView.css"
          xmlns="http://javafx.com/javafx/15.0.1"
-         xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.725">
+         xmlns:fx="http://javafx.com/fxml/1"
+         fx:id="viewContainer"
+         dividerPositions="0.725">
 
     <!-- Runtime: ListView -->
 

@@ -16,11 +16,11 @@
 
             <left>
                 <!-- Toolbar -->
-                <BorderPane styleClass="toolbarContainer" stylesheets="@toolbar/Toolbar.css" maxWidth="40" >
+                <BorderPane styleClass="toolbarContainer" stylesheets="@toolbar/Toolbar.css" prefWidth="60" >
 
                     <!-- Tab Bar -->
                     <top>
-                        <VBox alignment="CENTER" >
+                        <VBox alignment="CENTER">
 
                             <padding>
                                 <Insets bottom="10"/>
@@ -30,13 +30,13 @@
                                 <ToggleGroup fx:id="tabToggleGroup" />
                             </fx:define>
 
-                            <Tab icon="home.svg" iconSize="30" unselectedIconColor="cadetblue"
+                            <Tab text="HOME" icon="home.svg" unselectedIconColor="cadetblue"
                                  onAction="#switchViewToListSpace" toggleGroup="$tabToggleGroup" selected="true" />
-                            <Tab icon="folder-open.svg" iconSize="30" unselectedIconColor="cadetblue"
+                            <Tab text="WORKSPACE" icon="folder-open.svg" unselectedIconColor="cadetblue"
                                  onAction="#switchViewToWorkspace" toggleGroup="$tabToggleGroup" />
-                            <Tab icon="cogs.svg" iconSize="30" unselectedIconColor="cadetblue"
+                            <Tab text="SETTINGS" icon="cogs.svg" unselectedIconColor="cadetblue"
                                  onAction="#switchViewToSettings" toggleGroup="$tabToggleGroup"  />
-                            <Tab icon="archive.svg" iconSize="30" unselectedIconColor="cadetblue"
+                            <Tab text="ARCHIVE" icon="archive.svg" unselectedIconColor="cadetblue"
                                  onAction="#switchViewToArchive" toggleGroup="$tabToggleGroup" />
 
                         </VBox>

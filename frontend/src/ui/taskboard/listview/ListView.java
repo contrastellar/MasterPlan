@@ -5,6 +5,7 @@ import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import util.graph.ObservableVertex;
 
@@ -13,10 +14,13 @@ import java.io.IOException;
 public class ListView extends VBox {
 
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
-    public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
+    private final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
     private final ListViewHeader listViewHeader;
     private final ListViewContainer listViewContainer;
+
+    public Button addTaskBtn;
+    public Button addCatBtn;
 
     public ListView() {
 
@@ -24,6 +28,8 @@ public class ListView extends VBox {
 
         listViewHeader = new ListViewHeader();
         listViewContainer = new ListViewContainer();
+
+        listViewContainer.setId("listContainer");
 
         getChildren().addAll(listViewHeader, listViewContainer);
 

@@ -2,16 +2,14 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.geometry.Insets?>
 
 <?import ui.custom.icon.Icon?>
 
-<?import ui.taskboard.listview.ListViewContainer?>
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@TaskView.css"
-         styleClass="bottomBorder"
+         styleClass="taskContainer, bottomBorder"
          xmlns="http://javafx.com/javafx/15.0.1"
          xmlns:fx="http://javafx.com/fxml/1">
 
@@ -27,15 +25,19 @@
     </rowConstraints>
 
     <!-- Drop down icon (row 0, col 0) -->
-    <HBox alignment="CENTER" ><Icon icon="angle-down.svg" iconColor="#cecece"  rotate="-90" iconSize="10"/></HBox>
+    <HBox alignment="CENTER" >
+        <Icon icon="angle-down.svg" iconColor="#cccccc"  rotate="-90" iconSize="7"/>
+    </HBox>
 
     <!-- Category title (row 0, col 1) -->
-    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1"><Label fx:id="taskName" text="Task Name Placeholder"/></HBox>
+    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+        <Label fx:id="taskName" text="Task Name Placeholder"/>
+    </HBox>
 
     <!-- Category buttons (row 0, col 2) -->
     <HBox alignment="CENTER_RIGHT" GridPane.columnIndex="2">
-        <Icon icon="bookmark.svg" iconColor="#cecece" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
-        <Icon icon="archive.svg" iconColor="#cecece" iconSize="10"/>
+        <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
+        <Icon icon="archive.svg" iconColor="#cccccc" iconSize="10"/>
     </HBox>
 
     <!-- Status of category (row 1, col 1) -->

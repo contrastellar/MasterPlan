@@ -1,6 +1,8 @@
 package ui.window;
 
+import components.Category;
 import components.task.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -23,6 +25,12 @@ public class MainViewController {
     @FXML
     public void initialize() {
         switchViewToListSpace();
+        listSpaceView.listView.addTaskBtn.setOnAction((ActionEvent e) -> {
+            mainModel.addTask(new Task("Change oil on Subaru Forester XS 2.5"), mainModel.obsRootVertex);
+        });
+        listSpaceView.listView.addCatBtn.setOnAction((ActionEvent e) -> {
+            mainModel.addCategory(new Category("Writing"), mainModel.obsRootVertex);
+        });
     }
 
     @FXML

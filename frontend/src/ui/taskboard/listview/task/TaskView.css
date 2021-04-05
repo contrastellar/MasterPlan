@@ -6,6 +6,6 @@ HBox {
     -fx-padding: 0 5 0 5;
 }
 
-#catContainer {
+.taskContainer {
     -fx-padding: 5 0 5 0;
 }

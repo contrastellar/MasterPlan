@@ -24,14 +24,13 @@ public class Icon extends Region {
     public final double ICON_SIZE_DEFAULT = 20;
 
     public Icon() {
+        this.getStylesheets().add("./ui/custom/icon/Icon.css");
         setShape(icon);
         setIconColor(Color.WHITE);
         setIconSize(ICON_SIZE_DEFAULT);
     }
 
     public void setIconSize(double size) {
-        setMinWidth(size);
-        setMinHeight(size);
         setPrefWidth(size);
         setPrefHeight(size);
         setMaxWidth(size);

@@ -25,8 +25,21 @@
     -fx-border-width: 0;
 }
 
+.toggle-button:selected:hover {
+    -fx-border-width: 0;
+}
+
+.toggle-button:selected {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+}
+
+.toggle-button:selected > Icon {
+    -fx-background-color: black;
+}
+
 /* Tab Button hover */
-toggle-button:hover {
+.toggle-button:hover {
     -fx-border-width: 0 0 0 5;
     -fx-border-color: red;
 }

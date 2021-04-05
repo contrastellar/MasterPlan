@@ -33,6 +33,7 @@ public class Tab extends RadioButton {
 
         icon.setIconColor(unselectedIconColor);
         this.setTextFill(unselectedTextColor);
+        this.getStylesheets().add("./ui/window/toolbar/tab/Tab.css");
 
         getStyleClass().remove("radio-button");
         getStyleClass().add("toggle-button");
