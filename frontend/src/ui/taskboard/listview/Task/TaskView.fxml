@@ -9,7 +9,6 @@
 <?import ui.custom.icon.Icon?>
 
 <fx:root type="javafx.scene.layout.GridPane"
-         fx:id="catContainer"
          stylesheets="@Category.css"
          styleClass="bottomBorder"
          xmlns="http://javafx.com/javafx/15.0.1"
@@ -44,6 +43,6 @@
     </HBox>
 
     <!-- Sub list (row 2, col 1, colspan 2) -->
-    <VBox fx:id="subContainer" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+    <ListViewContainer fx:id="subContainer" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
 
 </fx:root>

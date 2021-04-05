@@ -2,14 +2,12 @@
 
 <!-- Split Pane containing the workspace view and edit bar !-->
 <fx:root type="javafx.scene.control.SplitPane"
-         fx:id="viewContainer"
-         stylesheets="@TaskView.css"
+         stylesheets="@ListSpaceView.css"
          xmlns="http://javafx.com/javafx/15.0.1"
          xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.725">
 
-    <!-- Task View -->
-    <fx:include fx:id="taskview" source="listview/ListView.fxml"/>
 
+    <!-- Runtime: Task View -->
 
     <!-- Task EditBar -->
     <fx:include fx:id="editbar" source="taskedit/EditBar.fxml"/>

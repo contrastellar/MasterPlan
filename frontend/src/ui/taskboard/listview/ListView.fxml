@@ -5,29 +5,15 @@
 
 <?import ui.custom.icon.Icon?>
 
-<?import ui.taskboard.listview.category.Category?>
-<VBox stylesheets="@ListView.css"
-      fx:id="listContainer"
-      fx:controller="ui.taskboard.listview.ListViewController"
+<?import ui.taskboard.listview.category.CategoryView?>
+
+<?import ui.taskboard.listview.ListViewContainer?>
+<?import ui.taskboard.listview.ListViewHeader?>
+<fx:root type="javafx.scene.layout.VBox" stylesheets="@ListView.css"
       xmlns="http://javafx.com/javafx/15.0.1"
       xmlns:fx="http://javafx.com/fxml/1">
-
-      <!-- Top Bar -->
-      <HBox fx:id="topBar" styleClass="bottomBorder" prefHeight="70.0">
-         <!-- Selected Category Info -->
-         <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
-            <Label text="Personal TODO's" textFill="#eb9090"><font><Font name="Segoe UI Bold" size="18.0" /></font></Label>
-            <Label text="6 Categories, 13 Tasks" textFill="#cecece"/>
-         </VBox>
-
-         <!-- Category Icon -->
-         <VBox fx:id="catIcon" alignment="CENTER"><Icon icon="home.svg" iconColor="#eb9090"/></VBox>
-      </HBox>
-
-      <VBox fx:id="taskList">
-         <Category/>
-         <Category/>
-      </VBox>
+      <!-- During runtime listview header  -->
+      <ListViewContainer fx:id="" />
 
 
 <!--            <VBox GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">-->
@@ -696,4 +682,4 @@
 <!--                  <Insets />-->
 <!--               </GridPane.margin>-->
 <!--            </VBox>-->
-</VBox>
+</fx:root>

@@ -1,11 +1,16 @@
 package ui.window;
 
+import components.Category;
+import components.TodoElement;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import ui.taskboard.TaskView;
+import ui.taskboard.ListSpaceView;
 import ui.window.toolbar.ToolbarController;
 import ui.window.toolbar.tab.Tab;
+import util.graph.Graph;
+import util.graph.ObservableGraph;
+import util.graph.ObservableVertex;
 
 /**
  * MainView Controller
@@ -16,6 +21,10 @@ public class MainViewController {
     @FXML private ToolbarController toolbarController;      // Toolbar controller instance
 
     private String currentView = "";                        // Current center view as String
+
+    private final ObservableGraph<TodoElement> obsGraph = new ObservableGraph<>(new Graph<>());
+    private final ObservableVertex<Category> rootVertex = obsGraph.addVertex(new Category("Main"));
+
 
     /**
      * Initializes Tab handlers to manage view
@@ -47,7 +56,7 @@ public class MainViewController {
         // Switch center view based on active tab name
         switch (activeTab) {
             case "HOME":
-                mainContainer.setCenter(new TaskView());
+                mainContainer.setCenter(new ListSpaceView(rootVertex));
                 System.out.println("HOME");
                 break;
             case "SETTINGS":

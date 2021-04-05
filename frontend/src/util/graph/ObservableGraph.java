@@ -7,10 +7,10 @@ import components.observable.IObservable;
 import java.util.*;
 
 public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGraphChange<T>> {
-
     protected final IGraph<T> graph;
     private final Set<IListener<ObservableGraphChange<T>>> listeners = new HashSet<>();
     private final Map<IVertex<T>, ObservableVertex<T>> vertexToObservable = new HashMap<>();
+
 
     public ObservableGraph(IGraph<T> graph) {
         this.graph = graph;
