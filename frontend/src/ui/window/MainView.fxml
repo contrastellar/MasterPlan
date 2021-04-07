@@ -16,27 +16,23 @@
 
             <left>
                 <!-- Toolbar -->
-                <BorderPane styleClass="toolbarContainer" stylesheets="@toolbar/Toolbar.css" prefWidth="60" >
+                <BorderPane styleClass="toolbarContainer" stylesheets="@toolbar/Toolbar.css" >
 
                     <!-- Tab Bar -->
                     <top>
-                        <VBox alignment="CENTER">
-
-                            <padding>
-                                <Insets bottom="10"/>
-                            </padding>
+                        <VBox alignment="CENTER" >
 
                             <fx:define>
                                 <ToggleGroup fx:id="tabToggleGroup" />
                             </fx:define>
 
-                            <Tab text="HOME" icon="home.svg" unselectedIconColor="cadetblue"
+                            <Tab text="HOME" icon="home.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="25"
                                  onAction="#switchViewToListSpace" toggleGroup="$tabToggleGroup" selected="true" />
-                            <Tab text="WORKSPACE" icon="folder-open.svg" unselectedIconColor="cadetblue"
+                            <Tab text="WORKSPACE" icon="folder-open.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="25"
                                  onAction="#switchViewToWorkspace" toggleGroup="$tabToggleGroup" />
-                            <Tab text="SETTINGS" icon="cogs.svg" unselectedIconColor="cadetblue"
+                            <Tab text="SETTINGS" icon="cogs.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="29"
                                  onAction="#switchViewToSettings" toggleGroup="$tabToggleGroup"  />
-                            <Tab text="ARCHIVE" icon="archive.svg" unselectedIconColor="cadetblue"
+                            <Tab text="ARCHIVE" icon="archive.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="25"
                                  onAction="#switchViewToArchive" toggleGroup="$tabToggleGroup" />
 
                         </VBox>

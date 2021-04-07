@@ -22,19 +22,40 @@ public class Icon extends Region {
     private final SVGPath icon = new SVGPath();
 
     public final double ICON_SIZE_DEFAULT = 20;
+    public final Color ICON_COLOR_DEFAULT = Color.WHITE;
 
     public Icon() {
         this.getStylesheets().add(getClass().getResource("Icon.css").toExternalForm());
+
         setShape(icon);
-        setIconColor(Color.WHITE);
+
+        setIconColor(ICON_COLOR_DEFAULT);
         setIconSize(ICON_SIZE_DEFAULT);
     }
 
-    public void setIconSize(double size) {
+    public void setWidthSize(double size) {
+        setMinWidth(size);
         setPrefWidth(size);
-        setPrefHeight(size);
         setMaxWidth(size);
+    }
+
+    public double getWidthSize() {
+        return super.getWidth();
+    }
+
+    public void setHeightSize(double size) {
+        setMinHeight(size);
+        setPrefHeight(size);
         setMaxHeight(size);
+    }
+
+    public double getHeightSize() {
+        return super.getHeight();
+    }
+
+    public void setIconSize(double size) {
+        setWidthSize(size);
+        setHeightSize(size);
     }
 
     public double getIconSize() {

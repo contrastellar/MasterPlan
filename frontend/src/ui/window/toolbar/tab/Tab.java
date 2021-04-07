@@ -31,8 +31,6 @@ public class Tab extends RadioButton {
         this.icon = new Icon();
         setGraphic(icon);
 
-        icon.setIconColor(unselectedIconColor);
-        this.setTextFill(unselectedTextColor);
         this.getStylesheets().add(getClass().getResource("Tab.css").toExternalForm());
 
         getStyleClass().remove("radio-button");
@@ -46,12 +44,10 @@ public class Tab extends RadioButton {
 
     private void selectedChanged(ObservableValue<? extends Boolean> observableValue, boolean prevVal, boolean newVal) {
         if(newVal) {
-            // setBackground(new Background(new BackgroundFill(unselectedIconColor, CornerRadii.EMPTY, Insets.EMPTY)));
             icon.setIconColor(selectedIconColor);
             this.setTextFill(selectedTextColor);
         }
         else {
-            // setBackground(new Background(new BackgroundFill(selectedTextColor, CornerRadii.EMPTY, Insets.EMPTY)));
             icon.setIconColor(unselectedIconColor);
             this.setTextFill(unselectedTextColor);
         }
@@ -63,6 +59,22 @@ public class Tab extends RadioButton {
 
     public void setIconSize(double size) {
         icon.setIconSize(size);
+    }
+
+    public void setIconHeight(double iconHeight) {
+        icon.setHeightSize(iconHeight);
+    }
+
+    public double getIconHeight() {
+        return icon.getHeightSize();
+    }
+
+    public void setIconWidth(double iconWidth) {
+        icon.setWidthSize(iconWidth);
+    }
+
+    public double getIconWidth() {
+        return icon.getWidthSize();
     }
 
     public Color getSelectedIconColor() {
