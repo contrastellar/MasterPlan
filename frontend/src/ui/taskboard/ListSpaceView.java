@@ -5,6 +5,7 @@ import components.TodoElement;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
+import models.MainModel;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 
@@ -17,27 +18,28 @@ public class ListSpaceView extends SplitPane {
 
     public final ListView listView;
 
-    private final ObservableVertex<TodoElement> rootCategory;
+    private final MainModel mainModel;
 
     /**
      * Constructs Taskview component with loader
      */
-    public ListSpaceView(ObservableVertex<TodoElement> rootCategory) {
-
-        if(rootCategory == null)
-            throw new IllegalArgumentException("ListSpaceView() - rootCategory can not be null");
-
-        if(!(rootCategory.getElement() instanceof Category))
-            throw new IllegalArgumentException("ListSpaceView() - rootCategory.getElement() must be of type Category");
-
-        this.rootCategory = rootCategory;
+    public ListSpaceView(MainModel mainModel) {
+        this.mainModel = mainModel;
+        mainModel.selectedVertex.startListen(this::onSelectedRootChange);
 
         loadFXML();
 
-        listView = new ListView();
-        listView.setRootVertex(rootCategory);
+        listView = new ListView(mainModel);
 
         getItems().add(0, listView);
+    }
+
+    private void onSelectedRootChange(ObservableVertex<TodoElement> selectedRoot) {
+        if(selectedRoot == null)
+            throw new IllegalArgumentException("ListSpaceView() - rootCategory can not be null");
+
+        if(!(selectedRoot.getElement() instanceof Category))
+            throw new IllegalArgumentException("ListSpaceView() - rootCategory.getElement() must be of type Category");
     }
 
     private void loadFXML() {

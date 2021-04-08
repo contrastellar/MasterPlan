@@ -4,17 +4,16 @@ import components.Category;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import models.MainModel;
 import util.graph.ObservableVertex;
 
 import java.io.IOException;
 
 public class ListView extends VBox {
-
-    private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
-    private final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
     private final ListViewHeader listViewHeader;
     private final ListViewContainer listViewContainer;
@@ -22,7 +21,10 @@ public class ListView extends VBox {
     public Button addTaskBtn;
     public Button addCatBtn;
 
-    public ListView() {
+    private final MainModel mainModel;
+
+    public ListView(MainModel mainModel) {
+        this.mainModel = mainModel;
 
         loadFXML();
 
@@ -32,8 +34,12 @@ public class ListView extends VBox {
         listViewContainer.setId("listContainer");
 
         getChildren().addAll(listViewHeader, listViewContainer);
+        mainModel.selectedVertex.startListen(this::onRootVertexChange);
 
-        _rootVertex.startListen(this::onRootVertexChange);
+    }
+
+    @FXML
+    private void initialize() {
 
     }
 
@@ -50,19 +56,10 @@ public class ListView extends VBox {
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
-        listViewHeader.setRootCategory(rootVertex);
-        listViewContainer.setRootVertex(rootVertex);
-    }
-
-    public void setRootVertex(ObservableVertex<TodoElement> rootVertex) {
         if(!(rootVertex.getElement() instanceof Category))
             throw new IllegalArgumentException("ListView() - rootVertex is not of type Category");
-
-        _rootVertex.setValue(rootVertex);
-    }
-
-    public ObservableVertex<TodoElement> getRootVertex() {
-        return _rootVertex.getValue();
+        listViewHeader.setRootCategory(rootVertex);
+        listViewContainer.setRootVertex(rootVertex);
     }
 
 }

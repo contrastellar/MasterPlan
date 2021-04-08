@@ -17,7 +17,7 @@ public class MainViewController {
 
     private final MainModel mainModel = new MainModel();
 
-    ListSpaceView listSpaceView = new ListSpaceView(mainModel.obsRootVertex);
+    ListSpaceView listSpaceView = new ListSpaceView(mainModel);
 
     /**
      * Initializes Tab handlers to manage view
@@ -25,10 +25,10 @@ public class MainViewController {
     @FXML
     public void initialize() {
         switchViewToListSpace();
-        listSpaceView.listView.addTaskBtn.setOnAction((ActionEvent e) ->
-                mainModel.addTask(new Task("Change oil on Subaru Forester XS 2.5"), mainModel.obsRootVertex));
-        listSpaceView.listView.addCatBtn.setOnAction((ActionEvent e) ->
-                mainModel.addCategory(new Category("Writing"), mainModel.obsRootVertex));
+//        listSpaceView.listView.addTaskBtn.setOnAction((ActionEvent e) ->
+//                mainModel.addTask(new Task("Change oil on Subaru Forester XS 2.5"), mainModel.obsRootVertex));
+//        listSpaceView.listView.addCatBtn.setOnAction((ActionEvent e) ->
+//                mainModel.addCategory(new Category("Writing"), mainModel.obsRootVertex));
     }
 
     @FXML

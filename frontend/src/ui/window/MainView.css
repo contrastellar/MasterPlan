@@ -3,3 +3,7 @@
     -fx-font-family: "Segoe UI";
     -fx-background-color: white;
 }
+
+.topBottomPadded {
+    -fx-padding: 10 0 10 0;
+}

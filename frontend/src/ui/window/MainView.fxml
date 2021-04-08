@@ -20,7 +20,7 @@
 
                     <!-- Tab Bar -->
                     <top>
-                        <VBox alignment="CENTER" >
+                        <VBox styleClass="topBottomPadded" alignment="CENTER" >
 
                             <fx:define>
                                 <ToggleGroup fx:id="tabToggleGroup" />
