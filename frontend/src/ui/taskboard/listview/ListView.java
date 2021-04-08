@@ -2,13 +2,13 @@ package ui.taskboard.listview;
 
 import components.Category;
 import components.TodoElement;
-import components.observable.IReadOnlyObservable;
-import components.observable.Observable;
+import components.task.Task;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import models.MainModel;
+
 import util.graph.ObservableVertex;
 
 import java.io.IOException;
@@ -18,9 +18,6 @@ public class ListView extends VBox {
     private final ListViewHeader listViewHeader;
     private final ListViewContainer listViewContainer;
 
-    public Button addTaskBtn;
-    public Button addCatBtn;
-
     private final MainModel mainModel;
 
     public ListView(MainModel mainModel) {
@@ -28,6 +25,7 @@ public class ListView extends VBox {
 
         loadFXML();
 
+        // TODO put these in fxml
         listViewHeader = new ListViewHeader();
         listViewContainer = new ListViewContainer();
 
@@ -53,6 +51,18 @@ public class ListView extends VBox {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    private void addTask() {
+        Task task = new Task("Task");
+        mainModel.obsGraph.addVertex(task, mainModel.selectedVertex.getValue());
+    }
+
+    @FXML
+    private void addCategory() {
+        Category category = new Category("Category");
+        mainModel.obsGraph.addVertex(category, mainModel.selectedVertex.getValue());
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {

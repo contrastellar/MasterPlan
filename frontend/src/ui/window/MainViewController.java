@@ -25,10 +25,6 @@ public class MainViewController {
     @FXML
     public void initialize() {
         switchViewToListSpace();
-//        listSpaceView.listView.addTaskBtn.setOnAction((ActionEvent e) ->
-//                mainModel.addTask(new Task("Change oil on Subaru Forester XS 2.5"), mainModel.obsRootVertex));
-//        listSpaceView.listView.addCatBtn.setOnAction((ActionEvent e) ->
-//                mainModel.addCategory(new Category("Writing"), mainModel.obsRootVertex));
     }
 
     @FXML

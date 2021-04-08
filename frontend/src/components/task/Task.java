@@ -2,13 +2,23 @@ package components.task;
 
 import components.Completable;
 import components.TodoElement;
+import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 
 
 public final class Task extends TodoElement implements Completable {
 
-    public final Observable<Boolean> isCompleted = new Observable<>(false);
-    public final Observable<IDateGenerator> dueDate = new Observable<>();
+    private final Observable<Boolean> _isCompleted = new Observable<>(false);
+    public final IReadOnlyObservable<Boolean> isCompleted = _isCompleted;
+
+    private final Observable<IDateGenerator> _dueDate = new Observable<>(null); // TODO Change to IDateGenerator
+    public final IReadOnlyObservable<IDateGenerator> dueDate = _dueDate;
+
+    private final Observable<String> _notes = new Observable<>("");
+    public final IReadOnlyObservable<String> notes = _notes;
+
+    private final Observable<String> _author = new Observable("");
+    private final IReadOnlyObservable<String> author = new Observable("");
 
     public Task() {
         super();
@@ -19,12 +29,28 @@ public final class Task extends TodoElement implements Completable {
 
     @Override
     public boolean isCompleted() {
-        return isCompleted.getValue();
+        return _isCompleted.getValue();
     }
 
     @Override
     public void setCompleted(boolean isComplete) {
-        this.isCompleted.setValue(isComplete);
+        this._isCompleted.setValue(isComplete);
+    }
+
+    public void setDueDate(IDateGenerator dueDate) {
+        this._dueDate.setValue(dueDate);
+    }
+
+    public IDateGenerator getDueDate() {
+        return _dueDate.getValue();
+    }
+
+    public void setNotes(String notes) {
+        this._notes.setValue(notes);
+    }
+
+    public String getNotes() {
+        return _notes.getValue();
     }
 
 }

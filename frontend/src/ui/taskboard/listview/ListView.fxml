@@ -20,11 +20,12 @@
             <padding>
                   <Insets topRightBottomLeft="5"/>
             </padding>
-            <Button fx:id="addTaskBtn" text="Add Task">
+            <Button fx:id="addTaskBtn" text="Add Task" onAction="#addTask">
                   <HBox.margin><Insets right="10"/></HBox.margin>
             </Button>
-            <Button fx:id="addCatBtn" text="Add Category"/>
+            <Button fx:id="addCatBtn" text="Add Category" onAction="#addCategory"/>
       </HBox>
+
       <!-- Runtime: listview header  -->
 
       <!-- Runtime: category view  -->
@@ -696,4 +697,3 @@
 <!--                  <Insets />-->
 <!--               </GridPane.margin>-->
 <!--            </VBox>-->
-
