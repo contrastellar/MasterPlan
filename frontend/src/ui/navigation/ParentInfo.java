@@ -2,7 +2,7 @@ package ui.navigation;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import ui.taskboard.ListSpaceView;
+import ui.taskboard.WorkSpaceView;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -11,7 +11,7 @@ public enum ParentInfo {
 
     MAIN_SCENE("../window/MainView.fxml"),
     SETTINGS("../account/settings/Settings.fxml"),
-    TASK_VIEW(ListSpaceView.class);
+    TASK_VIEW(WorkSpaceView.class);
 
     private final ParentProvider parentProvider;
 

@@ -1,13 +1,10 @@
 package ui.window;
 
-import components.Category;
-import components.task.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import models.MainModel;
-import ui.taskboard.ListSpaceView;
+import ui.taskboard.WorkSpaceView;
 
 /**
  * MainView Controller
@@ -17,7 +14,7 @@ public class MainViewController {
 
     private final MainModel mainModel = new MainModel();
 
-    ListSpaceView listSpaceView = new ListSpaceView(mainModel);
+    private WorkSpaceView workSpaceView = new WorkSpaceView(mainModel);
 
     /**
      * Initializes Tab handlers to manage view
@@ -29,7 +26,7 @@ public class MainViewController {
 
     @FXML
     private void switchViewToListSpace() {
-        mainContainer.setCenter(listSpaceView);
+        mainContainer.setCenter(workSpaceView);
     }
 
     @FXML

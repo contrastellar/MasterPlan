@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import ui.taskboard.listview.ListViewContainer;
+import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -22,10 +22,10 @@ public class TaskView extends GridPane {
 
     @FXML
     private Label tasksRemainingLabel;
-    private static final String tasksRemainingPattern = "%d remaining";
+    private static final String tasksRemainingFormat = "%d remaining";
 
     @FXML
-    private final ListViewContainer listViewContainer;
+    private final ListView listView;
 
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
@@ -37,13 +37,13 @@ public class TaskView extends GridPane {
 
         loadFXML();
 
-        listViewContainer = new ListViewContainer();
+        listView = new ListView();
 
-        GridPane.setColumnIndex(listViewContainer, 1);
-        GridPane.setColumnSpan(listViewContainer, 2);
-        GridPane.setRowIndex(listViewContainer, 2);
+        GridPane.setColumnIndex(listView, 1);
+        GridPane.setColumnSpan(listView, 2);
+        GridPane.setRowIndex(listView, 2);
 
-        getChildren().add(listViewContainer);
+        getChildren().add(listView);
 
         _rootTask.startListen(this::onRootTaskChange);
     }
@@ -68,7 +68,8 @@ public class TaskView extends GridPane {
             return;
         }
 
-        listViewContainer.setRootVertex(rootTask);
+        listView.setRootVertex(rootTask);
+
         rootTask.startListen(this::onTaskRemainingTasksChange);
         rootTask.getElement().name.startListen(this::onTaskNameChange);
     }
@@ -79,10 +80,12 @@ public class TaskView extends GridPane {
     }
 
     private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
+
         List<ObservableVertex<TodoElement>> remainingVertices =
                 _rootTask.getValue().getGraph().query((element) -> element instanceof Task, _rootTask.getValue());
+        tasksRemainingLabel.setText(String.format(tasksRemainingFormat, remainingVertices.size()));
 
-        tasksRemainingLabel.setText(String.format(tasksRemainingPattern, remainingVertices.size()));
+
     }
 
     public void setRootTask(ObservableVertex<TodoElement> rootTask) {

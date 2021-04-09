@@ -83,7 +83,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public Iterable<ObservableVertex<T>> getOutVertices(IVertex<T> v) {
+    public Iterable<ObservableVertex<T>> getOutVertices(IVertex<T> v)  {
         ObservableVertex<T> obsV = validateVertex(v);
         return convertIterableToObsVertex(graph.getOutVertices(obsV.vertex));
     }
@@ -95,7 +95,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public Iterable<ObservableVertex<T>> getInVertices(IVertex<T> v) {
+    public Iterable<ObservableVertex<T>> getInVertices(IVertex<T> v)  {
         ObservableVertex<T> obsV = validateVertex(v);
         return convertIterableToObsVertex(graph.getInVertices(obsV.vertex));
     }
@@ -130,6 +130,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public ObservableVertex<T> addVertex(T element) {
+
         IVertex<T> vertex = graph.addVertex(element);
 
         ObservableVertex<T> obsVertex = new ObservableVertex<>(this, vertex);
@@ -145,7 +146,8 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
+    public synchronized ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
+
         ObservableVertex<T> obsInVertex = validateVertex(inVertex);
 
         IVertex<T> vertex = graph.addVertex(element, obsInVertex.vertex);
@@ -169,6 +171,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public void removeVertex(IVertex<T> v) {
+
         ObservableVertex<T> obsV = validateVertex(v);
 
         ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
@@ -192,6 +195,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public void addDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
+
         ObservableVertex<T> obsV1 = validateVertex(v1);
         ObservableVertex<T> obsV2 = validateVertex(v2);
 

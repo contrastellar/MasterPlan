@@ -4,10 +4,9 @@ import components.Category;
 import components.TodoElement;
 import components.observable.Observable;
 import components.task.Task;
-import util.graph.Graph;
-import util.graph.IVertex;
-import util.graph.ObservableGraph;
-import util.graph.ObservableVertex;
+import util.graph.*;
+
+import java.util.ArrayList;
 
 public class MainModel {
 
@@ -32,8 +31,8 @@ public class MainModel {
         obsGraph.addVertex(t, root);
     }
 
-    public void importGoogleCalendar() {
-        throw new UnsupportedOperationException("not implemented yet");
+    public void importGoogleCalendar(IVertex<TodoElement> rootVertex) {
+
     }
 
     public void exportGoogleCalendar() {

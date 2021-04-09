@@ -2,11 +2,10 @@ package ui.taskboard;
 
 import components.Category;
 import components.TodoElement;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SplitPane;
 import models.MainModel;
-import ui.taskboard.listview.ListView;
+import ui.taskboard.listview.ListSpaceView;
 import util.graph.ObservableVertex;
 
 import java.io.IOException;
@@ -14,24 +13,24 @@ import java.io.IOException;
 /**
  * Taskview custom component
  */
-public class ListSpaceView extends SplitPane {
+public class WorkSpaceView extends SplitPane {
 
-    public final ListView listView;
+    public final ListSpaceView listSpaceView;
 
     private final MainModel mainModel;
 
     /**
      * Constructs Taskview component with loader
      */
-    public ListSpaceView(MainModel mainModel) {
+    public WorkSpaceView(MainModel mainModel) {
         this.mainModel = mainModel;
         mainModel.selectedVertex.startListen(this::onSelectedRootChange);
 
         loadFXML();
 
-        listView = new ListView(mainModel);
+        listSpaceView = new ListSpaceView(mainModel);
 
-        getItems().add(0, listView);
+        getItems().add(0, listSpaceView);
     }
 
     private void onSelectedRootChange(ObservableVertex<TodoElement> selectedRoot) {
@@ -43,7 +42,7 @@ public class ListSpaceView extends SplitPane {
     }
 
     private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListSpaceView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("WorkSpaceView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

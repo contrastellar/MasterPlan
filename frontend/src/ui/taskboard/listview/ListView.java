@@ -2,74 +2,99 @@ package ui.taskboard.listview;
 
 import components.Category;
 import components.TodoElement;
+import components.observable.IReadOnlyObservable;
+import components.observable.Observable;
 import components.task.Task;
-
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.layout.VBox;
-import models.MainModel;
-
+import ui.taskboard.listview.task.TaskView;
+import ui.taskboard.listview.category.CategoryView;
+import util.graph.IVertex;
 import util.graph.ObservableVertex;
+import util.graph.ObservableVertexChange;
 
-import java.io.IOException;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListView extends VBox {
 
-    private final ListViewHeader listViewHeader;
-    private final ListViewContainer listViewContainer;
+    private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
+    public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
-    private final MainModel mainModel;
+    private final Map<IVertex<TodoElement>, Node> vertexToNode = new HashMap<>();
 
-    public ListView(MainModel mainModel) {
-        this.mainModel = mainModel;
-
-        loadFXML();
-
-        // TODO put these in fxml
-        listViewHeader = new ListViewHeader();
-        listViewContainer = new ListViewContainer();
-
-        listViewContainer.setId("listContainer");
-
-        getChildren().addAll(listViewHeader, listViewContainer);
-        mainModel.selectedVertex.startListen(this::onRootVertexChange);
-
+    public ListView() {
+        _rootVertex.startListen(this::onRootVertexChange);
     }
 
-    @FXML
-    private void initialize() {
-
+    public void setRootVertex(ObservableVertex<TodoElement> rootVertex) {
+        _rootVertex.setValue(rootVertex);
     }
 
-    private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    private void addTask() {
-        Task task = new Task("Task");
-        mainModel.obsGraph.addVertex(task, mainModel.selectedVertex.getValue());
-    }
-
-    @FXML
-    private void addCategory() {
-        Category category = new Category("Category");
-        mainModel.obsGraph.addVertex(category, mainModel.selectedVertex.getValue());
+    public ObservableVertex<TodoElement> getRootVertex() {
+        return _rootVertex.getValue();
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
-        if(!(rootVertex.getElement() instanceof Category))
-            throw new IllegalArgumentException("ListView() - rootVertex is not of type Category");
-        listViewHeader.setRootCategory(rootVertex);
-        listViewContainer.setRootVertex(rootVertex);
+        vertexToNode.clear();
+        getChildren().clear();
+
+        if(rootVertex == null)
+            return;
+
+        // memory leak - doesn't call stopListen on previous rootVertex
+
+        rootVertex.startListen(this::onRootVertexOutEdgesChange);
     }
 
+    private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
+
+        for(var vertex : change.getAddedEdges()) {
+            addVertex(vertex);
+        }
+
+        for(var vertex : change.getRemovedEdges()) {
+            removeVertex(vertex);
+        }
+
+        if(change.getSorted()) {
+            sort(change.getSortingComparator());
+        }
+    }
+
+    private void addVertex(ObservableVertex<TodoElement> vertex) {
+
+        Node node;
+
+        if(vertex.getElement() instanceof Category) {
+            CategoryView cView = new CategoryView();
+            cView.setRootCategory(vertex);
+            node = cView;
+        }
+        else if(vertex.getElement() instanceof Task) {
+            TaskView tView = new TaskView();
+            tView.setRootTask(vertex);
+            node = tView;
+        } else
+            throw new UnsupportedOperationException("not implemented");
+
+        getChildren().add(node);
+        vertexToNode.put(vertex, node);
+    }
+
+    private void removeVertex(ObservableVertex<TodoElement> vertex) {
+        Node node = vertexToNode.get(vertex);
+
+        if(node == null)
+            throw new IllegalArgumentException("ListViewContainer.removeVertex() - vertex does not exist in this ListViewContainer");
+
+        getChildren().remove(node);
+        vertexToNode.remove(vertex);
+    }
+
+    private void sort(Comparator<TodoElement> c) {
+        // TODO: Implement
+        throw new UnsupportedOperationException("not yet implemented");
+    }
 }

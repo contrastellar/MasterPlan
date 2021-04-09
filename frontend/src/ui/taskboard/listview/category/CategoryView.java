@@ -9,13 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-import ui.taskboard.listview.ListViewContainer;
+import ui.taskboard.listview.ListView;
 import util.graph.*;
 import java.io.IOException;
 
 public class CategoryView extends GridPane {
 
-    private final ListViewContainer listViewContainer;
+    private final ListView listView;
 
     @FXML
     private Label categoryName;
@@ -32,13 +32,13 @@ public class CategoryView extends GridPane {
 
         loadFXML();
 
-        listViewContainer = new ListViewContainer();
+        listView = new ListView();
 
-        GridPane.setColumnIndex(listViewContainer, 1);
-        GridPane.setColumnSpan(listViewContainer, 2);
-        GridPane.setRowIndex(listViewContainer, 2);
+        GridPane.setColumnIndex(listView, 1);
+        GridPane.setColumnSpan(listView, 2);
+        GridPane.setRowIndex(listView, 2);
 
-        getChildren().add(listViewContainer);
+        getChildren().add(listView);
 
         _rootCategory.startListen(this::onRootCategoryChange);
     }
@@ -62,7 +62,8 @@ public class CategoryView extends GridPane {
             return;
         }
 
-        listViewContainer.setRootVertex(rootCategory);
+        listView.setRootVertex(rootCategory);
+
         rootCategory.startListen(this::onTaskRemainingTasksChange);
         rootCategory.getElement().name.startListen(this::onCategoryNameChange);
     }
@@ -71,8 +72,9 @@ public class CategoryView extends GridPane {
 
         int remainingTasks = 0;
 
-        for(var vertex : _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue()))
-            if(vertex.getElement() instanceof Task)
+
+        for (var vertex : _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue()))
+            if (vertex.getElement() instanceof Task)
                 remainingTasks++;
 
         tasksRemainingLabel.setText(String.format(tasksRemainingPattern, remainingTasks));

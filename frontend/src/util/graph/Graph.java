@@ -1,5 +1,10 @@
 package util.graph;
 
+import util.collections.IReadOnlyCollection;
+import util.collections.IReadOnlyList;
+import util.collections.ReadOnlyCollection;
+import util.collections.ReadOnlyList;
+
 import java.util.*;
 
 public class Graph<T> implements IGraph<T> {
@@ -112,7 +117,7 @@ public class Graph<T> implements IGraph<T> {
         addDirectedEdge(vertex1, vertex2);
     }
 
-    public void addDirectedEdge(Vertex v1, Vertex v2) {
+    public void addDirectedEdge(Vertex v1, Vertex v2)  {
         validateVertex(v1);
         validateVertex(v2);
 
@@ -144,7 +149,7 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public void sort(Comparator<T> c, IVertex<T> v) {
+    public void sort(Comparator<T> c, IVertex<T> v)  {
         Vertex vertex = validateVertex(v);
         sort(c, vertex);
     }
@@ -245,14 +250,14 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public Iterable<Vertex> getOutVertices(IVertex<T> v) {
+    public IReadOnlyList<Vertex> getOutVertices(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
         return getOutVertices(vertex);
     }
 
-    public Iterable<Vertex> getOutVertices(Vertex v) {
+    public IReadOnlyList<Vertex> getOutVertices(Vertex v) {
         validateVertex(v);
-        return v.outVertices;
+        return new ReadOnlyList<>(v.outVertices);
     }
 
     @Override
@@ -261,20 +266,20 @@ public class Graph<T> implements IGraph<T> {
         return getOutDegree(vertex);
     }
 
-    public int getOutDegree(Vertex v) {
+    public int getOutDegree(Vertex v)  {
         validateVertex(v);
         return v.outVertices.size();
     }
 
     @Override
-    public Iterable<Vertex> getInVertices(IVertex<T> v) {
+    public IReadOnlyList<Vertex> getInVertices(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
         return getInVertices(vertex);
     }
 
-    public Iterable<Vertex> getInVertices(Vertex v) {
+    public IReadOnlyList<Vertex> getInVertices(Vertex v){
         validateVertex(v);
-        return v.inVertices;
+        return new ReadOnlyList<>(v.inVertices);
     }
 
     @Override
@@ -289,8 +294,8 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public Iterable<Vertex> getVertices() {
-        return elementToVertex.values();
+    public IReadOnlyCollection<Vertex> getVertices() {
+        return new ReadOnlyCollection<>(elementToVertex.values());
     }
 
     public int size() {

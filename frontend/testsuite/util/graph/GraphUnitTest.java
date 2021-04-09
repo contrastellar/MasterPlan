@@ -13,6 +13,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+
 //TODO confirm that the sort test is working once sort is implemented
 /**
  * This class performs an extensive testing of our util.Graph structure
@@ -22,149 +23,206 @@ import static org.junit.Assert.*;
 
 public class GraphUnitTest {
 
+    private Graph<TodoElement> graph;
+    private Task t1, t2, t3, t4;
+    private Category c1, c2;
+    private Category root;
 
-//    Graph<TodoElement> graph;
-//    Task t1, t2;
-//    Graph.VertexAdjListAdjList v1, v2;
-//
-//
-//    @Before
-//    public void setUp() {
-//        graph = new Graph<>();
-//        t1 = new Task("1");
-//        t2 = new Task("2");
-//        v1 = graph.addVertex(t1);
-//        v2 = graph.addVertex(t2);
-//    }
-//
-//
-//    @Test
-//    /** Adds a task to the graph, and confirm that the returned vertex's element is the task  **/
-//    public void addVertexTest1() {
-//        var v = graph.addVertex(new Task("test"));
-//        assertEquals(v.getElement().getName(), "test");
-//    }
-//
-//    @Test
-//    /** Adds a null vertex testing that the IllegalArgumentException is thrown **/
-//    public void addVertexTest2() {
-//        try{
-//            graph.addVertex(null);
-//        } catch (IllegalArgumentException e) {
-//            assertThat(e.getMessage(), is("element can not be null"));
-//            return;
-//        }
-//        fail("Exception never thrown");
-//    }
-//
-//    @Test
-//    /** Adds v1 again to test that the IllegalArgumentException is thrown **/
-//    public void addVertexTest3() {
-//        var v = graph.addVertex(v1.getElement());
-//        assertEquals(v, v1);
-//    }
-//
-//    @Test
-//    /** Adds a Dependency between vertices from task 1 to task 2 **/
-//    public void addDirectedEdgeTest1() {
-//        graph.addDirectedEdge(v1, v2); // from v1 to v2
-//        for (var v : v1.getOutVertices()) {
-//            assertEquals(v.getElement(),v2.getElement());
-//        }
-//    }
-//
-//    @Test
-//    /** Test if the default root vertex "" is the root vertex of the graph. **/
-//    public void getRootVertexTest() {
-//        assertEquals(graph.getRootVertex().getElement().getName(), "Test");
-//    }
-//
-//    @Test
-//    /** Ensures that there is a one-to-one mapping between added vertices and vertices in the graph **/
-//    public void getVerticesTest() {
-//        HashSet<Graph.VertexAdjListAdjList> vertices = new HashSet<>();
-//        vertices.add(v1);
-//        vertices.add(v2);
-//        vertices.add(graph.getRootVertex());
-//        int size = vertices.size();
-//
-//        // Test
-//        int i = 0;
-//        for (var v : graph.getVertices()) {
-//            assertTrue(vertices.contains(v));
-//            i++;
-//        }
-//        assertTrue(size == i);
-//    }
-//
-//    @Test
-//    /** Test if the directed edge added to v1, v2 is removed from graph. **/
-//    public void removeDirectedEdgeTest() {
-//        graph.addDirectedEdge(v1, v2); // from v1 to v2
-//        graph.removeDirectedEdge(v1, v2);
-//        for (var c : v1.getOutVertices()) { // shouldn't enter b/c v1's only child was v2
-//            fail("Failed to remove directed edge");
-//        }
-//    }
-//
-//    @Test
-//    /** Removes v1 and v2 from the graph and confirms only the root vertex is left **/
-//    public void removeVertexTest1() {
-//        graph.removeVertex(v1);
-//        graph.removeVertex(v2);
-//        for (var v : graph.getVertices()) {
-//            assertEquals(v.getElement(), graph.getRootVertex().getElement());
-//        }
-//    }
-//
-//    @Test
-//    /** Ensures that IllegalArgumentException is thrown when trying to remove root vertex  **/
-//    public void removeVertextTest2() {
-//        try{
-//            graph.removeVertex(graph.getRootVertex());
-//        } catch (IllegalArgumentException e) {
-//            assertThat(e.getMessage(), is("given vertex is root vertex; can not remove root vertex"));
-//            return;
-//        }
-//        fail("Removed root node");
-//    }
-//
-//    /** Tests the sort of tasks by creation data **/
-//    @Test
-//    public void sortTest() {
-//        // comparator definition
-//        Comparator<TodoElement> c = (t1, t2) -> {
-//            return t1 == null ? -1 : t1.creationDate.compareTo(t2.creationDate);
-//        };
-//
-//        // Test
-//        graph.sort(c);
-//
-//        TodoElement prev = null;
-//
-//        // Testing the sort within our root vertex adjacency list
-//        for(var v : graph.getRootVertex().getOutVertices()) {
-//            assertTrue(c.compare(v.getElement(), prev) > 0);
-//            prev = v.getElement();
-//        }
-//
-//        // Testing the sort of our adjacency list collection
-//        prev = null;
-//        for(var v : graph.getVertices()) {
-//            assertTrue(c.compare(v.getElement(), prev) > 0);
-//            prev = v.getElement();
-//        }
-//    }
-//
-//    /** Testing a query for a specific TodoElement t1 **/
-//    @Test
-//    public void queryTest() {
-//        IQuery<TodoElement> query = (element) -> { return element == t1; };
-//
-//        List<Graph.VertexAdjListAdjList> queryRes = graph.query(query);
-//
-//        assertTrue(queryRes.contains(v1));
-//        assertEquals(1, queryRes.size());
-//    }
+    @Before
+    public void setUp() {
+        graph = new Graph<>();
+        t1 = new Task("t1");
+        t2 = new Task("t2");
+        t3 = new Task("t3");
+        t4 = new Task("t4");
+        c1 = new Category("c1");
+        c2 = new Category("c2");
+        root = new Category("Root");
+        graph.addVertex(root);
+    }
+
+    /** Adds a task to the graph, and confirm that the returned vertex's element is the task  **/
+    @Test
+    public void addVertex1() {
+        var cVertex = graph.addVertex(c1);
+        var tVertex = graph.addVertex(t1);
+
+        assertEquals(t1, tVertex.getElement());
+        assertEquals(c1, cVertex.getElement());
+    }
+
+    /** Adds a null vertex testing that the IllegalArgumentException is thrown **/
+    @Test
+    public void addVertex2() {
+        try{
+            graph.addVertex(null);
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), is("Graph.addVertex() - element can not be null."));
+            return;
+        }
+        fail("Exception never thrown");
+    }
+
+    /** Adds v again to test that the IllegalArgumentException is thrown **/
+    @Test
+    public void addVertex3() {
+        var v = graph.addVertex(t1);
+
+        try{
+            graph.addVertex(v.getElement());
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), is("Graph.addVertex() - element already exists in graph; duplicate elements are not allowed."));
+            return;
+        }
+        fail("Exception never thrown");
+    }
+
+    /** Adds a vertex and tests successful removal of the vertex **/
+    @Test
+    public void removeVertex1() {
+        var v1 = graph.addVertex(t1);
+        graph.removeVertex(v1);
+
+        for (var v : graph.getVertices())
+            assertEquals(v.getElement(),root);
+    }
+
+    /** Adds a Dependency between vertices from task 1 to task 2 **/
+    @Test
+    public void addDirectedEdge1() {
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        graph.addDirectedEdge(v1, v2);
+
+        for (var v : graph.getOutVertices(v1))
+            assertEquals(v.getElement(),v2.getElement());
+    }
+
+    /** Checks for thrown exception from adding a 3-cycle to the graph **/
+    @Test
+    public void addDirectedEdge2() {
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        var v3 = graph.addVertex(c1);
+        graph.addDirectedEdge(v3, v2);
+        graph.addDirectedEdge(v2, v1);
+
+
+        try {
+            graph.addDirectedEdge(v1, v2);
+        } catch (IllegalArgumentException e) {
+            assertThat(e.getMessage(), is("v1 is reachable from v2, circularity detected"));
+            return;
+        }
+        fail("Exception never thrown");
+    }
+
+    /** Adds a Dependency between vertices from task 1 to task 2 and checks for successful removal **/
+    @Test
+    public void removeDirectedEdge1() {
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        graph.addDirectedEdge(v1, v2);
+        graph.removeDirectedEdge(v1, v2);
+
+        assertEquals(0, graph.getOutVertices(v1).size());
+    }
+
+    /** Ensures that there is a one-to-one mapping between added vertices and vertices in the graph **/
+    @Test
+    public void getVertices1() {
+        HashSet<Graph.Vertex> vertexSet = new HashSet<>();
+
+        vertexSet.add(graph.addVertex(t1));
+        vertexSet.add(graph.addVertex(t2));
+        int size = vertexSet.size() + 1; // adding 1 b/c of root
+
+        assertEquals(size, graph.getVertices().size());
+    }
+
+    /** Tests the sort of tasks by creation data **/
+    @Test
+    public void sort1() { // TODO: Ensure working when implemented
+        // comparator definition
+        Comparator<TodoElement> c = (t1, t2) -> {
+            return t1 == null ? -1 : t1.creationDate.compareTo(t2.creationDate);
+        };
+
+        // Initialize
+        graph.addVertex(t1);
+        graph.addVertex(t2);
+        graph.addVertex(c1);
+        graph.addVertex(c2);
+        graph.sort(c);
+
+        TodoElement prev = null;
+
+        // Testing the sort within our root vertex adjacency list
+        for (var v : graph.getVertices()) {
+            assertTrue(c.compare(v.getElement(), prev) > 0);
+            prev = v.getElement();
+        }
+    }
+
+    /** Tests the sort of tasks by creation data **/
+    @Test
+    public void sortReachable1() {
+        // comparator definition
+        Comparator<TodoElement> c = (t1, t2) -> {
+            return t2 == null ? 1 : t1.name.getValue().compareTo(t2.name.getValue());
+        };
+
+        // Initialize
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        var v3 = graph.addVertex(t3);
+        var v4 = graph.addVertex(t4);
+
+        graph.addDirectedEdge(v1, v2);
+        graph.addDirectedEdge(v1, v3);
+        graph.addDirectedEdge(v1, v4);
+        graph.sortReachable(c, v1);
+
+        TodoElement prev = null;
+
+        // Testing the sort within our root vertex adjacency list
+        for (var v : graph.getOutVertices(v1)) {
+            assertTrue(c.compare(v.getElement(), prev) >= 0);
+            prev = v.getElement();
+        }
+    }
+
+
+    /** Testing a query for a specific vertex of Task t1 **/
+    @Test
+    public void query1() {
+        IQuery<TodoElement> query = (element) -> { return element == t1; };
+
+        // Initialize
+        var v = graph.addVertex(t1);
+        List<Graph<TodoElement>.Vertex> queryRes = graph.query(query);
+
+        assertTrue(queryRes.contains(v));
+        assertEquals(1, queryRes.size());
+    }
+
+    /** Testing a reachable query for a specific vertex of Task t **/
+    @Test
+    public void queryReachable1() {
+        IQuery<TodoElement> query = (element) -> { return element == t2; };
+
+        // Initialize
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        graph.addDirectedEdge(v1, v2);
+        List<Graph<TodoElement>.Vertex> queryRes = graph.query(query);
+
+        assertTrue(queryRes.contains(v2));
+        assertEquals(1, queryRes.size());
+    }
+
+    // TODO Validate vertex?
+
+
 
 }

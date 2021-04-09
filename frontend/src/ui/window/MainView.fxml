@@ -8,7 +8,10 @@
 <?import javafx.scene.control.ToggleGroup?>
 
 <?import javafx.geometry.Insets?>
-<Scene fx:controller="ui.window.MainViewController" stylesheets="@MainView.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Scene fx:controller="ui.window.MainViewController"
+       xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+       stylesheets="@MainView.css" >
+
     <VBox prefHeight="600.0" prefWidth="900.0">
 
         <!-- Main Container -->
