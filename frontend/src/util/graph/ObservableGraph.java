@@ -194,6 +194,11 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
+    public void removeVertexReachable(IVertex<T> v) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    @Override
     public void addDirectedEdge(IVertex<T> v1, IVertex<T> v2) {
 
         ObservableVertex<T> obsV1 = validateVertex(v1);

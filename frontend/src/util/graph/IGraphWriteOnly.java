@@ -30,6 +30,12 @@ public interface IGraphWriteOnly<T> {
     void removeVertex(IVertex<T> v);
 
     /**
+     *
+     * @param v
+     */
+    void removeVertexReachable(IVertex<T> v);
+
+    /**
      * Adds a directed edge from v1 to v2
      * @param v1 the from vertex
      * @param v2 the to vertex

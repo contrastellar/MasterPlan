@@ -82,6 +82,10 @@ public class Graph<T> implements IGraph<T> {
         elementToVertex.remove(v.element);
     }
 
+    public void removeVertexReachable(IVertex<T> v) {
+        throw new UnsupportedOperationException("not yet implemented");
+    }
+
     // returns true if v2 is reachable from v1, false otherwise
     private boolean DFS(Vertex v1, Vertex v2) {
         return DFS(v1, v2, new HashSet<>());
