@@ -63,11 +63,13 @@ public class ListView extends VBox {
         addCategoryBtn.setOnAction(this::addCategoryBtn_click);
     }
 
+    private static int num_id = 0;
+
     private void addTaskBtn_click(ActionEvent e) {
         if(_rootVertex.getValue() == null)
             return;
 
-        Task t = new Task("new task");
+        Task t = new Task("new task" + num_id++);
         rootVertex.getValue().getGraph().addVertex(t, rootVertex.getValue());
     }
 
@@ -75,7 +77,7 @@ public class ListView extends VBox {
         if(_rootVertex.getValue() == null)
             return;
 
-        Category c = new Category("new category");
+        Category c = new Category("new category" + num_id++);
         rootVertex.getValue().getGraph().addVertex(c, rootVertex.getValue());
     }
 
@@ -93,6 +95,8 @@ public class ListView extends VBox {
 
         if(rootVertex == null)
             return;
+
+        System.out.println("ListView.onRootVertexChange() - exec:\t" + rootVertex.getElement().getName());
 
         // memory leak - doesn't call stopListen on previous rootVertex
 
@@ -117,7 +121,7 @@ public class ListView extends VBox {
     private void addVertex(ObservableVertex<TodoElement> vertex) {
 
         Node node;
-
+        System.out.println("ListView.addVertex() - exec:\t" + vertex.getElement().getName());
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
             cView.setRootCategory(vertex);
@@ -149,13 +153,4 @@ public class ListView extends VBox {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-
-    private void addTask() {
-
-    }
-
-    @FXML
-    private void addCategory() {
-
-    }
 }
