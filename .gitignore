@@ -6,33 +6,37 @@
 # If Gradle,Maven is not used, life may be easier if we include .iml files
 # *.iml
 
-# Ignore user-specific .idea files:
+# ignore user-specific .idea files:
 .idea/workspace.xml
 .idea/tasks.xml
 .idea/dictionaries
 .idea/shelf
 .idea/compiler.xml
 
-# Ignore Sensitive or high-churn files:
+# ignore Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
-# Ignore IntelliJ build directory
+# ignore IntelliJ build directory
 /out/
 /mods/
 
-# Ignore project libraries
+# ignore project libraries
 /frontend/lib/*
 !/frontend/lib/readme.txt
 
 /backend/lib/*
 !/backend/lib/readme.txt
 
-# Ignore discord plugin
+# ignore discord plugin
 discord.xml
-#ignore my to-do list.
+
+# ignore my to-do list.
 /frontend/src/UI/TODO.txt
 /frontend/src/UI/HelpfulStuff.txt
+
+# ignore mac OS .DS_Store
+.DS_Store

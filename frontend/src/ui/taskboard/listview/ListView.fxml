@@ -6,9 +6,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import ui.custom.icon.Icon?>
+<?import javafx.scene.shape.Circle?>
+
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx"
-         xmlns:fx="http://javafx.com/fxml">
+         xmlns:fx="http://javafx.com/fxml" >
+
+
+    <VBox fx:id="todoContainer"/>
+
+    <!-- task and category add buttons -->
+    <HBox alignment="CENTER">
+        <Button fx:id="addTaskBtn"
+                text="T" textFill="black" contentDisplay="CENTER" style="-fx-background-color: transparent;">
+            <graphic>
+                <Circle fill="green" radius="13"/>
+            </graphic>
+        </Button>
+
+        <Button fx:id="addCategoryBtn"
+                text="C" textFill="black" contentDisplay="CENTER" style="-fx-background-color: transparent;">
+            <graphic>
+                <Circle fill="green" radius="13"/>
+            </graphic>
+        </Button>
+    </HBox>
 
 
 </fx:root>

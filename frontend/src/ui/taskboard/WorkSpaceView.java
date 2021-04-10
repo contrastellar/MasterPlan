@@ -11,7 +11,7 @@ import util.graph.ObservableVertex;
 import java.io.IOException;
 
 /**
- * Taskview custom component
+ *
  */
 public class WorkSpaceView extends SplitPane {
 
@@ -19,9 +19,7 @@ public class WorkSpaceView extends SplitPane {
 
     private final MainModel mainModel;
 
-    /**
-     * Constructs Taskview component with loader
-     */
+
     public WorkSpaceView(MainModel mainModel) {
         this.mainModel = mainModel;
         mainModel.selectedVertex.startListen(this::onSelectedRootChange);

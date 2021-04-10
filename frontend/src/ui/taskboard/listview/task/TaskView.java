@@ -4,7 +4,6 @@ import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.task.Task;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +15,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.text.Text;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
@@ -84,7 +81,7 @@ public class TaskView extends GridPane {
             return;
         }
 
-        rootTask.startListen(this::onTaskRemainingTasksChange);
+        rootTask.startListen(this::onRemainingTasksChange);
         rootTask.getElement().name.startListen(this::onTaskNameChange);
         Task task = (Task) rootTask.getElement();
         task.isCompleted.startListen(this::onTaskCompletedChange);
@@ -117,8 +114,7 @@ public class TaskView extends GridPane {
         taskName.setText(name);
     }
 
-    private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
-
+    private void onRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
         List<ObservableVertex<TodoElement>> remainingVertices =
                 _rootTask.getValue().getGraph().query((element) -> element instanceof Task, _rootTask.getValue());
         tasksRemainingLabel.setText(String.format(tasksRemainingFormat, remainingVertices.size()));
