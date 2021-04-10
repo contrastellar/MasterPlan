@@ -96,8 +96,6 @@ public class ListView extends VBox {
         if(rootVertex == null)
             return;
 
-        System.out.println("ListView.onRootVertexChange() - exec:\t" + rootVertex.getElement().getName());
-
         // memory leak - doesn't call stopListen on previous rootVertex
 
         rootVertex.startListen(this::onRootVertexOutEdgesChange);
@@ -121,7 +119,6 @@ public class ListView extends VBox {
     private void addVertex(ObservableVertex<TodoElement> vertex) {
 
         Node node;
-        System.out.println("ListView.addVertex() - exec:\t" + vertex.getElement().getName());
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
             cView.setRootCategory(vertex);

@@ -51,6 +51,7 @@ public class ListSpaceView extends VBox {
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
         if(!(rootVertex.getElement() instanceof Category))
             throw new IllegalArgumentException("ListView() - rootVertex is not of type Category");
+
         listViewHeader.setRootCategory(rootVertex);
         listView.setRootVertex(rootVertex);
     }
