@@ -42,9 +42,6 @@ public class ListSpaceView extends VBox {
 
     @FXML
     private void initialize() {
-        listViewHeader.setRootCategory(mainModel.selectedVertex.getValue());
-        listView.setRootVertex(mainModel.selectedVertex.getValue());
-
         mainModel.selectedVertex.startListen(this::onRootVertexChange);
     }
 
