@@ -15,30 +15,17 @@ import java.io.IOException;
 
 public class ListSpaceView extends VBox {
 
-    private final ListViewHeader listViewHeader;
-    private final ListView listView;
+    @FXML
+    private ListViewHeader listViewHeader;
+
+    @FXML
+    private ListView listView;
 
     private final MainModel mainModel;
 
     public ListSpaceView(MainModel mainModel) {
         this.mainModel = mainModel;
-
         loadFXML();
-
-        // TODO put these in fxml
-        listViewHeader = new ListViewHeader();
-        listView = new ListView();
-
-        listView.setId("listContainer");
-
-        getChildren().addAll(listViewHeader, listView);
-        mainModel.selectedVertex.startListen(this::onRootVertexChange);
-
-    }
-
-    @FXML
-    private void initialize() {
-
     }
 
     private void loadFXML() {
@@ -54,15 +41,11 @@ public class ListSpaceView extends VBox {
     }
 
     @FXML
-    private void addTask() {
-        Task task = new Task("Task");
-        mainModel.obsGraph.addVertex(task, mainModel.selectedVertex.getValue());
-    }
+    private void initialize() {
+        listViewHeader.setRootCategory(mainModel.selectedVertex.getValue());
+        listView.setRootVertex(mainModel.selectedVertex.getValue());
 
-    @FXML
-    private void addCategory() {
-        Category category = new Category("Category");
-        mainModel.obsGraph.addVertex(category, mainModel.selectedVertex.getValue());
+        mainModel.selectedVertex.startListen(this::onRootVertexChange);
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {

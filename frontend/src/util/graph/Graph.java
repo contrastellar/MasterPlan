@@ -82,8 +82,29 @@ public class Graph<T> implements IGraph<T> {
         elementToVertex.remove(v.element);
     }
 
+    @Override
     public void removeVertexReachable(IVertex<T> v) {
-        throw new UnsupportedOperationException("not yet implemented");
+        Vertex vertex = validateVertex(v);
+        removeVertexReachable(vertex);
+    }
+
+    public void removeVertexReachable(Vertex v) {
+        validateVertex(v);
+        removeValidate(v);
+    }
+
+    private void removeValidate(Vertex v) {
+        for (var p : v.inVertices)
+            removeDirectedEdge(p, v);
+        for (var c : v.outVertices) {
+            if (c.inVertices.size() == 1) { // base case 1
+                removeValidate(c);
+            } else { // case of another vertex to attach a child compenent of v
+                removeDirectedEdge(v, c);
+                c.inVertices.remove(v);
+            }
+        }
+        elementToVertex.remove(v.element);
     }
 
     // returns true if v2 is reachable from v1, false otherwise
@@ -160,9 +181,7 @@ public class Graph<T> implements IGraph<T> {
 
     public void sort(Comparator<T> c, Vertex v) {
         validateVertex(v);
-
         Comparator<Vertex> vComparator = (v1, v2) -> c.compare(v1.element, v2.element);
-
         v.outVertices.sort(vComparator);
         v.inVertices.sort(vComparator);
     }
@@ -175,9 +194,7 @@ public class Graph<T> implements IGraph<T> {
 
     public void sortReachable(Comparator<T> c, Vertex v) {
         validateVertex(v);
-
         Comparator<Vertex> vComparator = (v1, v2) -> c.compare(v1.element, v2.element);
-
         sortReachable(vComparator, v, new HashSet<>());
     }
 

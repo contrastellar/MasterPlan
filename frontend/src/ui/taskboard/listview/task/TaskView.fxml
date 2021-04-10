@@ -7,6 +7,7 @@
 
 <?import ui.custom.icon.Icon?>
 
+<?import javafx.scene.control.CheckBox?>
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@TaskView.css"
          styleClass="taskContainer, bottomBorder"
@@ -30,8 +31,9 @@
     </HBox>
 
     <!-- Category title (row 0, col 1) -->
-    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
+    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" spacing="5">
         <Label fx:id="taskName" text="Task Name Placeholder"/>
+        <CheckBox fx:id="completedCheckBox" prefWidth="10" prefHeight="10"/>
     </HBox>
 
     <!-- Category buttons (row 0, col 2) -->

@@ -52,4 +52,5 @@ public class WorkSpaceView extends SplitPane {
             throw new RuntimeException(exception);
         }
     }
+
 }

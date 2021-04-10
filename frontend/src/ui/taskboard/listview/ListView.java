@@ -5,6 +5,8 @@ import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.task.Task;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import ui.taskboard.listview.task.TaskView;
@@ -13,6 +15,7 @@ import util.graph.IVertex;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +28,23 @@ public class ListView extends VBox {
     private final Map<IVertex<TodoElement>, Node> vertexToNode = new HashMap<>();
 
     public ListView() {
+        loadFXML();
+    }
+
+    private void loadFXML() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void initialize() {
         _rootVertex.startListen(this::onRootVertexChange);
     }
 
@@ -96,5 +116,15 @@ public class ListView extends VBox {
     private void sort(Comparator<TodoElement> c) {
         // TODO: Implement
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+
+    private void addTask() {
+
+    }
+
+    @FXML
+    private void addCategory() {
+
     }
 }

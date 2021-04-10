@@ -23,14 +23,6 @@ public class MainModel {
         obsGraph.addVertex(new Category("category of main 3"), selectedVertex.getValue());
     }
 
-    public void addCategory(Category c, IVertex<TodoElement> root) {
-        obsGraph.addVertex(c, root);
-    }
-
-    public void addTask(Task t, IVertex<TodoElement> root) {
-        obsGraph.addVertex(t, root);
-    }
-
     public void importGoogleCalendar(IVertex<TodoElement> rootVertex) {
 
     }
