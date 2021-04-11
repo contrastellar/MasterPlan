@@ -24,7 +24,7 @@ public class ObservableGraphChange<T> {
     }
 
     public Iterable<? extends IVertex<T>> getAddedVertices() {
-        if(addedVertices == null)
+        if (addedVertices == null)
             addedVertices = new ArrayList<>();
         return addedVertices;
     }

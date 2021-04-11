@@ -147,7 +147,6 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public synchronized ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
-
         ObservableVertex<T> obsInVertex = validateVertex(inVertex);
 
         IVertex<T> vertex = graph.addVertex(element, obsInVertex.vertex);
@@ -171,7 +170,6 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     @Override
     public void removeVertex(IVertex<T> v) {
-
         ObservableVertex<T> obsV = validateVertex(v);
 
         ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
