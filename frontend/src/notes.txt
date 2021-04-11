@@ -1,105 +1,58 @@
-Tag := allows for a user defined sorting order of the graph, a tag is a property
-of the VertexClass.
 
-Archival := a boolean attribute of the VertexClass.
-
-Completable := a boolean attribute of a TaskVertex.
-
-TempVar := implements similar properties of categories and task, having
-    - A set of tags
-    - An Archival
-    - An identifier set (color, name, description, attachments, )
-
-CategoryVertex := a VertexClass with
-    - background image
-
-CompletableVertex := a VertexClass with
-    - Completable
-
-Graph := encodes a logical dependency amongst the VertexClass:
-    - Or, if A is completed that B or C is completed
-    - and, if A is completed then B and C are completed
-    - not, if A is completed then B cannot completed
-
-
----------------------- Implementation ------------------------
-
-interface Archival
-interface Completable
-
-abstract class Vertex implements Archival{ // has tags, name, description, attachments
-
-    Observable<String> name
-
-}
-
-class Task extends Vertex implements Completable
-class Category extends Vertex
-
-
-// IN workSpaceData
-    Graph workSpaceData;
-
-Graph<T extends Vertex and Completable, C extends Vertex>
-
-    HashMap<TempVar, HashSet< OrSet > vertices
-
-    public class Operand {
-        T t;
-        boolean NOT;
-    }
-
-    HashMap<Vertex, SortedSet< SortedSet<Operand>>> graph;
-
-    private boolean evaluateDependency(AdjList list) {
-        for(E e : list)
-            if (!isTrue(list))
-                return false;
-
-        return true;
-    }
-
-    set.isTrue(); // return the corresponding truth value
-
-A = {T}
----------
-{}
-{B, C} = {T, F}
-{~Z, D} = {T, F}
-
-
-{D}
-~{Z}
-
-------------------- NO LONGER RELEVANT ^^ -------------------------
-
-BoardSpace Representation:
-
-            rootVertex
-                 |
-        c1 - c2 - c3 - t1 - t2
-
-The ListSpace representation doesn't add any graph information.
-
-    |c1|      |c2| ... t1, t2
-
-
-The graph class can be exposed to U/I
-
-
-TODO List:
+Critical:
+	- unit test ObservableGraph and ObservableUnit - DH
+	- complete dueDate property of Task - TS
+	- complete Tag class - TS
+	- finish list space
+		- UI expand/contract ListView - Ben
+		- remove tasks/categories (completely and remove edge) - DH
+		- enhance and expand on listspace user interface - Ben
+			- shows tags
+			- show due date
+			- make look better (in general)
+	* edit tasks
+		- complete EditBar controller and integrate it with list space - TS
+	- edit categories - DH
+	    - be able to manipulate all the variables in ToDoElement
 
 High Priority:
-- Boardspace.java
-- Unit tests Graph, Observables, and BoardSpace
+	* select which category is viewed in the workspace
+	    - create user interface to select which workspace - Gabby
+	    - integrate user interface - TS
+	* search for tasks (globally and relative to workspace)
+	    - create search user interface - Ben
+	    - integrate user interface - Ben
+    - setting theme - Gabby
+        - Light theme
+        - Dark theme
 
 
-
-
+Medium Priority:
+	* send email notifications
+	    - create method which sends an email - DL
+	* import/export to Google Calendar
+		- user interface - Ben
+		- API functionality - DL and Ben
+	* archiving
+	    - create user interface - Gabby
+	    - integrate user interface - Gabby
 
 Low Priority:
-A Possible solution to our O(n^2) problem in Graph.removeVertex:
-    Fix the .mergesort() / .split() in DoublyLinkedList.
-    Add DoublyLinkedList to the graph class, and an outgoing and an incoming edge set at each.
-    Unit test DoublyLinkedList.java
-    Add bidirectional map to the graph class.
+	* settings
+	    - create user interface - TS
+	    - integrate user interface - TS
+	- add in user interface adding/removing/viewing attachments - Gabby
+
+Forget about:
+	- multiple users
+	- calendar view
+	- integration with a database
+    - file permissions
+    - board space
+    - save to disk (serialize and de-serialize)
+    - customize user interface workspace background image/color
+
+
+
+
+
