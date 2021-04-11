@@ -9,17 +9,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ObservableGraphUnitTest implements IListener<ObservableGraphChange<TodoElement>> {
+public class ObservableGraphUnitTest {
 
     private ObservableGraph<TodoElement> obsGraph;
     private ObservableGraphChange<TodoElement> graphChange = null;
     private ObservableVertexChange<TodoElement> vertexChange = null;
-    private Graph<TodoElement> graph;
 
     private int numOnChangeCalls;
     private Task t1, t2, t3, t4;
-    private Category  root;
-    private IVertex<TodoElement> rootV;
 
 
 
@@ -30,31 +27,27 @@ public class ObservableGraphUnitTest implements IListener<ObservableGraphChange<
         t2 = new Task("t2");
         t3 = new Task("t3");
         t4 = new Task("t4");
-        root = new Category("Root");
-
-        graph = new Graph();
-        rootV = graph.addVertex(root);
-
-        obsGraph = new ObservableGraph<>(graph);
+        obsGraph = new ObservableGraph<>(new Graph<>());
     }
 
     @Test
     public void getVertices1() {
         // register listener
+        var t1Vertex = obsGraph.addVertex(t1);
         obsGraph.startListen(this::onChange);
         numOnChangeCalls = 0;
 
         // TEST
         for (var v: obsGraph.getVertices())
-            assertEquals(v.getElement(), rootV.getElement());
-
+            assertEquals(v, t1V);
     }
 
     @Test
     public void getOutVertices1() {
+        var t1Vertex obsGraph.addVertex(t1);
+
         // register listener
         obsGraph.startListen(this::onChange);
-        obsGraph.addVertex(t1, rootV);
 
         // TEST
         for (var v: obsGraph.getOutVertices(rootV)) {
@@ -135,41 +128,39 @@ public class ObservableGraphUnitTest implements IListener<ObservableGraphChange<
         var v = obsGraph.addVertex(t1);
 
         // check the listener is called only once
-       assertTrue(numOnChangeCalls == 1);
+        assertEquals(1, numOnChangeCalls);
 
         // check that the change variable is not null
-        assertTrue(graphChange != null);
+        assertNotNull(graphChange);
 
         // check that change only has 1 vertex added
-        assertTrue(graphChange.addedVerticesSize() == 1);
+        assertEquals(1, graphChange.addedVerticesSize());
 
         // check that the added vertex in change is the actual vertex
-        for (var c : graphChange.getAddedVertices()) {
-            assertEquals(c.getElement(), v.getElement());
-        }
+        assertEquals(graphChange.getAddedVertices().get(0), v);
 
         // check that change has no removed vertices
-        assertTrue(graphChange.removedVerticesSize() == 0);
+        assertEquals(0, graphChange.removedVerticesSize());
 
         // check that no sort occurred
-        assertTrue(graphChange.getSorted() == false);
+        assertFalse(graphChange.getSorted());
 
         // check that no sorting comparator was given
-        assertTrue(graphChange.getSortingComparator() == null);
+        assertNull(graphChange.getSortingComparator());
     }
 
-    @Test
+    @Test // Test ObservableGraphChange
     public void removeVertex1() {
+
+        var t1V = obsGraph.addVertex(t1);
 
         // register listener
         obsGraph.startListen(this::onChange);
         numOnChangeCalls = 0;
 
-        // test the removal
-        obsGraph.removeVertex(rootV);
+        obsGraph.removeVertex(t1V);
 
         // check the listener is called only once
-        System.out.println(numOnChangeCalls);
         assertTrue(numOnChangeCalls == 1);
 
         // check that the change variable is not null
@@ -179,9 +170,42 @@ public class ObservableGraphUnitTest implements IListener<ObservableGraphChange<
         assertTrue(graphChange.removedVerticesSize() == 1);
 
         // check that the removed vertex in change is the actual vertex
-        for (var c : graphChange.getRemovedVertices()) {
-            assertEquals(c.getElement(), rootV.getElement());
-        }
+        assertEquals(graphChange.getRemovedVertices().get(0), t1V);
+
+        // check that change has no added vertices
+        assertTrue(graphChange.addedVerticesSize() == 0);
+
+        // check that no sort occurred
+        assertTrue(graphChange.getSorted() == false);
+
+        // check that no sorting comparator was given
+        assertTrue(graphChange.getSortingComparator() == null);
+    }
+
+    @Test // Test ObservableVertexChange
+    public void removeVertex2() {
+
+        var v = obsGraph.addVertex(t2);
+
+        var t1V = obsGraph.addVertex(t1, v);
+
+        // register listener
+        obsGraph.startListen(this::onChange);
+        numOnChangeCalls = 0;
+
+        obsGraph.removeVertex(t1V);
+
+        // check the listener is called only once
+        assertTrue(numOnChangeCalls == 1);
+
+        // check that the change variable is not null
+        assertTrue(graphChange != null);
+
+        // check that change only has 1 vertex removed
+        assertTrue(graphChange.removedVerticesSize() == 1);
+
+        // check that the removed vertex in change is the actual vertex
+        assertEquals(graphChange.getRemovedVertices().get(0), t1V);
 
         // check that change has no added vertices
         assertTrue(graphChange.addedVerticesSize() == 0);

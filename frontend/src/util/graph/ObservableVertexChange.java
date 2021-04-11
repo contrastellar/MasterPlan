@@ -2,6 +2,8 @@ package util.graph;
 
 import components.TodoElement;
 import components.observable.IListener;
+import util.collections.IReadOnlyList;
+import util.collections.ReadOnlyList;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,18 +21,18 @@ public class ObservableVertexChange<T> {
     public boolean getSorted() { return sorted; }
     public Comparator<T> getSortingComparator() { return sortingComparator; }
 
-    public Iterable<ObservableVertex<T>> getAddedEdges() {
+    public IReadOnlyList<ObservableVertex<T>> getAddedEdges() {
         if(addedEdges == null)
             addedEdges = new ArrayList<>();
-        return addedEdges;
+        return new ReadOnlyList<>(addedEdges);
     }
 
     public int addedEdgesSize() { return addedEdges == null ? 0 : addedEdges.size(); }
 
-    public Iterable<ObservableVertex<T>> getRemovedEdges() {
+    public IReadOnlyList<ObservableVertex<T>> getRemovedEdges() {
         if(removedEdges == null)
             removedEdges = new ArrayList<>();
-        return removedEdges;
+        return new ReadOnlyList<>(removedEdges);
     }
 
     public int removedEdgesSize() { return removedEdges == null ? 0 : removedEdges.size(); }

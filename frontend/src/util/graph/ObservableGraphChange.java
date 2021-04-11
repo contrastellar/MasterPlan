@@ -1,5 +1,8 @@
 package util.graph;
 
+import util.collections.IReadOnlyList;
+import util.collections.ReadOnlyList;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,20 +26,20 @@ public class ObservableGraphChange<T> {
         return sortingComparator;
     }
 
-    public Iterable<? extends IVertex<T>> getAddedVertices() {
+    public IReadOnlyList<? extends IVertex<T>> getAddedVertices() {
         if (addedVertices == null)
             addedVertices = new ArrayList<>();
-        return addedVertices;
+        return new ReadOnlyList<>(addedVertices);
     }
 
     public int addedVerticesSize() {
         return addedVertices == null ? 0 : addedVertices.size();
     }
 
-    public Iterable<? extends IVertex<T>> getRemovedVertices() {
+    public IReadOnlyList<? extends IVertex<T>> getRemovedVertices() {
         if(removedVertices == null)
             removedVertices = new ArrayList<>();
-        return removedVertices;
+        return new ReadOnlyList<>(removedVertices);
     }
 
     public int removedVerticesSize() {
