@@ -1,5 +1,8 @@
 package util.graph;
 
+import util.collections.IReadOnlyCollection;
+import util.collections.IReadOnlyList;
+
 import java.util.List;
 
 /**
@@ -11,13 +14,13 @@ public interface IGraphReadOnly<T> {
     /**
      * @return the graph's vertices
      */
-    Iterable<? extends IVertex<T>> getVertices();
+    IReadOnlyCollection<? extends IVertex<T>> getVertices();
 
     /**
      * @param v vertex to retrieve the out vertices from
      * @return the out vertices of v
      */
-    Iterable<? extends IVertex<T>> getOutVertices(IVertex<T> v);
+    IReadOnlyList<? extends IVertex<T>> getOutVertices(IVertex<T> v);
 
     /**
      * @param v the vertex to determine the out degree of
@@ -29,7 +32,7 @@ public interface IGraphReadOnly<T> {
      * @param v vertex to retrieve the in vertices from
      * @return the in vertices of v
      */
-    Iterable<? extends IVertex<T>> getInVertices(IVertex<T> v);
+    IReadOnlyList<? extends IVertex<T>> getInVertices(IVertex<T> v);
 
     /**
      * @param v the vertex to determine the in degree of
