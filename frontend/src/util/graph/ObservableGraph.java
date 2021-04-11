@@ -3,6 +3,10 @@ package util.graph;
 
 import components.observable.IListener;
 import components.observable.IObservable;
+import util.collections.IReadOnlyCollection;
+import util.collections.IReadOnlyList;
+import util.collections.ReadOnlyCollection;
+import util.collections.ReadOnlyList;
 
 import java.util.*;
 
@@ -78,14 +82,14 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public Iterable<ObservableVertex<T>> getVertices() {
-        return convertIterableToObsVertex(graph.getVertices());
+    public IReadOnlyCollection<ObservableVertex<T>> getVertices() {
+        return new ReadOnlyCollection<>( convertIterableToObsVertexList(graph.getVertices()) );
     }
 
     @Override
-    public Iterable<ObservableVertex<T>> getOutVertices(IVertex<T> v)  {
+    public IReadOnlyList<ObservableVertex<T>> getOutVertices(IVertex<T> v)  {
         ObservableVertex<T> obsV = validateVertex(v);
-        return convertIterableToObsVertex(graph.getOutVertices(obsV.vertex));
+        return new ReadOnlyList<>( convertIterableToObsVertexList(graph.getOutVertices(obsV.vertex)) );
     }
 
     @Override
@@ -95,9 +99,9 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public Iterable<ObservableVertex<T>> getInVertices(IVertex<T> v)  {
+    public IReadOnlyList<ObservableVertex<T>> getInVertices(IVertex<T> v)  {
         ObservableVertex<T> obsV = validateVertex(v);
-        return convertIterableToObsVertex(graph.getInVertices(obsV.vertex));
+        return new ReadOnlyList<>( convertIterableToObsVertexList(graph.getInVertices(obsV.vertex)) );
     }
 
     @Override
@@ -146,7 +150,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public synchronized ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
+    public ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
         ObservableVertex<T> obsInVertex = validateVertex(inVertex);
 
         IVertex<T> vertex = graph.addVertex(element, obsInVertex.vertex);
