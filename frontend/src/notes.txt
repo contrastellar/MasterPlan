@@ -1,4 +1,3 @@
-
 Critical:
 	- unit test ObservableGraph and ObservableUnit - DH
 	- complete dueDate property of Task - TS
@@ -13,7 +12,7 @@ Critical:
 	* edit tasks
 		- complete EditBar controller and integrate it with list space - TS
 	- edit categories - DH
-	    - be able to manipulate all the variables in ToDoElement
+	    - be able to manipulate all the variables in ToDoElement (UI and functionality)
 
 High Priority:
 	* select which category is viewed in the workspace
@@ -26,7 +25,6 @@ High Priority:
         - Light theme
         - Dark theme
 
-
 Medium Priority:
 	* send email notifications
 	    - create method which sends an email - DL
@@ -35,13 +33,14 @@ Medium Priority:
 		- API functionality - DL and Ben
 	* archiving
 	    - create user interface - Gabby
-	    - integrate user interface - Gabby
+	    - integrate user interface w/ observables- Gabby
 
 Low Priority:
 	* settings
 	    - create user interface - TS
 	    - integrate user interface - TS
 	- add in user interface adding/removing/viewing attachments - Gabby
+
 
 Forget about:
 	- multiple users
