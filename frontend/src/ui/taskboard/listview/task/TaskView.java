@@ -3,26 +3,39 @@ package ui.taskboard.listview.task;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import ui.custom.icon.Icon;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskView extends GridPane {
+
+    @FXML
+    private Icon toggleBtn;
+    @FXML
+    private HBox toggleContainer;
+    @FXML
+    private HBox remainingContainer;
+    @FXML
+    private HBox buttonContainer;
 
     @FXML
     private Label taskName;
@@ -44,7 +57,6 @@ public class TaskView extends GridPane {
      * Constructs Category component with loader
      */
     public TaskView() {
-
         loadFXML();
 
         listView = new ListView();
@@ -56,6 +68,24 @@ public class TaskView extends GridPane {
         getChildren().add(listView);
 
         _rootTask.startListen(this::onRootTaskChange);
+
+        // Sets toggleBtn clicked handler
+        toggleBtn.setOnMouseClicked(this::toggleBtnHandler);
+        if (listView.isTodoEmpty())
+            toggleBtn.setVisible(false);
+
+        // Set styling for hover
+        List<Node> gridChildren = new ArrayList();
+        getChildren().forEach(e -> gridChildren.add(e));
+        gridChildren.remove(listView);
+        gridChildren.forEach(e -> {
+            e.setOnMouseEntered(event -> {
+                buttonContainer.setStyle("-fx-border-color: cadetblue;");
+            });
+            e.setOnMouseExited(event -> {
+                buttonContainer.setStyle("-fx-border-color: transparent;");
+            });
+        });
     }
 
 
@@ -70,6 +100,22 @@ public class TaskView extends GridPane {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * handler for Toggling todos and rotating btn
+     * @param e mouse event
+     */
+    public void toggleBtnHandler(MouseEvent e) {
+        if (listView.isTodoEmpty()) return;
+
+        listView.toggleTodo();
+
+        double angle = toggleBtn.getRotate();
+        if (angle == 0)
+            toggleBtn.setRotate(270);
+        else
+            toggleBtn.setRotate(0);
     }
 
     private void onRootTaskChange(ObservableVertex<TodoElement> rootTask) {
@@ -101,11 +147,9 @@ public class TaskView extends GridPane {
 
     private void onTaskCompletedChange(boolean completed) {
         if(completed) {
-            taskName.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
             taskName.setTextFill(Color.GREEN);
         }
         else {
-            taskName.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
             taskName.setTextFill(Color.BLACK);
         }
     }
@@ -118,6 +162,12 @@ public class TaskView extends GridPane {
         List<ObservableVertex<TodoElement>> remainingVertices =
                 _rootTask.getValue().getGraph().query((element) -> element instanceof Task, _rootTask.getValue());
         tasksRemainingLabel.setText(String.format(tasksRemainingFormat, remainingVertices.size()));
+
+        boolean hasChildren = false;
+        for (var vertex : _rootTask.getValue().getGraph().getOutVertices(_rootTask.getValue()))
+            hasChildren = true;
+        if (!hasChildren) toggleBtn.setVisible(false);
+        else toggleBtn.setVisible(true);
     }
 
     public void setRootTask(ObservableVertex<TodoElement> rootTask) {

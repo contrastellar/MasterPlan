@@ -1,9 +1,14 @@
 #topBar > VBox {
-    -fx-padding: 10;
+    -fx-padding: 5;
 }
 
 .bottomBorder {
     -fx-border-width: 0 0 1 0;
+    -fx-border-color: #cccccc;
+}
+
+.topBorder {
+    -fx-border-width: 1 0 0 0;
     -fx-border-color: #cccccc;
 }
 

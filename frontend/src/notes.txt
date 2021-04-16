@@ -3,7 +3,7 @@ Critical:
 	- complete dueDate property of Task - TS
 	- complete Tag class - TS
 	- finish list space
-		- UI expand/contract ListView - Ben
+		- (DONE) UI expand/contract ListView - Ben
 		- remove tasks/categories (completely and remove edge) - DH
 		- enhance and expand on listspace user interface - Ben
 			- shows tags

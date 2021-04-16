@@ -12,12 +12,6 @@
          xmlns:fx="http://javafx.com/fxml/1"
          fx:id="listContainer">
 
-      <HBox alignment="CENTER">
-            <padding>
-                  <Insets topRightBottomLeft="5"/>
-            </padding>
-      </HBox>
-
       <!-- Runtime: listview header  -->
       <ListViewHeader fx:id="listViewHeader" />
 

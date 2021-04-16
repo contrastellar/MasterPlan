@@ -61,6 +61,23 @@ public class ListView extends VBox {
 
         addTaskBtn.setOnAction(this::addTaskBtn_click);
         addCategoryBtn.setOnAction(this::addCategoryBtn_click);
+
+        // Binds managed and visible property to hide and reset the layout by just setting
+        todoContainer.managedProperty().bindBidirectional(todoContainer.visibleProperty());
+    }
+
+    /** Getters and Setters for the visibility of the todoContainer **/
+    public void hideTodo() { todoContainer.setVisible(false); };
+    public void showTodo() { todoContainer.setVisible(true); };
+    public boolean isTodoShown() { return todoContainer.isVisible(); }
+    public boolean isTodoHidden() { return !isTodoShown(); }
+    public void toggleTodo() {
+        if (isTodoShown()) hideTodo();
+        else showTodo();
+    }
+
+    public boolean isTodoEmpty() {
+        return todoContainer.getChildren().isEmpty();
     }
 
     private static int num_id = 0;

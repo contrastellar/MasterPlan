@@ -1,0 +1,35 @@
+#todoContainer {
+    -fx-background-color: transparent;
+    -fx-padding: 5 0 0 0;
+}
+
+#listViewContainer {
+    -fx-padding: 5 0 0 0;
+}
+
+#btnContainer {
+    -fx-padding: 0 5 0 5;
+}
+
+.todoAddBtn {
+    -fx-background-color: #cecece;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 11;
+
+    -fx-padding: 0 7 0 7;
+
+    -fx-border-width: 2 0 0 2;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5;
+
+    -fx-background-radius: 5;
+}
+
+.todoAddBtn:hover {
+    -fx-background-color: #cccccc;
+    -fx-border-width: 2 0 0 2;
+    -fx-border-color: cadetblue;
+    -fx-border-radius: 3;
+    -fx-box-sizing: border-box;
+}
