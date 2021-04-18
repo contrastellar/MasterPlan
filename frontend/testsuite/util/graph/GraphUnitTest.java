@@ -143,25 +143,26 @@ public class GraphUnitTest {
     /** Tests the sort of tasks by creation data **/
     @Test
     public void sort1() { // TODO: Ensure working when implemented
-        // comparator definition
-        Comparator<TodoElement> c = (t1, t2) -> {
-            return t1 == null ? -1 : t1.creationDate.compareTo(t2.creationDate);
-        };
-
-        // Initialize
-        graph.addVertex(t1);
-        graph.addVertex(t2);
-        graph.addVertex(c1);
-        graph.addVertex(c2);
-        graph.sort(c);
-
-        TodoElement prev = null;
-
-        // Testing the sort within our root vertex adjacency list
-        for (var v : graph.getVertices()) {
-            assertTrue(c.compare(v.getElement(), prev) > 0);
-            prev = v.getElement();
-        }
+//        // comparator definition
+//        Comparator<TodoElement> c = (t1, t2) -> {
+//            return t1 == null ? -1 : t1.creationDate.compareTo(t2.creationDate);
+//        };
+//
+//        // Initialize
+//        var r = graph.addVertex(t1);
+//        graph.addVertex(t2);
+//        graph.addVertex(t3);
+//        graph.addVertex(t4);
+//        graph.sort(c);
+//
+//        TodoElement prev = r.getElement();
+//
+//        // Testing the sort within our root vertex adjacency list
+//        for (var v : graph.getVertices()) {
+//            assertTrue(c.compare(v.getElement(), prev) > 0);
+//            prev = v.getElement();
+//        }
+        fail("Not yet implmented in ObservableGraph");
     }
 
     /** Tests the sort of tasks by creation data **/
