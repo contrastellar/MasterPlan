@@ -19,6 +19,7 @@ public class ObservableVertexChange<T> {
     public ObservableVertexChange() { }
 
     public boolean getSorted() { return sorted; }
+
     public Comparator<T> getSortingComparator() { return sortingComparator; }
 
     public IReadOnlyList<ObservableVertex<T>> getAddedEdges() {
