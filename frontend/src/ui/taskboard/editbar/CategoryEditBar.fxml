@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 
-<VBox fx:id="editContainer" stylesheets="@EditBar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="editContainer" stylesheets="@TaskEditBar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <!-- Description -->
     <VBox styleClass="groupContainer">

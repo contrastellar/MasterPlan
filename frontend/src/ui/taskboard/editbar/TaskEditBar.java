@@ -1,4 +1,4 @@
-package ui.taskboard.taskedit;
+package ui.taskboard.editbar;
 
 
 import components.Category;
@@ -14,7 +14,7 @@ import util.graph.ObservableVertex;
 
 import java.util.List;
 
-public class EditBar {
+public class TaskEditBar {
 
     private final MainModel mainModel;
     public final Observable<ObservableVertex<TodoElement>> _taskVertex = new Observable<>();
@@ -39,7 +39,7 @@ public class EditBar {
     // TAGs input
     @FXML private TextArea tagsInput;
 
-    public EditBar(MainModel mainModel) {
+    public TaskEditBar(MainModel mainModel) {
         this.mainModel = mainModel;
         taskVertex.startListen(this::onTaskChange);
     }
@@ -54,8 +54,8 @@ public class EditBar {
         task.setName(titleInput.getText());
         task.setAuthor(authorInput.getText());
         task.setNotes(notesInput.getText());
+        mainModel.obsGraph.addDirectedEdge(/* selected workspace*/null, taskVertex.getValue() );
         // TODO: to set the workspace, we need the vertex corresponding to the task
-        // TODO: we don't set createDate...
         // TODO: set due date
         // TODO: retrieve from tagsInput
 
