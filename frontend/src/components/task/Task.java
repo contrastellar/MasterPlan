@@ -5,14 +5,16 @@ import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 
+import java.util.Calendar;
+
 
 public final class Task extends TodoElement implements Completable {
 
     private final Observable<Boolean> _isCompleted = new Observable<>(false);
     public final IReadOnlyObservable<Boolean> isCompleted = _isCompleted;
 
-    private final Observable<IDateGenerator> _dueDate = new Observable<>(null); // TODO Change to IDateGenerator
-    public final IReadOnlyObservable<IDateGenerator> dueDate = _dueDate;
+    private final Observable<Calendar> _dueDate = new Observable<>(null);
+    public final IReadOnlyObservable<Calendar> dueDate = _dueDate;
 
     private final Observable<String> _notes = new Observable<>("");
     public final IReadOnlyObservable<String> notes = _notes;
@@ -37,11 +39,11 @@ public final class Task extends TodoElement implements Completable {
         this._isCompleted.setValue(isComplete);
     }
 
-    public void setDueDate(IDateGenerator dueDate) {
+    public void setDueDate(Calendar dueDate) {
         this._dueDate.setValue(dueDate);
     }
 
-    public IDateGenerator getDueDate() {
+    public Calendar getDueDate() {
         return _dueDate.getValue();
     }
 
