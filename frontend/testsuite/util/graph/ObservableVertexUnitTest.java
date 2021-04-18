@@ -16,9 +16,13 @@ import static org.junit.Assert.assertNull;
 
 public class ObservableVertexUnitTest {
     /**
-     * ObservableGraph G3: Used to test methods that produce Observabl(vertexChange
-     *     root --> {}
-     *     An ObservableVertex</Category> has empty adjacency list
+     * ObservableGraph G:
+     *     root --> {v1, v2, v3, v4}
+     *       v1 --> {v2, v3}
+     *       v2 --> {}
+     *       v3 --> {}
+     *       v4 --> {}
+     *
      *
      * In Testing for Observabl(vertexChange</TodoElement> and ObservableVertexChange</TodoElement>,
      * by listening to our graphs G1 and G2. Also, ensure that the only change is that being tested.
@@ -85,6 +89,7 @@ public class ObservableVertexUnitTest {
         // hash set of G1's root vertices adjacency list
         var expected = new HashSet<ObservableVertex<TodoElement>>();
         expected.add(rootV);
+        expected.add(v1);
 
         // test G1: expected -> G1
         assertTrue(rootV.getGraph().getInVertices(v2).containsAll(expected));

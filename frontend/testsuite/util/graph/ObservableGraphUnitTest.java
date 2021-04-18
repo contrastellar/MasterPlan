@@ -6,6 +6,8 @@ import components.task.Task;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -14,19 +16,15 @@ import static org.junit.Assert.*;
 
 public class ObservableGraphUnitTest {
     /**
-     * ObservableGraph G1:
-     *     root --> {t1, t2, t3, t4}
-     *       t1 --> {t2, t3}
-     *       t2 --> {}
-     *       t3 --> {}
-     *       t4 --> {}
+     * ObservableGraph G:
+     *     root --> {v1, v2, v3, v4}
+     *       v1 --> {v2, v3}
+     *       v2 --> {}
+     *       v3 --> {}
+     *       v4 --> {}
      *
-     * ObservableGraph G2:
-     *     root --> {}
-     *
-     *
-     * In Testing for ObservableGraphChange</TodoElement> and ObservableVertexChange</TodoElement>,
-     * by listening to our graphs G1 and G2. Also, ensure that the only change is that being tested.
+     * In Testing for ObservableGraphChange</TodoElement> we listen to changes in G
+     * and ensure that the only change is that being tested.
      *
      * Listeners are initially null.
      */
@@ -43,10 +41,10 @@ public class ObservableGraphUnitTest {
         G = new ObservableGraph<>(new Graph<>());
         rootV = G.addVertex(new Category("root"));
 
-        v1 = G.addVertex(new Task("t1"), rootV);
-        v2 = G.addVertex(new Task("t2"), rootV);
-        v3 = G.addVertex(new Task("t3"), rootV);
-        v4 = G.addVertex(new Task("t4"), rootV);
+        v1 = G.addVertex(new Task("v1"), rootV);
+        v2 = G.addVertex(new Task("v2"), rootV);
+        v3 = G.addVertex(new Task("v3"), rootV);
+        v4 = G.addVertex(new Task("v4"), rootV);
 
         G.addDirectedEdge(v1, v2);
         G.addDirectedEdge(v1, v3);
@@ -90,7 +88,7 @@ public class ObservableGraphUnitTest {
         G.startListen(this::onChange);
 
         // hash set of G1's root vertices adjacency list
-        var expected = new HashSet<ObservableVertex<TodoElement>>();
+        var expected = new ArrayList<ObservableVertex<TodoElement>>();
         expected.add(v1);
         expected.add(v2);
         expected.add(v3);
@@ -133,11 +131,12 @@ public class ObservableGraphUnitTest {
         G.startListen(this::onChange);
 
         // hash set of G1's root vertices adjacency list
-        var expected = new HashSet<ObservableVertex<TodoElement>>();
+        var expected = new ArrayList<ObservableVertex<TodoElement>>();
         expected.add(rootV);
+        expected.add(v1);
 
         // test G1: expected -> G1
-        assertTrue(G.getInVertices(v2.vertex).containsAll(expected));
+        assertTrue(G.getInVertices(v2).containsAll(expected));
 
         // test G1: expected <- G1
         for (var v : G.getInVertices(v2)) {
@@ -235,7 +234,7 @@ public class ObservableGraphUnitTest {
     }
 
     @Test
-    public void addVertexTest() {
+    public void VertexTest()  {
         G.startListen(this::onChange);
 
         var v = G.addVertex(new Task());

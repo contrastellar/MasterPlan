@@ -149,7 +149,7 @@ public class Graph<T> implements IGraph<T> {
         checkForCircularity(v1, v2);
 
         v1.outVertices.add(v2);
-        v2.inVertices.add(v2);
+        v2.inVertices.add(v1);
     }
 
     @Override
