@@ -1,5 +1,6 @@
 package components;
 
+import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.observable.ObservableCollection;
 import javafx.scene.paint.Color;
@@ -8,57 +9,40 @@ import java.util.HashSet;
 
 public final class Tag {
 
-    /**
-     *
-     */
-    public static final ObservableCollection<Tag> ALL_TAGS = new ObservableCollection<>(new HashSet<>());
+    private final Observable<String> _name = new Observable<>("");
+    public final IReadOnlyObservable<String> name = _name;
 
-    /**
-     * User identifier name for the tag
-     */
-    public final Observable<String> name;
+    private final Observable<Color> _color = new Observable<>(Color.TRANSPARENT);
+    public final IReadOnlyObservable<Color> color = _color;
 
-    /**
-     * User identifier color for the tag
-     */
-    public final Observable<Color> color;
 
-    private Tag(String name, Color color) {
+    public Tag(String name, Color color) {
         if(name == null)
             throw new IllegalArgumentException("name cannot be null");
 
-        ALL_TAGS.add(this);
-
-        this.name = new Observable<>(name);
-        this.color = new Observable<>(color);
     }
 
-    // TODO: create register method
-    public void registerNewTag(String name, Color color) {
-      Tag tag = new Tag(name, color);
-      ALL_TAGS.add(tag);
+
+    public void setName(String name) {
+        if(name == null)
+            throw new IllegalArgumentException("Tag.setName() - name can not be null");
+
+        this._name.setValue(name);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if(o == this)
-            return true;
-
-        if(!(o instanceof Tag))
-            return false;
-
-        final Tag t = (Tag) o;
-
-        return this.name.getValue().equals( t.name.getValue() );
+    public String getName() {
+        return _name.getValue();
     }
 
-    @Override
-    public int hashCode()
-    {
-        int hash = 3;
-        hash = 53 * hash + (this.name.getValue() != null ? this.name.getValue().hashCode() : 0);
+    public void setColor(Color color) {
+        if(color == null)
+            throw new IllegalArgumentException("Tag.setColor() - name can not be null");
 
-        return hash;
+        this._color.setValue(color);
+    }
+
+    public Color getColor() {
+        return _color.getValue();
     }
 
 }
