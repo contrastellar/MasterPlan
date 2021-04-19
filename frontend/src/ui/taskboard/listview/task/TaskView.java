@@ -16,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import ui.taskboard.listview.ListView;
-import util.collections.IReadOnlyList;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -80,12 +79,8 @@ public class TaskView extends GridPane {
         List<Node> gridChildren = new ArrayList<>(getChildren());
         gridChildren.remove(listView);
         gridChildren.forEach(e -> {
-            e.setOnMouseEntered(event -> {
-                buttonContainer.setStyle("-fx-border-color: cadetblue;");
-            });
-            e.setOnMouseExited(event -> {
-                buttonContainer.setStyle("-fx-border-color: transparent;");
-            });
+            e.setOnMouseEntered(event -> buttonContainer.setStyle("-fx-border-color: cadetblue;"));
+            e.setOnMouseExited(event -> buttonContainer.setStyle("-fx-border-color: transparent;"));
         });
     }
 
@@ -158,9 +153,10 @@ public class TaskView extends GridPane {
 
     private void onRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
 
-        List<ObservableVertex<TodoElement>> numTaskQueryRes = _rootTask.getValue().getGraph().query((e) -> {
-            return e instanceof Task;
-        }, _rootTask.getValue());
+        List<ObservableVertex<TodoElement>> numTaskQueryRes = _rootTask.getValue().getGraph().query(
+                (e) -> e instanceof Task,
+                _rootTask.getValue()
+        );
 
         tasksRemainingLabel.setText(String.format(tasksRemainingFormat, numTaskQueryRes.size()));
 

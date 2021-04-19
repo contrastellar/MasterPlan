@@ -1,12 +1,14 @@
 package ui.custom.controls.tag;
 
 import components.Tag;
+import components.observable.IListener;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -15,15 +17,18 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 
-public class TagView extends HBox {
+class TagView extends HBox {
 
-    private final Observable<Tag> _tag = new Observable<>();
-    public final IReadOnlyObservable<Tag> tag = _tag;
+    public final Tag tag;
+
+    private IListener<TagView> removeTagCallback = null;
 
     @FXML
     private Label tagName;
 
-    public TagView(TagDisplayView tagDisplayView) {
+    public TagView(Tag tag) {
+        this.tag = tag;
+
         loadFXML();
     }
 
@@ -41,20 +46,12 @@ public class TagView extends HBox {
 
     @FXML
     private void initialize() {
-        _tag.startListen(this::onTagChange);
+        tag.name.startListen(this::onTagNameChange);
+        tag.color.startListen(this::onTagColorChange);
     }
 
-    private void onTagChange(Tag tag) {
-        if(tag == null) {
-            tagName.setText("TagView.tag.getValue() - null");
-            changeBackgroundColor(Color.WHITE);
-            // TODO: stop listening from the previous tag
-        }
-        else {
-            tag.name.startListen(this::onTagNameChange);
-            tag.color.startListen(this::onTagColorChange);
-        }
-
+    public void setOnRemoveCallback(IListener<TagView> removeTagCallback) {
+        this.removeTagCallback = removeTagCallback;
     }
 
     private void onTagNameChange(String name) {
@@ -69,21 +66,13 @@ public class TagView extends HBox {
         changeBackgroundColor(color);
     }
 
-    public void setTag(Tag tag) {
-        this._tag.setValue(tag);
-    }
-
-    public Tag getTag() {
-        return tag.getValue();
-    }
-
     @FXML
-    private void onMouseEnter() {
+    private void onMouseEnter(MouseEvent me) {
         // TODO: add remove button
     }
 
     @FXML
-    private void onMouseExit() {
+    private void onMouseExit(MouseEvent me) {
         // TODO: remove remove button
     }
 

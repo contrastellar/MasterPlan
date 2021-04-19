@@ -14,8 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ui.taskboard.listview.ListView;
-import util.collections.IReadOnlyList;
-import util.graph.*;
+import util.graph.ObservableVertex;
+import util.graph.ObservableVertexChange;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +71,8 @@ public class CategoryView extends GridPane {
         List<Node> gridChildren = new ArrayList<>(getChildren());
         gridChildren.remove(listView);
         gridChildren.forEach(e -> {
-            e.setOnMouseEntered(event -> {
-                buttonContainer.setStyle("-fx-border-color: cadetblue;");
-            });
-            e.setOnMouseExited(event -> {
-                buttonContainer.setStyle("-fx-border-color: transparent;");
-            });
+            e.setOnMouseEntered(event -> buttonContainer.setStyle("-fx-border-color: cadetblue;"));
+            e.setOnMouseExited(event -> buttonContainer.setStyle("-fx-border-color: transparent;"));
         });
     }
 
@@ -107,9 +104,10 @@ public class CategoryView extends GridPane {
 
     private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
 
-        List<ObservableVertex<TodoElement>> numTaskQueryRes = _categoryVertex.getValue().getGraph().query((e) -> {
-            return e instanceof Task;
-        }, _categoryVertex.getValue());
+        List<ObservableVertex<TodoElement>> numTaskQueryRes = _categoryVertex.getValue().getGraph().query(
+                (e) -> e instanceof Task,
+                _categoryVertex.getValue()
+        );
 
         tasksRemainingLabel.setText(String.format(tasksRemainingPattern, numTaskQueryRes.size()));
 
