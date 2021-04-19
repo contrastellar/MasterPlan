@@ -129,11 +129,6 @@ public class TaskView extends GridPane {
         listView.setRootVertex(rootTask);
     }
 
-    @FXML
-    private void onCheckBoxMouseClicked(MouseEvent ae) {
-        System.out.println("Clicked");
-    }
-
     private void onCheckBox_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
         if(_rootTask.getValue() == null)
             return;

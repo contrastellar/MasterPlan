@@ -35,7 +35,7 @@
 
     <!-- Category title (row 0, col 1) -->
     <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" spacing="5">
-        <CheckBox fx:id="completedCheckBox" prefWidth="10" prefHeight="10" onMouseClicked="#onCheckBoxMouseClicked" >
+        <CheckBox fx:id="completedCheckBox" prefWidth="10" prefHeight="10" >
             <HBox.margin><Insets right="5"/></HBox.margin>
         </CheckBox>
         <Label fx:id="taskName" text="Task Name Placeholder"/>
