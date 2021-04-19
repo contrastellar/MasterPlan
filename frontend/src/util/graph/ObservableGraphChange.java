@@ -15,6 +15,7 @@ public class ObservableGraphChange<T> {
     protected List<IVertex<T>> removedVertices = null;
 
 
+
     public ObservableGraphChange() { }
 
 

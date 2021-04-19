@@ -149,7 +149,7 @@ public class Graph<T> implements IGraph<T> {
         checkForCircularity(v1, v2);
 
         v1.outVertices.add(v2);
-        v2.inVertices.add(v2);
+        v2.inVertices.add(v1);
     }
 
     @Override
@@ -169,10 +169,13 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public void sort(Comparator<T> c) {
-        throw new UnsupportedOperationException("Graph.sort() - not implemented yet");
+    public void sort(Comparator<T> c) {  // TODO: Immplement
+//        ArrayList<Vertex> queryRes = new ArrayList<>();
+//        for(var v : this.getVertices()) {
+//            sort(c, v);
+//        }
+        throw new UnsupportedOperationException("Graph.sort() - not yet implmented");
     }
-
     @Override
     public void sort(Comparator<T> c, IVertex<T> v)  {
         Vertex vertex = validateVertex(v);

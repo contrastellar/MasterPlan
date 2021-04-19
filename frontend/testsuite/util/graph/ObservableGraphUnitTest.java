@@ -2,271 +2,381 @@ package util.graph;
 
 import components.Category;
 import components.TodoElement;
-import components.observable.IListener;
 import components.task.Task;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ObservableGraphUnitTest {
+    /**
+     * ObservableGraph G:
+     *     root --> {v1, v2, v3, v4}
+     *       v1 --> {v2, v3}
+     *       v2 --> {}
+     *       v3 --> {}
+     *       v4 --> {}
+     *
+     * In Testing for ObservableGraphChange</TodoElement> we listen to changes in G
+     * and ensure that the only change is that being tested.
+     *
+     * Listeners are initially null.
+     */
+    private ObservableGraph<TodoElement> G;
+    private ObservableVertex<TodoElement> v1, v2, v3, v4;
+    private ObservableVertex<TodoElement> rootV;
+    private ObservableGraphChange<TodoElement> graphChange;
+    private int numOnChangeCalls;
 
-//    private ObservableGraph<TodoElement> obsGraph;
-//    private ObservableGraphChange<TodoElement> graphChange = null;
-//    private ObservableVertexChange<TodoElement> vertexChange = null;
+
+
+    @Before
+    public void setup() {
+        G = new ObservableGraph<>(new Graph<>());
+        rootV = G.addVertex(new Category("root"));
+
+        v1 = G.addVertex(new Task("v1"), rootV);
+        v2 = G.addVertex(new Task("v2"), rootV);
+        v3 = G.addVertex(new Task("v3"), rootV);
+        v4 = G.addVertex(new Task("v4"), rootV);
+
+        G.addDirectedEdge(v1, v2);
+        G.addDirectedEdge(v1, v3);
+
+        // register listeners and set changes to null
+        numOnChangeCalls = 0;
+        graphChange = null;
+    }
+
+    @Test
+    public void getVerticesTest() {
+        // register listener
+        G.startListen(this::onChange);
+
+        // hash set of G1 the vertices
+        var expected = new HashSet<ObservableVertex<TodoElement>>();
+        expected.add(rootV);
+        expected.add(v1);
+        expected.add(v2);
+        expected.add(v3);
+        expected.add(v4);
+
+        // test G1: verticesG1 -> G1
+        assertTrue(G.getVertices().containsAll(expected));
+
+        // test G1: G1.getVertives -> vertivesG1
+        for (var v : G.getVertices()) {
+            assertTrue(expected.contains(v));
+            expected.remove(v); // remove to ensure we aren't getting repeats
+        }
+
+        // check the listener is only called on initialization
+        assertEquals(1, numOnChangeCalls);
+
+        // stop listners
+        G.stopListen(this::onChange); }
+
+    @Test
+    public void getOutVerticesTest() {
+        // register listener
+        G.startListen(this::onChange);
+
+        // hash set of G1's root vertices adjacency list
+        var expected = new ArrayList<ObservableVertex<TodoElement>>();
+        expected.add(v1);
+        expected.add(v2);
+        expected.add(v3);
+        expected.add(v4);
+
+        // test G1: expected -> G1
+        assertTrue(G.getOutVertices(rootV).containsAll(expected));
+
+        // test G1: expected <- G1
+        for (var v : G.getOutVertices(rootV)) {
+            assertTrue(expected.contains(v));
+            expected.remove(v);
+        }
+
+        // check the listener is only called on initialization
+        assertEquals(1, numOnChangeCalls);
+
+        // stop listners
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void getOutDegreeTest() {
+        // register listener
+        G.startListen(this::onChange);
+
+        // test G1 root
+        assertEquals(G.getOutDegree(rootV), 4);
+
+        // check the listener is only called on initialization
+        assertEquals(1, numOnChangeCalls);
+
+        // stop listeners
+        G.stopListen(this::onChange);
+    }
+
+    @Test // TODO: Fix issue
+    public void getInVerticesTest() {
+        // register listener
+        G.startListen(this::onChange);
+
+        // hash set of G1's root vertices adjacency list
+        var expected = new ArrayList<ObservableVertex<TodoElement>>();
+        expected.add(rootV);
+        expected.add(v1);
+
+        // test G1: expected -> G1
+        assertTrue(G.getInVertices(v2).containsAll(expected));
+
+        // test G1: expected <- G1
+        for (var v : G.getInVertices(v2)) {
+            assertTrue(expected.contains(v));
+            expected.remove(v);
+        }
+
+        // check the listener is only called on initialization
+        assertEquals(1, numOnChangeCalls);
+
+        // stop listners
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void getInDegreeTest() {
+        // register listener
+        G.startListen(this::onChange);
+
+        // test G1 root
+        assertEquals(2, G.getInDegree(v2));
+
+        // check the listener is only called on initialization
+        assertEquals(1, numOnChangeCalls);
+
+        // stop listeners
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void queryTest() {
+        // Register listener
+        G.startListen(this::onChange);
+
+        IQuery<TodoElement> query = (element) -> { return element == v1.vertex.getElement(); };
+
+        List<ObservableVertex<TodoElement>> queryRes = G.query(query);
+
+        assertTrue(queryRes.contains(v1));
+
+        assertEquals(1, queryRes.size());
+
+        // Test no change to ObservableGraphChange
+        assertEquals(1, numOnChangeCalls);
+
+        assertNotNull(graphChange);
+
+        assertEquals(5, graphChange.addedVerticesSize());
+
+        assertEquals(0, graphChange.removedVerticesSize());
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void queryReachableTest() {
+        // Register listener and define a query for v3
+        G.startListen(this::onChange);
+        IQuery<TodoElement> query = (element) -> { return element == v3.vertex.getElement(); };
+
+        List<ObservableVertex<TodoElement>> queryRes = G.queryReachable(query, rootV);
+
+        assertTrue(queryRes.contains(v3));
+
+        // Test no change to ObservableGraphChange
+        assertEquals(1, queryRes.size());
+
+        assertEquals(1, numOnChangeCalls);
+
+        assertNotNull(graphChange);
+
+        assertEquals(5, graphChange.addedVerticesSize());
+
+        assertEquals(0, graphChange.removedVerticesSize());
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void size() {
+        // Register listener
+        G.startListen(this::onChange);
+
+        assertEquals(5, G.size());
+
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void VertexTest()  {
+        G.startListen(this::onChange);
+
+        var v = G.addVertex(new Task());
+
+        assertEquals(2, numOnChangeCalls);
+
+        assertNotNull(graphChange);
+
+        assertEquals(1, graphChange.addedVerticesSize());
+
+        assertTrue(graphChange.getAddedVertices().contains(v.vertex));
+
+        assertEquals(0, graphChange.removedVerticesSize());
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void removeVertexTest() {
+        G.startListen(this::onChange);
+
+        G.removeVertex(v1.vertex);
+
+        assertEquals(2, numOnChangeCalls);
+
+        assertNotNull(graphChange);
+
+        assertEquals(0, graphChange.addedVerticesSize());
+
+        assertEquals(1, graphChange.removedVerticesSize());
+
+        assertTrue(graphChange.getRemovedVertices().contains(v1.vertex));
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+    @Test
+    public void removeVertexReachableTest() {
+        fail("Note yet implemented in ObservableGraph.java");
+    }
+
+    @Test
+    public void addDirectedEdgeTest() {
+        G.startListen(this::onChange);
+        G.addDirectedEdge(v1, v4); // now v1 -> {v2,v3,v4}
+
+        assertEquals(1, numOnChangeCalls);
+
+        // Test no change to ObservableGraphChange
+        assertNotNull(graphChange);
+
+        assertEquals(5, graphChange.addedVerticesSize());
+
+        assertEquals(0, graphChange.removedVerticesSize());
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void removeDirectedEdgeTest() {
+        G.startListen(this::onChange);
+        G.removeDirectedEdge(rootV, v1); // now rootV -> {v2,v3,v4}
+
+        assertEquals(1, numOnChangeCalls);
+
+        // Test no change to ObservableGraphChange
+        assertNotNull(graphChange);
+
+        assertEquals(5, graphChange.addedVerticesSize());
+
+        assertEquals(0, graphChange.removedVerticesSize());
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+
+    @Test
+    public void sortTest() { // TODO Must implement
+//        // comparator definition
+//        Comparator<TodoElement> c = (t1, t2) -> {
+//            return t2 == null ? 1 : t1.name.getValue().compareTo(t2.name.getValue());
+//        };
+//        TodoElement prev = null;
 //
-//    private int numOnChangeCalls;
-//    private Task t1, t2, t3, t4;
-//
-//
-//
-//    @Before
-//    public void setup() {
-//        numOnChangeCalls = 0;
-//        t1 = new Task("t1");
-//        t2 = new Task("t2");
-//        t3 = new Task("t3");
-//        t4 = new Task("t4");
-//        obsGraph = new ObservableGraph<>(new Graph<>());
-//    }
-//
-//    @Test
-//    public void getVertices1() {
-//        // register listener
-//        var t1Vertex = obsGraph.addVertex(t1);
-//        obsGraph.startListen(this::onChange);
-//        numOnChangeCalls = 0;
-//
-//        // TEST
-//        for (var v: obsGraph.getVertices())
-//            assertEquals(v, t1V);
-//    }
-//
-//    @Test
-//    public void getOutVertices1() {
-//        var t1Vertex obsGraph.addVertex(t1);
-//
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//
-//        // TEST
-//        for (var v: obsGraph.getOutVertices(rootV)) {
-//            assertEquals(v.getElement(), t1);
-//
+//        G.sort(c);
+//        // Testing the sort within our root vertex adjacency list
+//        for (var v : G.getVertices()) {
+//            assertTrue(c.compare(v.getElement(), prev) > 0);
+//            prev = v.getElement();
 //        }
-//    }
-//
-//    @Test
-//    public void getOutDegree1() {
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//
-//        obsGraph.addVertex(t1, rootV);
-//        obsGraph.addVertex(t2, rootV);
-//
-//        // TEST
-//        assertEquals(2, obsGraph.getOutDegree(rootV));
-//    }
-//
-//    @Test
-//    public void getInVertices() {
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//
-//        // TEST
-//        for (var v: obsGraph.getOutVertices(rootV))
-//            assertEquals(v.getElement(), rootV.getElement());
-//    }
-//
-//    @Test
-//    public void getInDegree() { //TODO
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//
-//        obsGraph.addVertex(t1, rootV);
-//        obsGraph.addVertex(t2, rootV);
-//
-//        // TEST
-//        assertEquals(0, obsGraph.getInDegree(rootV));
-//    }
-//
-//    @Test
-//    public void query1() {
-//        //query 2 param
-//        fail("Test not yet implemented");
-//    }
-//
-//    @Test
-//    public void query2() {
-//        //query 3 param
-//        fail("Test not yet implemented");
-//    }
-//
-//    @Test
-//    public void queryReachable1() {
-//        fail("Test not yet implemented");
-//    }
-//
-//    @Test
-//    public void size() {
-//        // Register listener
-//        obsGraph.startListen(this::onChange);
-//        obsGraph.addVertex(t1, rootV);
-//        obsGraph.addVertex(t2, rootV);
-//
-//        //TEST
-//        assertEquals(3, obsGraph.size());
-//    }
-//
-//    @Test
-//    public void addVertex1() {
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//        numOnChangeCalls = 0;
-//
-//        // add vertex
-//        var v = obsGraph.addVertex(t1);
-//
-//        // check the listener is called only once
-//        assertEquals(1, numOnChangeCalls);
-//
-//        // check that the change variable is not null
-//        assertNotNull(graphChange);
-//
-//        // check that change only has 1 vertex added
-//        assertEquals(1, graphChange.addedVerticesSize());
-//
-//        // check that the added vertex in change is the actual vertex
-//        assertEquals(graphChange.getAddedVertices().get(0), v);
-//
-//        // check that change has no removed vertices
-//        assertEquals(0, graphChange.removedVerticesSize());
-//
-//        // check that no sort occurred
-//        assertFalse(graphChange.getSorted());
-//
-//        // check that no sorting comparator was given
-//        assertNull(graphChange.getSortingComparator());
-//    }
-//
-//    @Test // Test ObservableGraphChange
-//    public void removeVertex1() {
-//
-//        var t1V = obsGraph.addVertex(t1);
-//
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//        numOnChangeCalls = 0;
-//
-//        obsGraph.removeVertex(t1V);
-//
-//        // check the listener is called only once
-//        assertTrue(numOnChangeCalls == 1);
-//
-//        // check that the change variable is not null
-//        assertTrue(graphChange != null);
-//
-//        // check that change only has 1 vertex removed
-//        assertTrue(graphChange.removedVerticesSize() == 1);
-//
-//        // check that the removed vertex in change is the actual vertex
-//        assertEquals(graphChange.getRemovedVertices().get(0), t1V);
-//
-//        // check that change has no added vertices
-//        assertTrue(graphChange.addedVerticesSize() == 0);
-//
-//        // check that no sort occurred
-//        assertTrue(graphChange.getSorted() == false);
-//
-//        // check that no sorting comparator was given
-//        assertTrue(graphChange.getSortingComparator() == null);
-//    }
-//
-//    @Test // Test ObservableVertexChange
-//    public void removeVertex2() {
-//
-//        var v = obsGraph.addVertex(t2);
-//
-//        var t1V = obsGraph.addVertex(t1, v);
-//
-//        // register listener
-//        obsGraph.startListen(this::onChange);
-//        numOnChangeCalls = 0;
-//
-//        obsGraph.removeVertex(t1V);
-//
-//        // check the listener is called only once
-//        assertTrue(numOnChangeCalls == 1);
-//
-//        // check that the change variable is not null
-//        assertTrue(graphChange != null);
-//
-//        // check that change only has 1 vertex removed
-//        assertTrue(graphChange.removedVerticesSize() == 1);
-//
-//        // check that the removed vertex in change is the actual vertex
-//        assertEquals(graphChange.getRemovedVertices().get(0), t1V);
-//
-//        // check that change has no added vertices
-//        assertTrue(graphChange.addedVerticesSize() == 0);
-//
-//        // check that no sort occurred
-//        assertTrue(graphChange.getSorted() == false);
-//
-//        // check that no sorting comparator was given
-//        assertTrue(graphChange.getSortingComparator() == null);
-//    }
-//
-//    @Test
-//    public void removeVertexReachable1() {
-//        fail("Note yet implemented in ObservableGraph.java");
-//    }
-//
-//    @Test
-//    public void addDirectedEdge1() {
-//        // register listener
-//        var obsV = obsGraph.addVertex(t1);
-//        obsV.startListen(this::onVertexChange);
-//
-//
-//        obsGraph.addDirectedEdge(obsV.vertex, rootV);
-//        for (var u : vertexChange.getAddedEdges()) {
-//            assertEquals(u.getElement(), obsV);
-//        }
-//    }
-//
-//    @Test
-//    public void removeDirectedEdge1() {
-//
-//
-//    }
-//
-//    @Test
-//    public void sort1() {
-//        // Tests sort with 1 param
-//        fail("Test not yet implemented");
-//    }
-//
-//    @Test
-//    public void sort2() {
-//        // Tests sort method that takes 2 params
-//        fail("Test not yet implemented");
-//    }
-//
-//    @Test
-//    public void sortReachable1() {
-//        fail("Test not yet implemented");
-//    }
-//
-//
-//    @Override
-//    public void onChange(ObservableGraphChange<TodoElement> change) {
-//        numOnChangeCalls++;
-//       this.graphChange = change;
-//    }
-//
-//
-//    public void onVertexChange(ObservableVertexChange<TodoElement> change) {
-//        this.vertexChange = change;
-//    }
+        fail("Not yet implmented in ObservableGraph");
+    }
+
+
+    @Test
+    public void sortReachableTest() {
+        // register listner and comparator sorts creation data of v1 childern
+        G.startListen(this::onChange);
+        Comparator<TodoElement> c = (t1, t2) -> {
+            return t2 == null ? 1 : t1.name.getValue().compareTo(t2.name.getValue());
+        };
+
+        // Testing the sort within our root vertex adjacency list
+        G.sortReachable(c, rootV);
+        TodoElement prev = null;
+        for (var v : G.getOutVertices(rootV)) {
+            assertTrue(c.compare(v.getElement(), prev) >= 0);
+            prev = v.getElement();
+        }
+
+        // Test no change to ObservableGraphChange
+        assertEquals(1, numOnChangeCalls);
+
+        assertNotNull(graphChange);
+
+        assertEquals(5, graphChange.addedVerticesSize());
+
+        assertEquals(0, graphChange.removedVerticesSize());
+
+        assertFalse(graphChange.getSorted());
+
+        assertNull(graphChange.getSortingComparator());
+
+        G.stopListen(this::onChange);
+    }
+
+    protected void onChange(ObservableGraphChange<TodoElement> change) {
+        numOnChangeCalls++;
+        this.graphChange = change;
+    }
 }

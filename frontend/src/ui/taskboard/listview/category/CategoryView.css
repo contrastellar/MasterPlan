@@ -1,11 +1,25 @@
+#remainingContainer, #buttonContainer {
+    -fx-border-width: 0 5 0 0;
+    -fx-border-color: transparent;
+}
+
 Label {
     -fx-font-size: 14;
+    -fx-text-fill: black;
 }
 
 HBox {
     -fx-padding: 0 5 0 5;
 }
 
+Icon:hover {
+    -fx-background-color: cadetblue;
+}
+
 .catContainer {
     -fx-padding: 5 0 5 0;
+}
+
+#tasksRemainingLabel {
+    -fx-text-fill: #cecece;
 }

@@ -12,19 +12,11 @@
          xmlns:fx="http://javafx.com/fxml/1"
          fx:id="listContainer">
 
-      <HBox alignment="CENTER">
-            <padding>
-                  <Insets topRightBottomLeft="5"/>
-            </padding>
-      </HBox>
-
       <!-- Runtime: listview header  -->
       <ListViewHeader fx:id="listViewHeader" />
 
-      <!-- Runtime: category view  -->
-      <ScrollPane fitToWidth="true" fitToHeight="true">
-            <ListView fx:id="listView" />
-      </ScrollPane>
+      <!-- Runtime: category view | ID is for scroll event handler  -->
+      <ScrollPane fx:id="scrollPane"><ListView fx:id="listView" /></ScrollPane>
 
 </fx:root>
 <!--            <VBox GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">-->

@@ -6,6 +6,7 @@ import components.task.Task;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
@@ -27,6 +28,7 @@ public class GraphUnitTest {
     private Task t1, t2, t3, t4;
     private Category c1, c2;
     private Category root;
+    private Graph<TodoElement>.Vertex rootV;
 
     @Before
     public void setUp() {
@@ -38,7 +40,7 @@ public class GraphUnitTest {
         c1 = new Category("c1");
         c2 = new Category("c2");
         root = new Category("Root");
-        graph.addVertex(root);
+        rootV = graph.addVertex(root);
     }
 
     /** Adds a task to the graph, and confirm that the returned vertex's element is the task  **/
@@ -143,25 +145,26 @@ public class GraphUnitTest {
     /** Tests the sort of tasks by creation data **/
     @Test
     public void sort1() { // TODO: Ensure working when implemented
-        // comparator definition
-        Comparator<TodoElement> c = (t1, t2) -> {
-            return t1 == null ? -1 : t1.creationDate.compareTo(t2.creationDate);
-        };
-
-        // Initialize
-        graph.addVertex(t1);
-        graph.addVertex(t2);
-        graph.addVertex(c1);
-        graph.addVertex(c2);
-        graph.sort(c);
-
-        TodoElement prev = null;
-
-        // Testing the sort within our root vertex adjacency list
-        for (var v : graph.getVertices()) {
-            assertTrue(c.compare(v.getElement(), prev) > 0);
-            prev = v.getElement();
-        }
+//        // comparator definition
+//        Comparator<TodoElement> c = (t1, t2) -> {
+//            return t1 == null ? -1 : t1.creationDate.compareTo(t2.creationDate);
+//        };
+//
+//        // Initialize
+//        var r = graph.addVertex(t1);
+//        graph.addVertex(t2);
+//        graph.addVertex(t3);
+//        graph.addVertex(t4);
+//        graph.sort(c);
+//
+//        TodoElement prev = r.getElement();
+//
+//        // Testing the sort within our root vertex adjacency list
+//        for (var v : graph.getVertices()) {
+//            assertTrue(c.compare(v.getElement(), prev) > 0);
+//            prev = v.getElement();
+//        }
+        fail("Not yet implmented in ObservableGraph");
     }
 
     /** Tests the sort of tasks by creation data **/
@@ -220,6 +223,40 @@ public class GraphUnitTest {
         assertTrue(queryRes.contains(v2));
         assertEquals(1, queryRes.size());
     }
+
+    /** Testing a reachable query for a specific vertex of Task t **/
+    @Test
+    public void getInVertices() {
+        // Initialize
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        var v3 = graph.addVertex(t3);
+        var v4 = graph.addVertex(t4);
+
+        graph.addDirectedEdge(rootV, v1);
+        graph.addDirectedEdge(rootV, v2);
+        graph.addDirectedEdge(rootV, v3);
+        graph.addDirectedEdge(rootV, v4);
+
+        graph.addDirectedEdge(v1, v2);
+        graph.addDirectedEdge(v1, v3);
+
+        var expected = new ArrayList<Graph<TodoElement>.Vertex>();
+        expected.add(rootV);
+        expected.add(v1);
+
+        // test G1: expected -> G1
+        assertTrue(graph.getInVertices(v2).containsAll(expected));
+
+        // test G1: expected <- G1
+        for (var v : graph.getInVertices(v2)) {
+            System.out.println(v.getElement().getName());
+            assertTrue(expected.contains(v));
+            expected.remove(v);
+        }
+
+    }
+
 
     // TODO Validate vertex?
 

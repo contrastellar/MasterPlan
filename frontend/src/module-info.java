@@ -10,7 +10,7 @@ module MasterPlan {
     opens ui.account.login.create        to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.custom.icon                 to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.taskboard                   to javafx.graphics, javafx.controls, javafx.fxml;
-    opens ui.taskboard.taskedit          to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.taskboard.editbar           to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.window                      to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.window.statusbar            to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.window.toolbar              to javafx.graphics, javafx.controls, javafx.fxml;

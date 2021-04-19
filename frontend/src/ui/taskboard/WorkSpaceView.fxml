@@ -11,6 +11,6 @@
     <!-- Runtime: ListView -->
 
     <!-- Task EditBar -->
-    <fx:include fx:id="editbar" source="taskedit/EditBar.fxml"/>
+    <fx:include fx:id="editbar" source="editbar/TaskEditBar.fxml"/>
 
 </fx:root>

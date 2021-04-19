@@ -149,6 +149,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         return obsVertex;
     }
 
+    /* TODO: Second param is outVertex */
     @Override
     public ObservableVertex<T> addVertex(T element, IVertex<T> inVertex) {
         ObservableVertex<T> obsInVertex = validateVertex(inVertex);

@@ -7,15 +7,30 @@ import components.observable.Observable;
 import components.task.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import ui.custom.icon.Icon;
 import ui.taskboard.listview.ListView;
 import util.graph.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryView extends GridPane {
 
     private final ListView listView;
+
+    @FXML
+    private Icon toggleBtn;
+    @FXML
+    private HBox toggleContainer;
+    @FXML
+    private HBox remainingContainer;
+    @FXML
+    private HBox buttonContainer;
 
     @FXML
     private Label categoryName;
@@ -33,14 +48,30 @@ public class CategoryView extends GridPane {
         loadFXML();
 
         listView = new ListView();
-
         GridPane.setColumnIndex(listView, 1);
         GridPane.setColumnSpan(listView, 2);
         GridPane.setRowIndex(listView, 2);
-
         getChildren().add(listView);
 
         _rootCategory.startListen(this::onRootCategoryChange);
+
+        // Sets toggleBtn clicked handler
+        toggleBtn.setOnMouseClicked(this::toggleBtnHandler);
+        if (listView.isTodoEmpty())
+            toggleBtn.setVisible(false);
+
+        // Set styling for hover
+        List<Node> gridChildren = new ArrayList();
+        getChildren().forEach(e -> gridChildren.add(e));
+        gridChildren.remove(listView);
+        gridChildren.forEach(e -> {
+            e.setOnMouseEntered(event -> {
+                buttonContainer.setStyle("-fx-border-color: cadetblue;");
+            });
+            e.setOnMouseExited(event -> {
+                buttonContainer.setStyle("-fx-border-color: transparent;");
+            });
+        });
     }
 
     private void loadFXML() {
@@ -53,6 +84,22 @@ public class CategoryView extends GridPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    /**
+     * handler for Toggling todos and rotating btn
+     * @param e mouse event
+     */
+    public void toggleBtnHandler(MouseEvent e) {
+        if (listView.isTodoEmpty()) return;
+
+        listView.toggleTodo();
+
+        double angle = toggleBtn.getRotate();
+        if (angle == 0)
+            toggleBtn.setRotate(270);
+        else
+            toggleBtn.setRotate(0);
     }
 
     private void onRootCategoryChange(ObservableVertex<TodoElement> rootCategory) {
@@ -71,11 +118,17 @@ public class CategoryView extends GridPane {
     private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
 
         int remainingTasks = 0;
+        boolean hasChildren = false;
 
-
-        for (var vertex : _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue()))
+        for (var vertex : _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue())) {
+            hasChildren = true;
             if (vertex.getElement() instanceof Task)
                 remainingTasks++;
+
+            }
+
+        if (!hasChildren) toggleBtn.setVisible(false);
+        else toggleBtn.setVisible(true);
 
         tasksRemainingLabel.setText(String.format(tasksRemainingPattern, remainingTasks));
 

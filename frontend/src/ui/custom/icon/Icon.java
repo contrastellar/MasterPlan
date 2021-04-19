@@ -1,7 +1,9 @@
 package ui.custom.icon;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
