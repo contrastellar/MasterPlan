@@ -21,6 +21,4 @@
     </HBox>
 
     <VBox fx:id="todoContainer"/>
-
-
 </fx:root>

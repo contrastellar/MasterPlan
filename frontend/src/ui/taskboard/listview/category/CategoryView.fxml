@@ -7,6 +7,7 @@
 
 <?import ui.custom.icon.Icon?>
 
+<?import javafx.scene.control.Button?>
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@CategoryView.css"
          styleClass="topBorder, catContainer"
@@ -35,7 +36,9 @@
     </HBox>
 
     <!-- Category buttons (row 0, col 2) -->
-    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
+    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="1">
+        <Button fx:id="removeVertexBtn" styleClass="removeCatBtn" text="V"><HBox.margin><Insets right="5"/></HBox.margin></Button>
+        <Button fx:id="removeGraphBtn" styleClass="removeCatBtn" text="G"><HBox.margin><Insets right="5"/></HBox.margin></Button>
         <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
         <Icon icon="archive.svg" iconColor="#cccccc" iconSize="10"/>
     </HBox>

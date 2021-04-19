@@ -82,11 +82,61 @@ public class GraphUnitTest {
     /** Adds a vertex and tests successful removal of the vertex **/
     @Test
     public void removeVertex1() {
+        /**
+         * G:
+         * root -> {v1, v4}
+         * v1 -> {v2, v3}
+         * v2 -> {}
+         *     :
+         * v3 -> {}
+         */
+        // Initialize
         var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        var v3 = graph.addVertex(t3);
+        var v4 = graph.addVertex(t4);
+
+        graph.addDirectedEdge(rootV, v1);
+        graph.addDirectedEdge(rootV, v4);
+        graph.addDirectedEdge(v1, v2);
+        graph.addDirectedEdge(v1, v3);
+
         graph.removeVertex(v1);
 
-        for (var v : graph.getVertices())
-            assertEquals(v.getElement(),root);
+        assertTrue(!graph.getVertices().contains(v1));
+        assertTrue(!graph.getInVertices(v2).contains(v1));
+        assertTrue(!graph.getInVertices(v3).contains(v1));
+    }
+
+    /** Adds a vertex and tests successful removal of the vertex **/
+    @Test
+    public void removeVertexReachable1() {
+        /**
+         * G:
+         * root -> {v1,v2, v4}
+         * v1 -> {v2, v3}
+         * v2 -> {}
+         *     :
+         * v3 -> {}
+         */
+
+        // Initialize
+        var v1 = graph.addVertex(t1);
+        var v2 = graph.addVertex(t2);
+        var v3 = graph.addVertex(t3);
+        var v4 = graph.addVertex(t4);
+
+        graph.addDirectedEdge(rootV, v1);
+        graph.addDirectedEdge(rootV, v2);
+        graph.addDirectedEdge(rootV, v4);
+
+        graph.addDirectedEdge(v1, v2);
+        graph.addDirectedEdge(v1, v3);
+
+        graph.removeVertex(v1);
+
+        assertTrue(!graph.getVertices().contains(v1));
+
     }
 
     /** Adds a Dependency between vertices from task 1 to task 2 **/

@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ObservableVertexChange<T> {
-
     protected boolean sorted = false;
     protected Comparator<T> sortingComparator = null;
     protected List<ObservableVertex<T>> addedEdges = null;

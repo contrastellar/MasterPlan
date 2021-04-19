@@ -69,41 +69,45 @@ public class Graph<T> implements IGraph<T> {
         return vertex;
     }
 
-    @Override
+    @Override /* this removes a vertex  */
     public void removeVertex(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
         removeVertex(vertex);
     }
 
     public void removeVertex(Vertex v) {
-        for(Vertex inV : v.inVertices)
-            removeDirectedEdge(inV, v);
+        for(Vertex outV : v.outVertices) // removes it's existstance from any lists
+            outV.inVertices.remove(v);
+        elementToVertex.remove(v.element); // remove vertex
+        v.outVertices.clear();
 
-        elementToVertex.remove(v.element);
     }
 
     @Override
-    public void removeVertexReachable(IVertex<T> v) {
+    public List<Graph<T>.Vertex> removeVertexReachable(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
-        removeVertexReachable(vertex);
+        List<Graph<T>.Vertex> list = new ArrayList<>();
+        removeVertexReachable(vertex, list);
+        return list;
     }
 
-    public void removeVertexReachable(Vertex v) {
-        validateVertex(v);
-        removeValidate(v);
+    public List<Graph<T>.Vertex> removeVertexReachable(Vertex v, List<Graph<T>.Vertex> list) {
+        removeVertexReachableValidate(v, list);
+        return list;
     }
 
-    private void removeValidate(Vertex v) {
+    private void removeVertexReachableValidate(Vertex v, List<Graph<T>.Vertex> list) {
         for (var p : v.inVertices)
             removeDirectedEdge(p, v);
         for (var c : v.outVertices) {
             if (c.inVertices.size() == 1) { // base case 1
-                removeValidate(c);
+                removeVertexReachableValidate(c, list);
             } else { // case of another vertex to attach a child compenent of v
                 removeDirectedEdge(v, c);
                 c.inVertices.remove(v);
             }
         }
+        list.add(v);
         elementToVertex.remove(v.element);
     }
 

@@ -19,9 +19,7 @@ import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ListView extends VBox {
 
@@ -34,8 +32,11 @@ public class ListView extends VBox {
     @FXML
     private Button addCategoryBtn;
 
+
+
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
+
 
     private final Map<IVertex<TodoElement>, Node> vertexToNode = new HashMap<>();
 
@@ -119,13 +120,12 @@ public class ListView extends VBox {
     }
 
     private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
-
         for(var vertex : change.getAddedEdges()) {
             addVertex(vertex);
         }
 
         for(var vertex : change.getRemovedEdges()) {
-            removeVertex(vertex);
+            removeView(vertex);
         }
 
         if(change.getSorted()) {
@@ -134,11 +134,10 @@ public class ListView extends VBox {
     }
 
     private void addVertex(ObservableVertex<TodoElement> vertex) {
-
         Node node;
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
-            cView.setRootCategory(vertex);
+            cView.setCategory(vertex);
             node = cView;
         }
         else if(vertex.getElement() instanceof Task) {
@@ -152,19 +151,35 @@ public class ListView extends VBox {
         vertexToNode.put(vertex, node);
     }
 
-    private void removeVertex(ObservableVertex<TodoElement> vertex) {
+    private void removeView(ObservableVertex<TodoElement> vertex) {
         Node node = vertexToNode.get(vertex);
 
         if(node == null)
-            throw new IllegalArgumentException("ListViewContainer.removeVertex() - vertex does not exist in this ListViewContainer");
+            throw new IllegalArgumentException("ListView.removeView() - node does not exist in this ListViewContainer");
+        else if(!vertex.getGraph().getInVertices(vertex).isEmpty()) {
 
+        } else
+            throw new UnsupportedOperationException("not implemented");
         todoContainer.getChildren().remove(node);
         vertexToNode.remove(vertex);
-    }
+   }
 
     private void sort(Comparator<TodoElement> c) {
         // TODO: Implement
         throw new UnsupportedOperationException("not yet implemented");
     }
 
+
+
 }
+
+
+
+
+
+
+
+
+
+
+

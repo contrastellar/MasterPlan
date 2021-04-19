@@ -280,7 +280,25 @@ public class ObservableGraphUnitTest {
     }
     @Test
     public void removeVertexReachableTest() {
-        fail("Note yet implemented in ObservableGraph.java");
+//        for (var v : rootV.getGraph().getVertices()) {
+//            System.out.println(v.getElement().getName() + "->");
+//            for (var u: rootV.getGraph().getOutVertices(v)) {
+//                System.out.println("     " + u.getElement().getName());
+//
+//            }
+//        }
+//
+//        G.removeVertexReachable(v1.vertex);
+//
+//        System.out.println(" ");
+//        for (var v : rootV.getGraph().getVertices()) {
+//            System.out.println(v.getElement().getName() + "->");
+//            for (var u: rootV.getGraph().getOutVertices(v)) {
+//                System.out.println("     " + u.getElement().getName());
+//
+//            }
+//        }
+        fail("not yet implemented");
     }
 
     @Test

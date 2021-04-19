@@ -8,6 +8,7 @@
 <?import ui.custom.icon.Icon?>
 
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Button?>
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@TaskView.css"
          styleClass="taskContainer, topBorder"
@@ -40,7 +41,9 @@
     </HBox>
 
     <!-- Category buttons (row 0, col 2) -->
-    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
+    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="1">
+        <Button fx:id="removeVertexBtn" styleClass="removeTaskBtn" text="V"><HBox.margin><Insets right="5"/></HBox.margin></Button>
+        <Button fx:id="removeGraphBtn" styleClass="removeTaskBtn" text="G"><HBox.margin><Insets right="5"/></HBox.margin></Button>
         <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
         <Icon icon="archive.svg" iconColor="#cccccc" iconSize="10"/>
     </HBox>

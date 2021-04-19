@@ -7,10 +7,12 @@ import components.observable.Observable;
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseDragEvent;
@@ -50,8 +52,12 @@ public class TaskView extends GridPane {
     @FXML
     private final ListView listView;
 
+    @FXML
+    private Button removeVertexBtn, removeGraphBtn;
+
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
+    private ObservableVertex<TodoElement> taskVertex;
 
     /**
      * Constructs Category component with loader
@@ -68,6 +74,8 @@ public class TaskView extends GridPane {
         getChildren().add(listView);
 
         _rootTask.startListen(this::onRootTaskChange);
+        removeVertexBtn.setOnAction(this::onRemoveVertexBtn_click);
+        removeGraphBtn.setOnAction(this::onRemoveGraphBtn_click);
 
         // Sets toggleBtn clicked handler
         toggleBtn.setOnMouseClicked(this::toggleBtnHandler);
@@ -87,8 +95,6 @@ public class TaskView extends GridPane {
             });
         });
     }
-
-
 
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TaskView.fxml"));
@@ -152,6 +158,18 @@ public class TaskView extends GridPane {
         else {
             taskName.setTextFill(Color.BLACK);
         }
+    }
+
+    private void onRemoveVertexBtn_click(ActionEvent e) {
+        if(_rootTask.getValue() == null)
+            return;
+
+    }
+
+    private void onRemoveGraphBtn_click(ActionEvent e) {
+        if(_rootTask.getValue() == null)
+            return;
+
     }
 
     private void onTaskNameChange(String name) {

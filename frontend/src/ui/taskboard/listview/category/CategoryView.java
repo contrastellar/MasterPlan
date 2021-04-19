@@ -5,9 +5,11 @@ import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.task.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -36,24 +38,46 @@ public class CategoryView extends GridPane {
     private Label categoryName;
 
     @FXML
+    private Button removeVertexBtn, removeGraphBtn;
+
+
+
+    @FXML
     private Label tasksRemainingLabel;
     private static final String tasksRemainingPattern = "%d remaining";
 
-    private final Observable<ObservableVertex<TodoElement>> _rootCategory = new Observable<>();
-    public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootCategory = _rootCategory;
+    private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
+    public final IReadOnlyObservable<ObservableVertex<TodoElement>> categoryVertex = _categoryVertex;
 
 
     public CategoryView() {
-
-        loadFXML();
-
         listView = new ListView();
+        loadFXML();
+    }
+
+    private void loadFXML() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CategoryView.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
+    }
+
+    @FXML
+    private void initialize() {
         GridPane.setColumnIndex(listView, 1);
         GridPane.setColumnSpan(listView, 2);
         GridPane.setRowIndex(listView, 2);
         getChildren().add(listView);
 
-        _rootCategory.startListen(this::onRootCategoryChange);
+        _categoryVertex.startListen(this::onCategoryVertexChange);
+        removeVertexBtn.setOnAction(this::onRemoveVertexBtn_click);
+        removeGraphBtn.setOnAction(this::onRemoveGraphBtn_click);
+
 
         // Sets toggleBtn clicked handler
         toggleBtn.setOnMouseClicked(this::toggleBtnHandler);
@@ -74,18 +98,6 @@ public class CategoryView extends GridPane {
         });
     }
 
-    private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CategoryView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
     /**
      * handler for Toggling todos and rotating btn
      * @param e mouse event
@@ -102,51 +114,61 @@ public class CategoryView extends GridPane {
             toggleBtn.setRotate(0);
     }
 
-    private void onRootCategoryChange(ObservableVertex<TodoElement> rootCategory) {
-        if(rootCategory == null) {
+    private void onCategoryVertexChange(ObservableVertex<TodoElement> categoryVertex) {
+        if(categoryVertex == null) {
             categoryName.setText("No Category");
             tasksRemainingLabel.setText("N/A");
             return;
         }
 
-        listView.setRootVertex(rootCategory);
+        listView.setRootVertex(categoryVertex);
 
-        rootCategory.startListen(this::onTaskRemainingTasksChange);
-        rootCategory.getElement().name.startListen(this::onCategoryNameChange);
+        categoryVertex.startListen(this::onTaskRemainingTasksChange);
+        categoryVertex.getElement().name.startListen(this::onCategoryNameChange);
     }
 
     private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
-
         int remainingTasks = 0;
         boolean hasChildren = false;
 
-        for (var vertex : _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue())) {
+        for (var vertex : _categoryVertex.getValue().getGraph().getOutVertices(_categoryVertex.getValue())) {
             hasChildren = true;
             if (vertex.getElement() instanceof Task)
                 remainingTasks++;
-
-            }
+        }
 
         if (!hasChildren) toggleBtn.setVisible(false);
+        // TODO: Set remove visability
         else toggleBtn.setVisible(true);
-
         tasksRemainingLabel.setText(String.format(tasksRemainingPattern, remainingTasks));
-
     }
+
+    private void onRemoveVertexBtn_click(ActionEvent e) {
+        if(_categoryVertex.getValue() == null)
+            return;
+        System.out.println("Hi");
+    }
+
+    private void onRemoveGraphBtn_click(ActionEvent e) {
+        if(_categoryVertex.getValue() == null)
+            return;
+        System.out.println("Hi");
+    }
+
 
     private void onCategoryNameChange(String name) {
         categoryName.setText(name);
     }
 
-    public void setRootCategory(ObservableVertex<TodoElement> rootCategory) {
-        if(!(rootCategory.getElement() instanceof Category))
+    public void setCategory(ObservableVertex<TodoElement> categoryVertex) {
+        if(!(categoryVertex.getElement() instanceof Category))
             throw new IllegalArgumentException("CategoryView() - rootVertex.getElement() is not of type Category");
 
-        _rootCategory.setValue(rootCategory);
+        _categoryVertex.setValue(categoryVertex);
     }
 
-    public ObservableVertex<TodoElement> getRootCategory() {
-        return _rootCategory.getValue();
+    public ObservableVertex<TodoElement> getCategory() {
+        return _categoryVertex.getValue();
     }
 
 }

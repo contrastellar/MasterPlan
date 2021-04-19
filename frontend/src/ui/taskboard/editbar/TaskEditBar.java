@@ -58,8 +58,6 @@ public class TaskEditBar {
         // TODO: to set the workspace, we need the vertex corresponding to the task
         // TODO: set due date
         // TODO: retrieve from tagsInput
-
-
     }
 
     private void onTaskChange(ObservableVertex<TodoElement> taskVertex) {
@@ -75,8 +73,6 @@ public class TaskEditBar {
             tagsInput.setText("");
         }
         else {
-
-
             Task task = (Task) taskVertex.getElement();
 
             titleInput.setText(task.getNotes());
@@ -99,6 +95,7 @@ public class TaskEditBar {
 
             String status = task.isCompleted() ? String.format(STATUS_LABEL_PATTERN, "true") : String.format(STATUS_LABEL_PATTERN, "false");
             statusLabel.setText(status);
+
 
             // TODO: set tagsInput (tagsInput shouldn't be a text area)
         }

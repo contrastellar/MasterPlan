@@ -1,6 +1,7 @@
 package util.graph;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -32,8 +33,9 @@ public interface IGraphWriteOnly<T> {
     /**
      *
      * @param v
+     * @return
      */
-    void removeVertexReachable(IVertex<T> v);
+    List<? extends IVertex<T>> removeVertexReachable(IVertex<T> v);
 
     /**
      * Adds a directed edge from v1 to v2

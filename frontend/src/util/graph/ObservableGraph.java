@@ -182,6 +182,9 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         changeVertex.removedEdges.add(obsV);
 
         List<ObservableVertex<T>> obsVertices = convertIterableToObsVertexList(graph.getInVertices(v));
+        for(var obsVertex : obsVertices)
+            obsVertex.updateListeners(changeVertex);
+
 
         graph.removeVertex(obsV.vertex);
 
@@ -190,15 +193,29 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         changeGraph.removedVertices.add(v);
 
         updateListeners(changeGraph);
-
-        for(var obsVertex : obsVertices)
-            obsVertex.updateListeners(changeVertex);
-
     }
 
     @Override
-    public void removeVertexReachable(IVertex<T> v) {
-        throw new UnsupportedOperationException("not yet implemented");
+    public List<ObservableVertex<T>> removeVertexReachable(IVertex<T> v) {
+        List<? extends IVertex<T>> removedVertices = graph.removeVertexReachable(v);
+        ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
+        changeGraph.removedVertices = new ArrayList<>();
+
+        for(var obsVertex : removedVertices) {
+            ObservableVertex<T> obsV = validateVertex(v);
+            ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
+            changeVertex.removedEdges = new ArrayList<>();
+            changeVertex.removedEdges.add(obsV);
+            vertexToObservable.get(v).updateListeners(changeVertex);
+            changeGraph.removedVertices.add(obsVertex);
+        }
+
+
+
+
+        updateListeners(changeGraph);
+
+        return null;
     }
 
     @Override

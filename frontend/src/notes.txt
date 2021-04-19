@@ -1,5 +1,5 @@
 Critical:
-	- unit test ObservableGraph and ObservableUnit - DH
+	- unit test ObservableGraph and ObservableUnit - DH (DONE)
 	- complete dueDate property of Task - TS
 	- complete Tag class - TS
 	- finish list space
