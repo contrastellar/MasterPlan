@@ -3,7 +3,6 @@ package ui.taskboard.listview.task;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
-
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -13,10 +12,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import ui.taskboard.listview.ListView;
+import util.collections.IReadOnlyList;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -28,10 +28,7 @@ public class TaskView extends GridPane {
 
     @FXML
     private Button toggleBtn;
-    @FXML
-    private HBox toggleContainer;
-    @FXML
-    private HBox remainingContainer;
+
     @FXML
     private HBox buttonContainer;
 
@@ -47,9 +44,6 @@ public class TaskView extends GridPane {
 
     @FXML
     private ListView listView;
-
-    @FXML
-    private Button removeVertexBtn, removeGraphBtn;
 
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
@@ -100,15 +94,12 @@ public class TaskView extends GridPane {
      * @param e mouse event
      */
     public void toggleBtnHandler(ActionEvent e) {
-        if (listView.isTodoEmpty()) return;
-
         listView.toggleTodo();
 
-        double angle = toggleBtn.getRotate();
-        if (angle == 0)
-            toggleBtn.setRotate(270);
-        else
+        if(listView.isTodoShown())
             toggleBtn.setRotate(0);
+        else
+            toggleBtn.setRotate(270);
     }
 
     private void onRootTaskChange(ObservableVertex<TodoElement> rootTask) {
@@ -166,15 +157,16 @@ public class TaskView extends GridPane {
     }
 
     private void onRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
-        List<ObservableVertex<TodoElement>> remainingVertices =
-                _rootTask.getValue().getGraph().query((element) -> element instanceof Task, _rootTask.getValue());
-        tasksRemainingLabel.setText(String.format(tasksRemainingFormat, remainingVertices.size()));
 
-        boolean hasChildren = false;
-        for (var vertex : _rootTask.getValue().getGraph().getOutVertices(_rootTask.getValue()))
-            hasChildren = true;
-        if (!hasChildren) toggleBtn.setVisible(false);
-        else toggleBtn.setVisible(true);
+        List<ObservableVertex<TodoElement>> numTaskQueryRes = _rootTask.getValue().getGraph().query((e) -> {
+            return e instanceof Task;
+        }, _rootTask.getValue());
+
+        tasksRemainingLabel.setText(String.format(tasksRemainingFormat, numTaskQueryRes.size()));
+
+        int totalElements = _rootTask.getValue().getGraph().getOutDegree(_rootTask.getValue());
+
+        toggleBtn.setVisible(totalElements > 0);
     }
 
     public void setRootTask(ObservableVertex<TodoElement> rootTask) {

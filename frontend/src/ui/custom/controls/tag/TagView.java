@@ -48,7 +48,7 @@ public class TagView extends HBox {
         if(tag == null) {
             tagName.setText("TagView.tag.getValue() - null");
             changeBackgroundColor(Color.WHITE);
-            // stop listening from the previous tag
+            // TODO: stop listening from the previous tag
         }
         else {
             tag.name.startListen(this::onTagNameChange);

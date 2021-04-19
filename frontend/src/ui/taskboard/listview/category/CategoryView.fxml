@@ -26,7 +26,8 @@
 
     <!-- Drop down icon (row 0, col 0) -->
     <HBox alignment="CENTER" >
-        <Button fx:id="toggleBtn" onAction="#toggleBtnHandler">
+        <Button fx:id="toggleBtn" onAction="#toggleBtnHandler"
+                style="-fx-border-color: transparent; -fx-background-color: transparent;" >
             <graphic>
                 <Icon icon="angle-down.svg" iconColor="#cccccc" iconSize="7" />
             </graphic>

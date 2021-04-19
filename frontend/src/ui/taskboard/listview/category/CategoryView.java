@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ui.taskboard.listview.ListView;
+import util.collections.IReadOnlyList;
 import util.graph.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,9 +33,6 @@ public class CategoryView extends GridPane {
 
     @FXML
     private Label categoryName;
-
-    @FXML
-    private Button removeVertexBtn, removeGraphBtn;
 
     @FXML
     private Label tasksRemainingLabel;
@@ -86,15 +84,12 @@ public class CategoryView extends GridPane {
      * @param e mouse event
      */
     public void toggleBtnHandler(ActionEvent e) {
-        if (listView.isTodoEmpty()) return;
-
         listView.toggleTodo();
 
-        double angle = toggleBtn.getRotate();
-        if (angle == 0)
-            toggleBtn.setRotate(270);
-        else
+        if(listView.isTodoShown())
             toggleBtn.setRotate(0);
+        else
+            toggleBtn.setRotate(270);
     }
 
     private void onCategoryVertexChange(ObservableVertex<TodoElement> categoryVertex) {
@@ -111,19 +106,16 @@ public class CategoryView extends GridPane {
     }
 
     private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
-        int remainingTasks = 0;
-        boolean hasChildren = false;
 
-        for (var vertex : _categoryVertex.getValue().getGraph().getOutVertices(_categoryVertex.getValue())) {
-            hasChildren = true;
-            if (vertex.getElement() instanceof Task)
-                remainingTasks++;
-        }
+        List<ObservableVertex<TodoElement>> numTaskQueryRes = _categoryVertex.getValue().getGraph().query((e) -> {
+            return e instanceof Task;
+        }, _categoryVertex.getValue());
 
-        if (!hasChildren) toggleBtn.setVisible(false);
-        // TODO: Set remove visability
-        else toggleBtn.setVisible(true);
-        tasksRemainingLabel.setText(String.format(tasksRemainingPattern, remainingTasks));
+        tasksRemainingLabel.setText(String.format(tasksRemainingPattern, numTaskQueryRes.size()));
+
+        int totalElements = _categoryVertex.getValue().getGraph().getOutDegree(_categoryVertex.getValue());
+
+        toggleBtn.setVisible(totalElements > 0);
     }
 
     @FXML
