@@ -1,13 +1,17 @@
 package ui.account.login;
 
+
+import javafx.scene.layout.VBox;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import ui.account.login.create.CreationView;
 
-public class LoginView {
+
+public class LoginView extends VBox {
 
     @FXML
     private BorderPane mainContainer;
+
 
     @FXML
     private void initialize() {

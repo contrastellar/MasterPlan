@@ -21,9 +21,14 @@ High Priority:
 	* search for tasks (globally and relative to workspace)
 	    - create search user interface - Ben
 	    - integrate user interface - Ben
-    - setting theme - Gabby
-        - Light theme
-        - Dark theme
+    * TODO archiving
+            - Create method of 'archiving' task
+            - Cry
+            - ???
+            - Profit
+            - create user interface - Gabby
+            - integrate user interface w/ observables- Gabby
+
 
 Medium Priority:
 	* send email notifications
@@ -31,15 +36,16 @@ Medium Priority:
 	* import/export to Google Calendar
 		- user interface - Ben
 		- API functionality - DL and Ben
-	* archiving
-	    - create user interface - Gabby
-	    - integrate user interface w/ observables- Gabby
+	* TODO setting theme - Gabby
+            - each stylesheet property is bound to a stylesheet
+            - Light theme
+            - Dark theme
 
 Low Priority:
 	* settings
 	    - create user interface - TS
 	    - integrate user interface - TS
-	- add in user interface adding/removing/viewing attachments - Gabby
+	- TODO add in user interface adding/removing/viewing attachments - Gabby
 
 
 Forget about:

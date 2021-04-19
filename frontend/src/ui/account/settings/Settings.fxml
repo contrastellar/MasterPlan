@@ -1,43 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<?import ui.custom.layoutmanager.RatioConstraint?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.paint.ImagePattern?>
-<RatioConstraint xmlns="http://javafx.com/javafx"
-                 xmlns:fx="http://javafx.com/fxml"
-                 fx:controller="ui.account.settings.Settings"
-                 prefHeight="400.0" prefWidth="600.0" ratio="1.25">
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.text.Text?>
 
 
-
-    <Pane fx:id="container" prefWidth="Infinity" prefHeight="Infinity" >
-
-        <ScrollPane>
-            <VBox>
-
-                <!-- USER ICON -->
-                <VBox maxWidth="Infinity" maxHeight="Infinity">
-                    <Circle onMouseClicked="#userAccountClicked">
-                        <fill>
-                            <ImagePattern fx:id="userImage" />
-                        </fill>
-                    </Circle>
-
-                    <Label fx:id="username" onMouseClicked="#userAccountClicked" />
-                </VBox>
-
-                <!-- Settings Menu -->
-
-
-            </VBox>
-        </ScrollPane>
-
-    </Pane>
-
-</RatioConstraint>
+<fx:root prefHeight="250" prefWidth="760" type="javafx.scene.control.SplitPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <items>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Please work :(" />
+   </items>
+</fx:root>
