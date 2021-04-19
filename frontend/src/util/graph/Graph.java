@@ -84,12 +84,12 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public List<? extends IVertex<T>> removeVertexReachable(IVertex<T> v) {
+    public List<Vertex> removeVertexReachable(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
         return removeVertexReachable(vertex);
     }
 
-    public List<? extends IVertex<T>> removeVertexReachable(Vertex v) {
+    public List<Vertex> removeVertexReachable(Vertex v) {
         List<Vertex> list = new ArrayList<>();
         removeVertexReachableValidate(v, list);
         return list;
