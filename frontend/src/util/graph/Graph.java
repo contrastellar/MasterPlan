@@ -84,19 +84,18 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public List<Graph<T>.Vertex> removeVertexReachable(IVertex<T> v) {
+    public List<? extends IVertex<T>> removeVertexReachable(IVertex<T> v) {
         Vertex vertex = validateVertex(v);
-        List<Graph<T>.Vertex> list = new ArrayList<>();
-        removeVertexReachable(vertex, list);
-        return list;
+        return removeVertexReachable(vertex);
     }
 
-    public List<Graph<T>.Vertex> removeVertexReachable(Vertex v, List<Graph<T>.Vertex> list) {
+    public List<? extends IVertex<T>> removeVertexReachable(Vertex v) {
+        List<Vertex> list = new ArrayList<>();
         removeVertexReachableValidate(v, list);
         return list;
     }
 
-    private void removeVertexReachableValidate(Vertex v, List<Graph<T>.Vertex> list) {
+    private void removeVertexReachableValidate(Vertex v, List<Vertex> list) {
         for (var p : v.inVertices)
             removeDirectedEdge(p, v);
         for (var c : v.outVertices) {

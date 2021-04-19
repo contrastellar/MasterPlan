@@ -26,10 +26,9 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
     public void startListen(IListener<ObservableGraphChange<T>> listener) {
         ObservableGraphChange<T> change = new ObservableGraphChange<>();
-        change.addedVertices = new ArrayList<>();
 
-        for(var vertex : graph.getVertices())
-            change.addedVertices.add(vertex);
+        change.addedVertices = new ArrayList<>();
+        change.addedVertices.addAll(vertexToObservable.values());
 
         listeners.add(listener);
         listener.onChange(change);
@@ -142,7 +141,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
         ObservableGraphChange<T> change = new ObservableGraphChange<>();
         change.addedVertices = new ArrayList<>();
-        change.addedVertices.add(vertex);
+        change.addedVertices.add(obsVertex);
 
         updateListeners(change);
 
@@ -160,7 +159,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
 
         ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
         changeGraph.addedVertices = new ArrayList<>();
-        changeGraph.addedVertices.add(vertex);
+        changeGraph.addedVertices.add(obsVertex);
 
         updateListeners(changeGraph);
 
@@ -174,48 +173,36 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     @Override
-    public void removeVertex(IVertex<T> v) {
+    public void removeVertex(IVertex<T> v ) {
         ObservableVertex<T> obsV = validateVertex(v);
-
-        ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
-        changeVertex.removedEdges = new ArrayList<>();
-        changeVertex.removedEdges.add(obsV);
-
-        List<ObservableVertex<T>> obsVertices = convertIterableToObsVertexList(graph.getInVertices(v));
-        for(var obsVertex : obsVertices)
-            obsVertex.updateListeners(changeVertex);
-
 
         graph.removeVertex(obsV.vertex);
 
         ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
         changeGraph.removedVertices = new ArrayList<>();
-        changeGraph.removedVertices.add(v);
+        changeGraph.removedVertices.add(obsV);
 
         updateListeners(changeGraph);
     }
 
     @Override
     public List<ObservableVertex<T>> removeVertexReachable(IVertex<T> v) {
+
+        ObservableVertex<T> obsV = validateVertex(v);
+
+        ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
+        changeVertex.removedEdges = new ArrayList<>();
+        changeVertex.removedEdges.add(obsV);
+
         List<? extends IVertex<T>> removedVertices = graph.removeVertexReachable(v);
+        List<ObservableVertex<T>> removedObsVertices = convertIterableToObsVertexList(removedVertices);
+
         ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();
-        changeGraph.removedVertices = new ArrayList<>();
 
-        for(var obsVertex : removedVertices) {
-            ObservableVertex<T> obsV = validateVertex(v);
-            ObservableVertexChange<T> changeVertex = new ObservableVertexChange<>();
-            changeVertex.removedEdges = new ArrayList<>();
-            changeVertex.removedEdges.add(obsV);
-            vertexToObservable.get(v).updateListeners(changeVertex);
-            changeGraph.removedVertices.add(obsVertex);
-        }
-
-
-
-
+        changeGraph.removedVertices = new ArrayList<>(removedObsVertices);
         updateListeners(changeGraph);
 
-        return null;
+        return removedObsVertices;
     }
 
     @Override

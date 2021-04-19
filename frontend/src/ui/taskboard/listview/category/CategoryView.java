@@ -11,10 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import ui.custom.icon.Icon;
 import ui.taskboard.listview.ListView;
 import util.graph.*;
 import java.io.IOException;
@@ -23,14 +21,12 @@ import java.util.List;
 
 public class CategoryView extends GridPane {
 
-    private final ListView listView;
+    @FXML
+    private ListView listView;
 
     @FXML
-    private Icon toggleBtn;
-    @FXML
-    private HBox toggleContainer;
-    @FXML
-    private HBox remainingContainer;
+    private Button toggleBtn;
+
     @FXML
     private HBox buttonContainer;
 
@@ -39,8 +35,6 @@ public class CategoryView extends GridPane {
 
     @FXML
     private Button removeVertexBtn, removeGraphBtn;
-
-
 
     @FXML
     private Label tasksRemainingLabel;
@@ -51,7 +45,6 @@ public class CategoryView extends GridPane {
 
 
     public CategoryView() {
-        listView = new ListView();
         loadFXML();
     }
 
@@ -69,24 +62,14 @@ public class CategoryView extends GridPane {
 
     @FXML
     private void initialize() {
-        GridPane.setColumnIndex(listView, 1);
-        GridPane.setColumnSpan(listView, 2);
-        GridPane.setRowIndex(listView, 2);
-        getChildren().add(listView);
 
         _categoryVertex.startListen(this::onCategoryVertexChange);
-        removeVertexBtn.setOnAction(this::onRemoveVertexBtn_click);
-        removeGraphBtn.setOnAction(this::onRemoveGraphBtn_click);
 
-
-        // Sets toggleBtn clicked handler
-        toggleBtn.setOnMouseClicked(this::toggleBtnHandler);
         if (listView.isTodoEmpty())
             toggleBtn.setVisible(false);
 
         // Set styling for hover
-        List<Node> gridChildren = new ArrayList();
-        getChildren().forEach(e -> gridChildren.add(e));
+        List<Node> gridChildren = new ArrayList<>(getChildren());
         gridChildren.remove(listView);
         gridChildren.forEach(e -> {
             e.setOnMouseEntered(event -> {
@@ -102,7 +85,7 @@ public class CategoryView extends GridPane {
      * handler for Toggling todos and rotating btn
      * @param e mouse event
      */
-    public void toggleBtnHandler(MouseEvent e) {
+    public void toggleBtnHandler(ActionEvent e) {
         if (listView.isTodoEmpty()) return;
 
         listView.toggleTodo();
@@ -143,12 +126,14 @@ public class CategoryView extends GridPane {
         tasksRemainingLabel.setText(String.format(tasksRemainingPattern, remainingTasks));
     }
 
+    @FXML
     private void onRemoveVertexBtn_click(ActionEvent e) {
         if(_categoryVertex.getValue() == null)
             return;
         System.out.println("Hi");
     }
 
+    @FXML
     private void onRemoveGraphBtn_click(ActionEvent e) {
         if(_categoryVertex.getValue() == null)
             return;

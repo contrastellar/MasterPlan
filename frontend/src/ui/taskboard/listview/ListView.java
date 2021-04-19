@@ -32,8 +32,6 @@ public class ListView extends VBox {
     @FXML
     private Button addCategoryBtn;
 
-
-
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 

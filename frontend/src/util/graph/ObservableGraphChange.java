@@ -11,8 +11,8 @@ public class ObservableGraphChange<T> {
 
     protected boolean sorted = false;
     protected Comparator<T> sortingComparator = null;
-    protected List<IVertex<T>> addedVertices = null;
-    protected List<IVertex<T>> removedVertices = null;
+    protected List<ObservableVertex<T>> addedVertices = null;
+    protected List<ObservableVertex<T>> removedVertices = null;
 
 
 

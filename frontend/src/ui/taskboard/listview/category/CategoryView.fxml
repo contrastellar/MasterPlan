@@ -8,44 +8,58 @@
 <?import ui.custom.icon.Icon?>
 
 <?import javafx.scene.control.Button?>
+
+<?import ui.taskboard.listview.ListView?>
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@CategoryView.css"
          styleClass="topBorder, catContainer"
          xmlns="http://javafx.com/javafx/15.0.1"
-         xmlns:fx="http://javafx.com/fxml/1">
+         xmlns:fx="http://javafx.com/fxml/1" gridLinesVisible="true">
 
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />
         <ColumnConstraints hgrow="ALWAYS" />
-        <ColumnConstraints hgrow="NEVER" prefWidth="50.0" />
     </columnConstraints>
 
     <rowConstraints>
-        <RowConstraints prefHeight="20.0"/>
-        <RowConstraints prefHeight="20.0"/>
     </rowConstraints>
 
     <!-- Drop down icon (row 0, col 0) -->
-    <HBox fx:id="toggleContainer" alignment="CENTER" >
-        <Icon fx:id="toggleBtn" icon="angle-down.svg" iconColor="#cccccc" iconSize="7"/>
+    <HBox alignment="CENTER" >
+        <Button fx:id="toggleBtn" onAction="#toggleBtnHandler">
+            <graphic>
+                <Icon icon="angle-down.svg" iconColor="#cccccc" iconSize="7" />
+            </graphic>
+        </Button>
     </HBox>
 
     <!-- Category title (row 0, col 1) -->
-    <HBox fx:id="titleContainer" alignment="CENTER_LEFT" GridPane.columnIndex="1">
+    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
         <Label fx:id="categoryName" text="Category Name Placeholder"/>
     </HBox>
 
     <!-- Category buttons (row 0, col 2) -->
-    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="1">
-        <Button fx:id="removeVertexBtn" styleClass="removeCatBtn" text="V"><HBox.margin><Insets right="5"/></HBox.margin></Button>
-        <Button fx:id="removeGraphBtn" styleClass="removeCatBtn" text="G"><HBox.margin><Insets right="5"/></HBox.margin></Button>
+    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
+        <Button fx:id="removeVertexBtn"
+                onAction="#onRemoveVertexBtn_click"
+                styleClass="removeCatBtn" text="V">
+            <HBox.margin><Insets right="5"/></HBox.margin>
+        </Button>
+        <Button fx:id="removeGraphBtn"
+                onAction="#onRemoveGraphBtn_click"
+                styleClass="removeCatBtn" text="G">
+            <HBox.margin><Insets right="5"/></HBox.margin>
+        </Button>
         <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
         <Icon icon="archive.svg" iconColor="#cccccc" iconSize="10"/>
     </HBox>
 
     <!-- Status of category (row 1, col 1) -->
-    <HBox fx:id="remainingContainer" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+    <HBox GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
         <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder"/>
     </HBox>
+
+    <ListView fx:id="listView"
+              GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
 
 </fx:root>

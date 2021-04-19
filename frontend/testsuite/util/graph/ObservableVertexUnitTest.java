@@ -177,19 +177,19 @@ public class ObservableVertexUnitTest {
         assertNull(vertexChange.getSortingComparator());
     }
 
-    @Test
-    public void removeVertexTest() {
-        rootV.getGraph().removeVertex(v1.vertex);
-
-        // Test no change to ObservableVertexChange
-        assertEquals(1, numOnChangeCalls);
-        assertNotNull(vertexChange);
-        assertEquals(0, vertexChange.addedEdgesSize());
-        assertTrue(vertexChange.getRemovedEdges().contains(v1));
-        assertEquals(1, vertexChange.removedEdgesSize());
-        assertFalse(vertexChange.getSorted());
-        assertNull(vertexChange.getSortingComparator());
-    }
+//    @Test
+//    public void removeVertexTest() {
+//        rootV.getGraph().removeVertex(v1.vertex);
+//
+//        // Test no change to ObservableVertexChange
+//        assertEquals(1, numOnChangeCalls);
+//        assertNotNull(vertexChange);
+//        assertEquals(0, vertexChange.addedEdgesSize());
+//        assertTrue(vertexChange.getRemovedEdges().contains(v1));
+//        assertEquals(1, vertexChange.removedEdgesSize());
+//        assertFalse(vertexChange.getSorted());
+//        assertNull(vertexChange.getSortingComparator());
+//    }
 
     @Test
     public void addDirectedEdgeTest() {

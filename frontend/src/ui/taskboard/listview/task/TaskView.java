@@ -6,20 +6,16 @@ import components.observable.Observable;
 
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import ui.custom.icon.Icon;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
@@ -31,7 +27,7 @@ import java.util.List;
 public class TaskView extends GridPane {
 
     @FXML
-    private Icon toggleBtn;
+    private Button toggleBtn;
     @FXML
     private HBox toggleContainer;
     @FXML
@@ -50,7 +46,7 @@ public class TaskView extends GridPane {
     private static final String tasksRemainingFormat = "%d remaining";
 
     @FXML
-    private final ListView listView;
+    private ListView listView;
 
     @FXML
     private Button removeVertexBtn, removeGraphBtn;
@@ -64,36 +60,6 @@ public class TaskView extends GridPane {
      */
     public TaskView() {
         loadFXML();
-
-        listView = new ListView();
-
-        GridPane.setColumnIndex(listView, 1);
-        GridPane.setColumnSpan(listView, 2);
-        GridPane.setRowIndex(listView, 2);
-
-        getChildren().add(listView);
-
-        _rootTask.startListen(this::onRootTaskChange);
-        removeVertexBtn.setOnAction(this::onRemoveVertexBtn_click);
-        removeGraphBtn.setOnAction(this::onRemoveGraphBtn_click);
-
-        // Sets toggleBtn clicked handler
-        toggleBtn.setOnMouseClicked(this::toggleBtnHandler);
-        if (listView.isTodoEmpty())
-            toggleBtn.setVisible(false);
-
-        // Set styling for hover
-        List<Node> gridChildren = new ArrayList();
-        getChildren().forEach(e -> gridChildren.add(e));
-        gridChildren.remove(listView);
-        gridChildren.forEach(e -> {
-            e.setOnMouseEntered(event -> {
-                buttonContainer.setStyle("-fx-border-color: cadetblue;");
-            });
-            e.setOnMouseExited(event -> {
-                buttonContainer.setStyle("-fx-border-color: transparent;");
-            });
-        });
     }
 
     private void loadFXML() {
@@ -108,11 +74,32 @@ public class TaskView extends GridPane {
         }
     }
 
+    @FXML
+    private void initialize() {
+
+        _rootTask.startListen(this::onRootTaskChange);
+
+        if (listView.isTodoEmpty())
+            toggleBtn.setVisible(false);
+
+        // Set styling for hover
+        List<Node> gridChildren = new ArrayList<>(getChildren());
+        gridChildren.remove(listView);
+        gridChildren.forEach(e -> {
+            e.setOnMouseEntered(event -> {
+                buttonContainer.setStyle("-fx-border-color: cadetblue;");
+            });
+            e.setOnMouseExited(event -> {
+                buttonContainer.setStyle("-fx-border-color: transparent;");
+            });
+        });
+    }
+
     /**
      * handler for Toggling todos and rotating btn
      * @param e mouse event
      */
-    public void toggleBtnHandler(MouseEvent e) {
+    public void toggleBtnHandler(ActionEvent e) {
         if (listView.isTodoEmpty()) return;
 
         listView.toggleTodo();
@@ -142,6 +129,11 @@ public class TaskView extends GridPane {
         listView.setRootVertex(rootTask);
     }
 
+    @FXML
+    private void onCheckBoxMouseClicked(MouseEvent ae) {
+        System.out.println("Clicked");
+    }
+
     private void onCheckBox_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
         if(_rootTask.getValue() == null)
             return;
@@ -160,12 +152,14 @@ public class TaskView extends GridPane {
         }
     }
 
+    @FXML
     private void onRemoveVertexBtn_click(ActionEvent e) {
         if(_rootTask.getValue() == null)
             return;
 
     }
 
+    @FXML
     private void onRemoveGraphBtn_click(ActionEvent e) {
         if(_rootTask.getValue() == null)
             return;

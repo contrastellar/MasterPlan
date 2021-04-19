@@ -16,7 +16,9 @@
       <ListViewHeader fx:id="listViewHeader" />
 
       <!-- Runtime: category view | ID is for scroll event handler  -->
-      <ScrollPane fx:id="scrollPane"><ListView fx:id="listView" /></ScrollPane>
+      <ScrollPane fx:id="scrollPane">
+            <ListView fx:id="listView" />
+      </ScrollPane>
 
 </fx:root>
 <!--            <VBox GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">-->

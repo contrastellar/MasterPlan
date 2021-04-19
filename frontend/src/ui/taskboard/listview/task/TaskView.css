@@ -13,6 +13,7 @@ HBox {
 
 Icon:hover {
     -fx-background-color: cadetblue;
+    -fx-border-color: transparent;
 }
 
 .taskContainer {

@@ -171,9 +171,13 @@ public class ObservableGraphUnitTest {
         // Register listener
         G.startListen(this::onChange);
 
-        IQuery<TodoElement> query = (element) -> { return element == v1.vertex.getElement(); };
+        IQuery<TodoElement> query = (element) -> { return element == v1.getElement(); };
 
         List<ObservableVertex<TodoElement>> queryRes = G.query(query);
+
+        System.out.println(queryRes.get(0).getElement().name.getValue());
+
+        System.out.println(queryRes.get(0) == v1);
 
         assertTrue(queryRes.contains(v1));
 
@@ -199,7 +203,7 @@ public class ObservableGraphUnitTest {
     public void queryReachableTest() {
         // Register listener and define a query for v3
         G.startListen(this::onChange);
-        IQuery<TodoElement> query = (element) -> { return element == v3.vertex.getElement(); };
+        IQuery<TodoElement> query = (element) -> { return element == v3.getElement(); };
 
         List<ObservableVertex<TodoElement>> queryRes = G.queryReachable(query, rootV);
 
@@ -245,7 +249,7 @@ public class ObservableGraphUnitTest {
 
         assertEquals(1, graphChange.addedVerticesSize());
 
-        assertTrue(graphChange.getAddedVertices().contains(v.vertex));
+        assertTrue(graphChange.getAddedVertices().contains(v));
 
         assertEquals(0, graphChange.removedVerticesSize());
 
@@ -260,7 +264,7 @@ public class ObservableGraphUnitTest {
     public void removeVertexTest() {
         G.startListen(this::onChange);
 
-        G.removeVertex(v1.vertex);
+        G.removeVertex(v1);
 
         assertEquals(2, numOnChangeCalls);
 
@@ -270,7 +274,7 @@ public class ObservableGraphUnitTest {
 
         assertEquals(1, graphChange.removedVerticesSize());
 
-        assertTrue(graphChange.getRemovedVertices().contains(v1.vertex));
+        assertTrue(graphChange.getRemovedVertices().contains(v1));
 
         assertFalse(graphChange.getSorted());
 
