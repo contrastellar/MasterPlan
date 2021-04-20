@@ -87,14 +87,14 @@ public class ListSpaceView extends VBox implements Viewable {
 
     @Override
     public void registerListeners() {
-        listView.registerListners();
-        listViewHeader.registerListners();
+        listView.registerListeners();
+        listViewHeader.registerListeners();
         observableManager.startListen();    }
 
     @Override
     public void unregisterListeners() {
-        listView.unregisterListners();
-        listViewHeader.unregisterListners();
+        listView.unregisterListeners();
+        listViewHeader.unregisterListeners();
         observableManager.stopListen();
     }
 }

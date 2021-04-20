@@ -149,13 +149,13 @@ public class ListView extends VBox implements Viewable {
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
             cView.setCategory(vertex);
-            cView.registerListners();
+            cView.registerListeners();
             viewable = cView;
         }
         else if(vertex.getElement() instanceof Task) {
             TaskView tView = new TaskView();
             tView.setRootTask(vertex);
-            tView.registerListners();
+            tView.registerListeners();
             viewable = tView;
         } else
             throw new UnsupportedOperationException("not implemented");
@@ -166,7 +166,7 @@ public class ListView extends VBox implements Viewable {
 
     private void removeView(ObservableVertex<TodoElement> vertex) {
         Viewable viewable = vertexToViewable.get(vertex);
-        viewable.unregisterListners();
+        viewable.unregisterListeners();
         todoContainer.getChildren().remove(viewable.node());
         vertexToViewable.remove(vertex);
     }
@@ -189,14 +189,14 @@ public class ListView extends VBox implements Viewable {
     public void registerListeners() {
         observableManager.startListen();
         for(var viewable : vertexToViewable.values())
-            viewable.registerListners();
+            viewable.registerListeners();
     }
 
     @Override
     public void unregisterListeners() {
         observableManager.stopListen();
         for(var viewable : vertexToViewable.values())
-            viewable.unregisterListners();
+            viewable.unregisterListeners();
     }
 }
 

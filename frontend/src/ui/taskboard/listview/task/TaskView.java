@@ -194,12 +194,12 @@ public class TaskView extends GridPane implements Viewable {
     @Override
     public void registerListeners() {
         observableManager.startListen();
-        listView.registerListners();
+        listView.registerListeners();
     }
 
     @Override
     public void unregisterListeners() {
         observableManager.stopListen();
-        listView.unregisterListners();
+        listView.unregisterListeners();
     }
 }
