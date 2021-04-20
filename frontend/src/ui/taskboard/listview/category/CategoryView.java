@@ -2,6 +2,7 @@ package ui.taskboard.listview.category;
 
 import components.Category;
 import components.TodoElement;
+import components.observable.IListener;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.task.Task;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ui.taskboard.listview.ListView;
+import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -61,7 +63,6 @@ public class CategoryView extends GridPane {
 
     @FXML
     private void initialize() {
-
         _categoryVertex.startListen(this::onCategoryVertexChange);
 
         if (listView.isTodoEmpty())
@@ -118,18 +119,21 @@ public class CategoryView extends GridPane {
 
     @FXML
     private void onRemoveVertexBtn_click(ActionEvent e) {
+
         if(_categoryVertex.getValue() == null)
             return;
-        System.out.println("Hi");
+
+        System.out.println("Removing vertex");
+
+        _categoryVertex.getValue().getGraph().removeVertex(_categoryVertex.getValue());
     }
 
     @FXML
     private void onRemoveGraphBtn_click(ActionEvent e) {
         if(_categoryVertex.getValue() == null)
             return;
-        System.out.println("Hi");
-    }
 
+    }
 
     private void onCategoryNameChange(String name) {
         categoryName.setText(name);

@@ -28,7 +28,7 @@
 
 .todoAddBtn:hover {
     -fx-background-color: #cccccc;
-    -fx-border-width: 2 0 0 2;
+    -fx-border-width: 2 2 2 2;
     -fx-border-color: cadetblue;
     -fx-border-radius: 3;
     -fx-box-sizing: border-box;

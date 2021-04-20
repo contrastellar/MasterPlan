@@ -145,6 +145,9 @@ public class TaskView extends GridPane {
         if(_rootTask.getValue() == null)
             return;
 
+//        if (rootTask.)
+
+
     }
 
     private void onTaskNameChange(String name) {

@@ -27,7 +27,7 @@ public class ObservableGraphChange<T> {
         return sortingComparator;
     }
 
-    public IReadOnlyList<? extends IVertex<T>> getAddedVertices() {
+    public IReadOnlyList<ObservableVertex<T>> getAddedVertices() {
         if (addedVertices == null)
             addedVertices = new ArrayList<>();
         return new ReadOnlyList<>(addedVertices);
@@ -37,7 +37,7 @@ public class ObservableGraphChange<T> {
         return addedVertices == null ? 0 : addedVertices.size();
     }
 
-    public IReadOnlyList<? extends IVertex<T>> getRemovedVertices() {
+    public IReadOnlyList<ObservableVertex<T>> getRemovedVertices() {
         if(removedVertices == null)
             removedVertices = new ArrayList<>();
         return new ReadOnlyList<>(removedVertices);

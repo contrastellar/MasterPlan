@@ -34,3 +34,11 @@ Icon:hover {
 
     -fx-background-radius: 5;
 }
+
+.removeTaskBtn:hover {
+    -fx-background-color: #cccccc;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: cadetblue;
+    -fx-border-radius: 2;
+    -fx-box-sizing: border-box;
+}

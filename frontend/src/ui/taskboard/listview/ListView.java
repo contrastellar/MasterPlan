@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import ui.taskboard.listview.category.CategoryView;
 import ui.taskboard.listview.task.TaskView;
 import util.graph.IVertex;
+import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -36,7 +37,7 @@ public class ListView extends VBox {
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
 
-    private final Map<IVertex<TodoElement>, Node> vertexToNode = new HashMap<>();
+    public final Map<IVertex<TodoElement>, Node> vertexToNode = new HashMap<>();
 
     public ListView() {
         loadFXML();
@@ -106,28 +107,42 @@ public class ListView extends VBox {
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
+
         vertexToNode.clear();
         todoContainer.getChildren().clear();
 
         if(rootVertex == null)
             return;
-
         // memory leak - doesn't call stopListen on previous rootVertex
 
+
         rootVertex.startListen(this::onRootVertexOutEdgesChange);
+        System.out.println("Starting Listen in ListView()");
+        rootVertex.getGraph().startListen(this::onRootVertexRemoval);
     }
 
     private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
         for(var vertex : change.getAddedEdges()) {
             addVertex(vertex);
         }
-
         for(var vertex : change.getRemovedEdges()) {
             removeView(vertex);
         }
-
         if(change.getSorted()) {
             sort(change.getSortingComparator());
+        }
+    }
+
+    private void onRootVertexRemoval(ObservableGraphChange<TodoElement> change) {
+        System.out.println(change.removedVerticesSize());
+
+        if(change.getRemovedVertices().contains(_rootVertex.getValue()))
+                return;
+
+        for(var vertex : change.getRemovedVertices()) {
+            System.out.println(vertex.getElement().getName());
+            if (_rootVertex.getValue().getGraph().getOutVertices(_rootVertex.getValue()).contains(vertex))
+                removeView(vertex);
         }
     }
 
@@ -151,16 +166,10 @@ public class ListView extends VBox {
 
     private void removeView(ObservableVertex<TodoElement> vertex) {
         Node node = vertexToNode.get(vertex);
-
-        if(node == null)
-            throw new IllegalArgumentException("ListView.removeView() - node does not exist in this ListViewContainer");
-        else if(!vertex.getGraph().getInVertices(vertex).isEmpty()) {
-
-        } else
-            throw new UnsupportedOperationException("not implemented");
         todoContainer.getChildren().remove(node);
-        vertexToNode.remove(vertex);
-   }
+    }
+
+
 
     private void sort(Comparator<TodoElement> c) {
         // TODO: Implement
