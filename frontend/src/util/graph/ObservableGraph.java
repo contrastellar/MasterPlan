@@ -197,7 +197,7 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
         changeVertex.removedEdges = new ArrayList<>();
         changeVertex.removedEdges.add(obsV);
 
-        List<? extends IVertex<T>> removedVertices = graph.removeVertexReachable(v);
+        List<? extends IVertex<T>> removedVertices = graph.removeVertexReachable(obsV.vertex);
         List<ObservableVertex<T>> removedObsVertices = convertIterableToObsVertexList(removedVertices);
 
         ObservableGraphChange<T> changeGraph = new ObservableGraphChange<>();

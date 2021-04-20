@@ -38,7 +38,7 @@ public class ListView extends VBox implements Viewable {
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
 
-    public final Map<IVertex<TodoElement>, Viewable> vertexToViewable = new HashMap<>();
+    public final Map<ObservableVertex<TodoElement>, Viewable> vertexToViewable = new HashMap<>();
 
     private final ObservableManager observableManager = new ObservableManager();
 
@@ -142,8 +142,13 @@ public class ListView extends VBox implements Viewable {
 
         for(var vertex : change.getRemovedVertices()) {
             System.out.println(vertex.getElement().getName());
-            if (_rootVertex.getValue().getGraph().getOutVertices(_rootVertex.getValue()).contains(vertex))
+
+
+
+            if(vertexToViewable.containsValue(vertex)) {
+                System.out.println("REMOVED: " + vertex.getElement().getName());
                 removeView(vertex);
+            }
         }
     }
 
@@ -171,6 +176,7 @@ public class ListView extends VBox implements Viewable {
         Viewable viewable = vertexToViewable.get(vertex);
         viewable.unregisterListners();
         todoContainer.getChildren().remove(viewable.node());
+        vertexToViewable.remove(vertex);
     }
 
 
