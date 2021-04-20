@@ -39,7 +39,10 @@ public class ObservableGraph<T> implements IGraph<T>, IObservable<ObservableGrap
     }
 
     private void updateListeners(ObservableGraphChange<T> change) {
-        for(var listener : listeners)
+
+        ArrayList<IListener<ObservableGraphChange<T>>> listenerArr = new ArrayList<>(listeners);
+
+        for(var listener : listenerArr)
             listener.onChange(change);
     }
 
