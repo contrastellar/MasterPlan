@@ -5,6 +5,7 @@ import components.TodoElement;
 import components.observable.IListener;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
@@ -23,7 +25,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryView extends GridPane {
+public class CategoryView extends GridPane implements Viewable {
 
     @FXML
     private ListView listView;
@@ -44,6 +46,8 @@ public class CategoryView extends GridPane {
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> categoryVertex = _categoryVertex;
 
+    private final ObservableManager observableManager = new ObservableManager();
+
 
     public CategoryView() {
         loadFXML();
@@ -63,7 +67,10 @@ public class CategoryView extends GridPane {
 
     @FXML
     private void initialize() {
-        _categoryVertex.startListen(this::onCategoryVertexChange);
+
+        observableManager.addListener(_categoryVertex, this::onCategoryVertexChange);
+
+        // show();
 
         if (listView.isTodoEmpty())
             toggleBtn.setVisible(false);
@@ -99,8 +106,8 @@ public class CategoryView extends GridPane {
 
         listView.setRootVertex(categoryVertex);
 
-        categoryVertex.startListen(this::onTaskRemainingTasksChange);
-        categoryVertex.getElement().name.startListen(this::onCategoryNameChange);
+        observableManager.addListener(categoryVertex, this::onTaskRemainingTasksChange);
+        observableManager.addListener(categoryVertex.getElement().name, this::onCategoryNameChange);
     }
 
     private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
@@ -150,4 +157,18 @@ public class CategoryView extends GridPane {
         return _categoryVertex.getValue();
     }
 
+    @Override
+    public Node node() {
+        return this;
+    }
+
+    @Override
+    public void show() {
+        observableManager.startListen();
+    }
+
+    @Override
+    public void hide() {
+        observableManager.stopListen();
+    }
 }

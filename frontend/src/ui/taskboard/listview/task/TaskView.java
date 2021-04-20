@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskView extends GridPane {
+public class TaskView extends GridPane implements Viewable {
 
     @FXML
     private Button toggleBtn;
@@ -179,4 +180,18 @@ public class TaskView extends GridPane {
         return _rootTask.getValue();
     }
 
+    @Override
+    public Node node() {
+        return null;
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
 }

@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import ui.custom.Viewable;
 import ui.taskboard.listview.category.CategoryView;
 import ui.taskboard.listview.task.TaskView;
 import util.graph.IVertex;
@@ -37,7 +38,7 @@ public class ListView extends VBox {
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
 
-    public final Map<IVertex<TodoElement>, Node> vertexToNode = new HashMap<>();
+    public final Map<IVertex<TodoElement>, Viewable> vertexToViewable = new HashMap<>();
 
     public ListView() {
         loadFXML();
@@ -108,7 +109,7 @@ public class ListView extends VBox {
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
 
-        vertexToNode.clear();
+        vertexToViewable.clear();
         todoContainer.getChildren().clear();
 
         if(rootVertex == null)
@@ -147,26 +148,29 @@ public class ListView extends VBox {
     }
 
     private void addVertex(ObservableVertex<TodoElement> vertex) {
-        Node node;
+        Viewable viewable;
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
             cView.setCategory(vertex);
-            node = cView;
+            cView.show();
+            viewable = cView;
         }
         else if(vertex.getElement() instanceof Task) {
             TaskView tView = new TaskView();
             tView.setRootTask(vertex);
-            node = tView;
+            tView.show();
+            viewable = tView;
         } else
             throw new UnsupportedOperationException("not implemented");
 
-        todoContainer.getChildren().add(node);
-        vertexToNode.put(vertex, node);
+        todoContainer.getChildren().add(viewable.node());
+        vertexToViewable.put(vertex, viewable);
     }
 
     private void removeView(ObservableVertex<TodoElement> vertex) {
-        Node node = vertexToNode.get(vertex);
-        todoContainer.getChildren().remove(node);
+        Viewable viewable = vertexToViewable.get(vertex);
+        viewable.hide();
+        todoContainer.getChildren().remove(viewable.node());
     }
 
 
