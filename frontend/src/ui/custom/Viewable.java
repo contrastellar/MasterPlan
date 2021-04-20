@@ -8,9 +8,9 @@ public interface Viewable {
     Node node();
 
     // registers all listeners
-    void show();
+    void registerListners();
 
     // unregisters all listeners
-    void hide();
+    void unregisterListners();
 
 }

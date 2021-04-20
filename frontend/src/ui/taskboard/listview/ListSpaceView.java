@@ -2,21 +2,24 @@ package ui.taskboard.listview;
 
 import components.Category;
 import components.TodoElement;
+import components.observable.ObservableManager;
 import components.task.Task;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 import models.MainModel;
 
+import ui.custom.Viewable;
 import util.graph.ObservableVertex;
 
 import java.io.IOException;
 
-public class ListSpaceView extends VBox {
+public class ListSpaceView extends VBox implements Viewable {
 
     @FXML
     private ListViewHeader listViewHeader;
@@ -29,6 +32,9 @@ public class ListSpaceView extends VBox {
 
     private final MainModel mainModel;
     private final double SCROLL_SPEED_MODIFIER = 6.0; // Modify single value to adjust scroll speed
+
+    private final ObservableManager observableManager = new ObservableManager();
+
 
     public ListSpaceView(MainModel mainModel) {
         this.mainModel = mainModel;
@@ -49,7 +55,7 @@ public class ListSpaceView extends VBox {
 
     @FXML
     private void initialize() {
-        mainModel.selectedVertex.startListen(this::onRootVertexChange);
+        observableManager.addListener(mainModel.selectedVertex, this::onRootVertexChange);
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
@@ -74,4 +80,21 @@ public class ListSpaceView extends VBox {
         scrollPane.setVvalue(vValue + -deltaY/width);
     }
 
+    @Override
+    public Node node() {
+        return this;
+    }
+
+    @Override
+    public void registerListners() {
+        listView.registerListners();
+        listViewHeader.registerListners();
+        observableManager.startListen();    }
+
+    @Override
+    public void unregisterListners() {
+        listView.unregisterListners();
+        listViewHeader.unregisterListners();
+        observableManager.stopListen();
+    }
 }

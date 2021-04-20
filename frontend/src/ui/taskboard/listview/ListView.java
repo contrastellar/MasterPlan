@@ -4,13 +4,13 @@ import components.Category;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import ui.custom.Viewable;
 import ui.taskboard.listview.category.CategoryView;
@@ -23,7 +23,7 @@ import util.graph.ObservableVertexChange;
 import java.io.IOException;
 import java.util.*;
 
-public class ListView extends VBox {
+public class ListView extends VBox implements Viewable {
 
     @FXML
     private VBox todoContainer;
@@ -39,6 +39,9 @@ public class ListView extends VBox {
 
 
     public final Map<IVertex<TodoElement>, Viewable> vertexToViewable = new HashMap<>();
+
+    private final ObservableManager observableManager = new ObservableManager();
+
 
     public ListView() {
         loadFXML();
@@ -58,7 +61,7 @@ public class ListView extends VBox {
 
     @FXML
     private void initialize() {
-        _rootVertex.startListen(this::onRootVertexChange);
+        observableManager.addListener(_rootVertex, this::onRootVertexChange);
 
         addTaskBtn.setOnAction(this::addTaskBtn_click);
         addCategoryBtn.setOnAction(this::addCategoryBtn_click);
@@ -116,10 +119,8 @@ public class ListView extends VBox {
             return;
         // memory leak - doesn't call stopListen on previous rootVertex
 
-
-        rootVertex.startListen(this::onRootVertexOutEdgesChange);
-        System.out.println("Starting Listen in ListView()");
-        rootVertex.getGraph().startListen(this::onRootVertexRemoval);
+        observableManager.addListener(_rootVertex.getValue(), this::onRootVertexOutEdgesChange);
+        observableManager.addListener(_rootVertex.getValue().getGraph(), this::onRootVertexRemoval);
     }
 
     private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
@@ -135,7 +136,6 @@ public class ListView extends VBox {
     }
 
     private void onRootVertexRemoval(ObservableGraphChange<TodoElement> change) {
-        System.out.println(change.removedVerticesSize());
 
         if(change.getRemovedVertices().contains(_rootVertex.getValue()))
                 return;
@@ -152,13 +152,13 @@ public class ListView extends VBox {
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
             cView.setCategory(vertex);
-            cView.show();
+            cView.registerListners();
             viewable = cView;
         }
         else if(vertex.getElement() instanceof Task) {
             TaskView tView = new TaskView();
             tView.setRootTask(vertex);
-            tView.show();
+            tView.registerListners();
             viewable = tView;
         } else
             throw new UnsupportedOperationException("not implemented");
@@ -169,7 +169,7 @@ public class ListView extends VBox {
 
     private void removeView(ObservableVertex<TodoElement> vertex) {
         Viewable viewable = vertexToViewable.get(vertex);
-        viewable.hide();
+        viewable.unregisterListners();
         todoContainer.getChildren().remove(viewable.node());
     }
 
@@ -181,7 +181,21 @@ public class ListView extends VBox {
     }
 
 
+    @Override
+    public Node node() {
+        return this;
+    }
 
+
+    @Override
+    public void registerListners() {
+        observableManager.startListen();
+    }
+
+    @Override
+    public void unregisterListners() {
+        observableManager.stopListen();
+    }
 }
 
 

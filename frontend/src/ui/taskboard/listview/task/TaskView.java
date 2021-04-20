@@ -3,6 +3,7 @@ package ui.taskboard.listview.task;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -48,6 +49,7 @@ public class TaskView extends GridPane implements Viewable {
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
     private ObservableVertex<TodoElement> taskVertex;
+    private final ObservableManager observableManager = new ObservableManager();
 
     /**
      * Constructs Category component with loader
@@ -107,10 +109,10 @@ public class TaskView extends GridPane implements Viewable {
             return;
         }
 
-        rootTask.startListen(this::onRemainingTasksChange);
-        rootTask.getElement().name.startListen(this::onTaskNameChange);
-        Task task = (Task) rootTask.getElement();
-        task.isCompleted.startListen(this::onTaskCompletedChange);
+        observableManager.addListener(_rootTask.getValue(), this::onRemainingTasksChange);
+        observableManager.addListener(_rootTask.getValue().getElement().name, this::onTaskNameChange);
+        observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
+
         completedCheckBox.selectedProperty().addListener(this::onCheckBox_click);
 
         listView.setRootVertex(rootTask);
@@ -182,16 +184,18 @@ public class TaskView extends GridPane implements Viewable {
 
     @Override
     public Node node() {
-        return null;
+        return this;
     }
 
     @Override
-    public void show() {
-
+    public void registerListners() {
+        observableManager.startListen();
+        listView.registerListners();
     }
 
     @Override
-    public void hide() {
-
+    public void unregisterListners() {
+        observableManager.stopListen();
+        listView.unregisterListners();
     }
 }

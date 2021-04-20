@@ -4,17 +4,20 @@ import components.Category;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import ui.custom.Viewable;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
 
-public class ListViewHeader extends HBox {
+public class ListViewHeader extends HBox implements Viewable {
 
     @FXML
     private Label headerName;
@@ -26,6 +29,7 @@ public class ListViewHeader extends HBox {
     private final Observable<ObservableVertex<TodoElement>> _rootCategory = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootCategory = _rootCategory;
 
+    private final ObservableManager observableManager = new ObservableManager();
 
     public ListViewHeader() {
         loadFXML();
@@ -58,8 +62,8 @@ public class ListViewHeader extends HBox {
 
         if(!(rootCategory.getElement() instanceof Category))
             throw new IllegalArgumentException("ListViewHeader.onRootCategoryChange() - rootCategory.getElement is not of type Category");
+        observableManager.addListener(rootCategory, this::onRootCategoryOutVerticesChange);
 
-        rootCategory.startListen(this::onRootCategoryOutVerticesChange);
         rootCategory.getElement().name.startListen(this::onRootCategoryNameChange);
     }
 
@@ -96,12 +100,18 @@ public class ListViewHeader extends HBox {
     }
 
 
+    @Override
+    public Node node() {
+        return this;
+    }
 
+    @Override
+    public void registerListners() {
+        observableManager.startListen();
+    }
 
-
-
-
-
-
-
+    @Override
+    public void unregisterListners() {
+        observableManager.stopListen();
+    }
 }

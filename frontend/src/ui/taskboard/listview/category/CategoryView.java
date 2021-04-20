@@ -2,7 +2,6 @@ package ui.taskboard.listview.category;
 
 import components.Category;
 import components.TodoElement;
-import components.observable.IListener;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
 import components.observable.ObservableManager;
@@ -17,7 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
-import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -163,12 +161,14 @@ public class CategoryView extends GridPane implements Viewable {
     }
 
     @Override
-    public void show() {
+    public void registerListners() {
+        listView.registerListners();
         observableManager.startListen();
     }
 
     @Override
-    public void hide() {
+    public void unregisterListners() {
+        listView.unregisterListners();
         observableManager.stopListen();
     }
 }
