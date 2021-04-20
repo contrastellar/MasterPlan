@@ -12,8 +12,8 @@ public class Graph<T> implements IGraph<T> {
     public class Vertex implements IVertex<T> {
 
         private final T element;
-        private final List<Vertex> inVertices = new LinkedList<>();
-        private final List<Vertex> outVertices = new LinkedList<>();
+        private final List<Vertex> inVertices = new ArrayList<>();
+        private final List<Vertex> outVertices = new ArrayList<>();
 
         public Vertex (T element) { this.element = element; }
 
@@ -76,11 +76,11 @@ public class Graph<T> implements IGraph<T> {
     }
 
     public void removeVertex(Vertex v) {
-        for(Vertex outV : v.outVertices) // removes it's existstance from any lists
-            outV.inVertices.remove(v);
-        elementToVertex.remove(v.element); // remove vertex
-        v.outVertices.clear();
+        for(int i = v.outVertices.size() - 1; i > 0; i--) {
+            removeDirectedEdge(v, v.outVertices.get(i));
+        }
 
+        elementToVertex.remove(v.element);
     }
 
     @Override
@@ -91,22 +91,24 @@ public class Graph<T> implements IGraph<T> {
 
     public List<Vertex> removeVertexReachable(Vertex v) {
         List<Vertex> list = new ArrayList<>();
-        removeVertexReachableValidate(v, list);
+        removeVertexReachable(v, list);
         return list;
     }
 
-    private void removeVertexReachableValidate(Vertex v, List<Vertex> list) {
-        for (var p : v.inVertices)
-            removeDirectedEdge(p, v);
-        for (var c : v.outVertices) {
-            if (c.inVertices.size() == 1) { // base case 1
-                removeVertexReachableValidate(c, list);
-            } else { // case of another vertex to attach a child compenent of v
-                removeDirectedEdge(v, c);
-                c.inVertices.remove(v);
-            }
-        }
+    private void removeVertexReachable(Vertex v, List<Vertex> list) {
         list.add(v);
+
+        for(int i = v.inVertices.size() - 1; i > 0; i--) {
+            var inVertex = v.inVertices.get(i);
+            removeDirectedEdge(inVertex, v);
+        }
+
+        for(int i = v.outVertices.size() - 1; i > 0; i--) {
+            var outVertex = v.outVertices.get(i);
+            if(outVertex.inVertices.size() == 1)
+                removeVertexReachable(outVertex, list);
+        }
+
         elementToVertex.remove(v.element);
     }
 

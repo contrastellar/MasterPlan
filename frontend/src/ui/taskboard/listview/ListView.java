@@ -145,7 +145,7 @@ public class ListView extends VBox implements Viewable {
 
 
 
-            if(vertexToViewable.containsValue(vertex)) {
+            if(vertexToViewable.containsKey(vertex)) {
                 System.out.println("REMOVED: " + vertex.getElement().getName());
                 removeView(vertex);
             }
@@ -196,11 +196,15 @@ public class ListView extends VBox implements Viewable {
     @Override
     public void registerListners() {
         observableManager.startListen();
+        for(var viewable : vertexToViewable.values())
+            viewable.registerListners();
     }
 
     @Override
     public void unregisterListners() {
         observableManager.stopListen();
+        for(var viewable : vertexToViewable.values())
+            viewable.unregisterListners();
     }
 }
 
