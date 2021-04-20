@@ -57,13 +57,13 @@ public class WorkSpaceView extends SplitPane implements Viewable {
     }
 
     @Override
-    public void registerListners() {
+    public void registerListeners() {
         listSpaceView.registerListners();
         observableManager.startListen();
     }
 
     @Override
-    public void unregisterListners() {
+    public void unregisterListeners() {
         listSpaceView.unregisterListners();
         observableManager.startListen();
     }

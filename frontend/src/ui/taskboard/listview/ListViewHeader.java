@@ -114,12 +114,12 @@ public class ListViewHeader extends HBox implements Viewable {
     }
 
     @Override
-    public void registerListners() {
+    public void registerListeners() {
         observableManager.startListen();
     }
 
     @Override
-    public void unregisterListners() {
+    public void unregisterListeners() {
         observableManager.stopListen();
     }
 }

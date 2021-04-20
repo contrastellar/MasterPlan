@@ -186,14 +186,14 @@ public class ListView extends VBox implements Viewable {
 
 
     @Override
-    public void registerListners() {
+    public void registerListeners() {
         observableManager.startListen();
         for(var viewable : vertexToViewable.values())
             viewable.registerListners();
     }
 
     @Override
-    public void unregisterListners() {
+    public void unregisterListeners() {
         observableManager.stopListen();
         for(var viewable : vertexToViewable.values())
             viewable.unregisterListners();

@@ -26,7 +26,7 @@ public class MainViewController {
 
     @FXML
     private void switchViewToListSpace() {
-        workSpaceView.registerListners();
+        workSpaceView.registerListeners();
         mainContainer.setCenter(workSpaceView.node());
     }
 

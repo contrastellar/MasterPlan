@@ -163,13 +163,13 @@ public class CategoryView extends GridPane implements Viewable {
     }
 
     @Override
-    public void registerListners() {
+    public void registerListeners() {
         listView.registerListners();
         observableManager.startListen();
     }
 
     @Override
-    public void unregisterListners() {
+    public void unregisterListeners() {
         listView.unregisterListners();
         observableManager.stopListen();
     }
