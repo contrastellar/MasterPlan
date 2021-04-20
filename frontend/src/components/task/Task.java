@@ -1,5 +1,6 @@
 package components.task;
 
+import components.Archival;
 import components.Completable;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
@@ -8,10 +9,13 @@ import components.observable.Observable;
 import java.util.Calendar;
 
 
-public final class Task extends TodoElement implements Completable {
+public final class Task extends TodoElement implements Completable, Archival{
 
     private final Observable<Boolean> _isCompleted = new Observable<>(false);
     public final IReadOnlyObservable<Boolean> isCompleted = _isCompleted;
+
+    private final Observable<Boolean> _isArchived = new Observable<>(false);
+    public final IReadOnlyObservable<Boolean> isArchived = _isArchived;
 
     private final Observable<Calendar> _dueDate = new Observable<>(null);
     public final IReadOnlyObservable<Calendar> dueDate = _dueDate;
@@ -37,6 +41,10 @@ public final class Task extends TodoElement implements Completable {
     @Override
     public void setCompleted(boolean isComplete) {
         this._isCompleted.setValue(isComplete);
+    }
+
+    public void setArchived(boolean isArchived) {
+        this._isArchived.setValue(isArchived);
     }
 
     public void setDueDate(Calendar dueDate) {

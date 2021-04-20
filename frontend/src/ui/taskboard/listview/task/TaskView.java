@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import ui.custom.Viewable;
+
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
@@ -26,6 +27,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskView extends GridPane implements Viewable {
+
+
+    @FXML
+    private CheckBox archiveCheckBox;
 
     @FXML
     private Button toggleBtn;
@@ -112,10 +117,18 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(_rootTask.getValue(), this::onRemainingTasksChange);
         observableManager.addListener(_rootTask.getValue().getElement().name, this::onTaskNameChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
-
+        observableManager.addListener(((Task) _rootTask.getValue().getElement()).isArchived, this::onArchiveChange);
+        archiveCheckBox.selectedProperty().addListener(this::onArchived_click);
         completedCheckBox.selectedProperty().addListener(this::onCheckBox_click);
 
         listView.setRootVertex(rootTask);
+    }
+
+    private void onArchived_click(ObservableValue<? extends  Boolean> observableValue, Boolean oldVal, Boolean newVal){
+        if(_rootTask.getValue() == null)
+            return;
+        Task task = (Task) _rootTask.getValue().getElement();
+        task.setArchived(newVal);
     }
 
     private void onCheckBox_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
@@ -125,6 +138,14 @@ public class TaskView extends GridPane implements Viewable {
         Task task = (Task) _rootTask.getValue().getElement();
         task.setCompleted(newVal);
 
+    }
+
+    private void onArchiveChange(boolean completed){
+        if(completed){
+            System.out.printf("Archived set to 'true'\n");
+        }else{
+            System.out.printf("Archived set to 'false'\n");
+        }
     }
 
     private void onTaskCompletedChange(boolean completed) {
