@@ -51,14 +51,21 @@ public class ObservableManager {
 
 
     public void startListen() {
-        listening = true;
+        if(listening)
+            return;
+        else
+            listening = true;
 
         for(ObservableListenerPair<?> pair : observableToPair.values())
             pair.startListen();
     }
 
     public void stopListen() {
-        listening = false;
+        if(!listening)
+            return;
+        else
+            listening = false;
+
         for(ObservableListenerPair<?> pair : observableToPair.values())
             pair.stopListen();
     }
