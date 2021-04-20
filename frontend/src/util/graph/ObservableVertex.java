@@ -28,6 +28,8 @@ public class ObservableVertex<T> implements IVertex<T>, IObservable<ObservableVe
         ObservableVertexChange<T> change = new ObservableVertexChange<>();
 
         change.addedEdges = new ArrayList<>();
+
+
         for(var v : obsGraph.convertIterableToObsVertex( obsGraph.graph.getOutVertices(vertex) ))
             change.addedEdges.add(v);
 
@@ -40,7 +42,9 @@ public class ObservableVertex<T> implements IVertex<T>, IObservable<ObservableVe
     }
 
     protected void updateListeners(ObservableVertexChange<T> change) {
-        for(var listener : listeners)
+
+        ArrayList<IListener<ObservableVertexChange<T>>> listenerArr = new ArrayList<>(listeners);
+        for(var listener : listenerArr)
             listener.onChange(change);
     }
 

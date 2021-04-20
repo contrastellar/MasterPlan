@@ -141,17 +141,19 @@ public class TaskView extends GridPane implements Viewable {
         if(_rootTask.getValue() == null)
             return;
 
+        System.out.println("Removing vertex");
+
+        _rootTask.getValue().getGraph().removeVertex(_rootTask.getValue());
     }
 
     @FXML
     private void onRemoveGraphBtn_click(ActionEvent e) {
         if(_rootTask.getValue() == null)
             return;
-
-//        if (rootTask.)
-
-
+        System.out.println("Removing vertex");
+        _rootTask.getValue().getGraph().removeVertexReachable(_rootTask.getValue());
     }
+
 
     private void onTaskNameChange(String name) {
         taskName.setText(name);

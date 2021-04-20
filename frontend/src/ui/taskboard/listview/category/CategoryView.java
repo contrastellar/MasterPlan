@@ -138,6 +138,9 @@ public class CategoryView extends GridPane implements Viewable {
         if(_categoryVertex.getValue() == null)
             return;
 
+        System.out.println("Removing vertex");
+
+        _categoryVertex.getValue().getGraph().removeVertexReachable(_categoryVertex.getValue());
     }
 
     private void onCategoryNameChange(String name) {
