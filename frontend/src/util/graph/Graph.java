@@ -76,9 +76,10 @@ public class Graph<T> implements IGraph<T> {
     }
 
     public void removeVertex(Vertex v) {
-        for(int i = v.outVertices.size() - 1; i > 0; i--) {
-            removeDirectedEdge(v, v.outVertices.get(i));
-        }
+        for(var inVertex : v.inVertices)
+            inVertex.outVertices.remove(v);
+
+        v.inVertices.clear();
 
         elementToVertex.remove(v.element);
     }
@@ -96,19 +97,20 @@ public class Graph<T> implements IGraph<T> {
     }
 
     private void removeVertexReachable(Vertex v, List<Vertex> list) {
-        list.add(v);
+        // note: order of for loops maters
 
-        for(int i = v.inVertices.size() - 1; i > 0; i--) {
-            var inVertex = v.inVertices.get(i);
-            removeDirectedEdge(inVertex, v);
-        }
-
-        for(int i = v.outVertices.size() - 1; i > 0; i--) {
-            var outVertex = v.outVertices.get(i);
+        for(var outVertex : new ArrayList<>(v.outVertices)) {
             if(outVertex.inVertices.size() == 1)
                 removeVertexReachable(outVertex, list);
         }
 
+        for(var inVertex : v.inVertices) {
+            inVertex.outVertices.remove(v);
+        }
+
+        v.inVertices.clear();
+
+        list.add(v);
         elementToVertex.remove(v.element);
     }
 
@@ -174,11 +176,7 @@ public class Graph<T> implements IGraph<T> {
     }
 
     @Override
-    public void sort(Comparator<T> c) {  // TODO: Immplement
-//        ArrayList<Vertex> queryRes = new ArrayList<>();
-//        for(var v : this.getVertices()) {
-//            sort(c, v);
-//        }
+    public void sort(Comparator<T> c) {  // TODO: Implement
         throw new UnsupportedOperationException("Graph.sort() - not yet implmented");
     }
     @Override

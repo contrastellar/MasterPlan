@@ -136,20 +136,12 @@ public class ListView extends VBox implements Viewable {
     }
 
     private void onRootVertexRemoval(ObservableGraphChange<TodoElement> change) {
-
         if(change.getRemovedVertices().contains(_rootVertex.getValue()))
-                return;
+            return;
 
-        for(var vertex : change.getRemovedVertices()) {
-            System.out.println(vertex.getElement().getName());
-
-
-
-            if(vertexToViewable.containsKey(vertex)) {
-                System.out.println("REMOVED: " + vertex.getElement().getName());
+        for(var vertex : change.getRemovedVertices())
+            if(vertexToViewable.containsKey(vertex))
                 removeView(vertex);
-            }
-        }
     }
 
     private void addVertex(ObservableVertex<TodoElement> vertex) {

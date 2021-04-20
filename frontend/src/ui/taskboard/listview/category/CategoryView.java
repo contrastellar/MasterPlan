@@ -124,13 +124,12 @@ public class CategoryView extends GridPane implements Viewable {
 
     @FXML
     private void onRemoveVertexBtn_click(ActionEvent e) {
-
         if(_categoryVertex.getValue() == null)
             return;
 
-        System.out.println("Removing vertex");
-
         _categoryVertex.getValue().getGraph().removeVertex(_categoryVertex.getValue());
+
+        System.out.println("Removing vertex. Graph size: " + _categoryVertex.getValue().getGraph().getVertices().size());
     }
 
     @FXML
@@ -138,9 +137,9 @@ public class CategoryView extends GridPane implements Viewable {
         if(_categoryVertex.getValue() == null)
             return;
 
-        System.out.println("Removing vertex");
-
         _categoryVertex.getValue().getGraph().removeVertexReachable(_categoryVertex.getValue());
+
+        System.out.println("Removing vertex. Graph size: " + _categoryVertex.getValue().getGraph().getVertices().size());
     }
 
     private void onCategoryNameChange(String name) {

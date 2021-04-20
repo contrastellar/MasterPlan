@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import ui.custom.Viewable;
+import util.collections.IReadOnlyList;
+import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -62,9 +64,10 @@ public class ListViewHeader extends HBox implements Viewable {
 
         if(!(rootCategory.getElement() instanceof Category))
             throw new IllegalArgumentException("ListViewHeader.onRootCategoryChange() - rootCategory.getElement is not of type Category");
-        observableManager.addListener(rootCategory, this::onRootCategoryOutVerticesChange);
 
-        rootCategory.getElement().name.startListen(this::onRootCategoryNameChange);
+        observableManager.addListener(rootCategory, this::onRootCategoryOutVerticesChange);
+        observableManager.addListener(rootCategory.getGraph(), this::onRootCategoryOutVerticesRemoved);
+        observableManager.addListener(rootCategory.getElement().name, this::onRootCategoryNameChange);
     }
 
     private void onRootCategoryNameChange(String name) {
@@ -72,15 +75,20 @@ public class ListViewHeader extends HBox implements Viewable {
     }
 
     private void onRootCategoryOutVerticesChange(ObservableVertexChange<TodoElement> change) {
-        if(change.removedEdgesSize() == 0 && change.addedEdgesSize() == 0)
-            return;
+        if(change.removedEdgesSize() != 0 && change.addedEdgesSize() != 0)
+            rootCategoryOutVerticesChanged();
+    }
 
-        Iterable<ObservableVertex<TodoElement>> outVertices = _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue());
+    private void onRootCategoryOutVerticesRemoved(ObservableGraphChange<TodoElement> change) {
+        if(change.removedVerticesSize() != 0 || change.addedVerticesSize() != 0)
+            rootCategoryOutVerticesChanged();
+    }
 
+    private void rootCategoryOutVerticesChanged() {
         int numCategories = 0;
         int numTasks = 0;
 
-        for(var vertex : outVertices) {
+        for(var vertex : _rootCategory.getValue().getGraph().getOutVertices(_rootCategory.getValue())) {
             if(vertex.getElement() instanceof Category)
                 numCategories++;
             else if(vertex.getElement() instanceof Task)
