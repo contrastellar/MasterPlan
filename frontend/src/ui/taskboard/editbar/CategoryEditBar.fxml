@@ -2,19 +2,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ChoiceBox?>
 
 <?import javafx.scene.control.Button?>
 <fx:root type="javafx.scene.layout.VBox"
-         fx:id="editContainer"
-         stylesheets="@TaskEditBar.css"
-         xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+         styleClass="editContainer"
+         stylesheets="@EditBar.css"
+         xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+         VBox.vgrow="ALWAYS">
 
     <!-- Description -->
-    <VBox styleClass="groupContainer">
+    <VBox styleClass="groupContainer" VBox.vgrow="ALWAYS">
         <Label text="DESCRIPTION:"> <VBox.margin> <Insets bottom="10.0" /> </VBox.margin> </Label>
 
         <HBox styleClass="leftPadded" alignment="CENTER_RIGHT" >
@@ -26,7 +25,7 @@
             <VBox.margin> <Insets bottom="5.0" /> </VBox.margin>
         </HBox>
 
-        <HBox styleClass="leftPadded" HBox.hgrow="ALWAYS">
+        <HBox styleClass="leftPadded" VBox.vgrow="ALWAYS">
             <VBox minWidth="50" alignment="TOP_CENTER">
                 <Label text="Notes:"/>
                 <HBox.margin> <Insets right="5.0" /> </HBox.margin>
@@ -38,13 +37,17 @@
 
     <!-- Dates -->
     <VBox styleClass="groupContainer">
-        <Label text="DATES:"> <VBox.margin> <Insets bottom="10.0" /> </VBox.margin> </Label>
+        <Label text="DATES:" alignment="CENTER_LEFT"> <VBox.margin> <Insets bottom="10.0" /> </VBox.margin> </Label>
 
         <HBox styleClass="leftPadded">
             <VBox minWidth="50" alignment="CENTER"> <Label text="Created:"/> </VBox>
-            <Label fx:id="createdDateInput" HBox.hgrow="ALWAYS">
-                <HBox.margin> <Insets bottom="5.0" left="5.0" /> </HBox.margin>
-            </Label>
+            <VBox HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
+                <HBox.margin><Insets left="5" /></HBox.margin>
+                <VBox styleClass="inputBox" alignment="CENTER_LEFT">
+                    <padding><Insets top="2" bottom="2" left="5" right="5"/></padding>
+                    <Label fx:id="createdDateInput"/>
+                </VBox>
+            </VBox>
         </HBox>
     </VBox>
 
