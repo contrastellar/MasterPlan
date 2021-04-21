@@ -7,17 +7,20 @@ import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import ui.custom.Viewable;
 
+import ui.custom.icon.Icon;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
@@ -87,6 +90,7 @@ public class TaskView extends GridPane implements Viewable {
             MainModel.model.editVertex.setValue(_rootTask.getValue());
         });
 
+
         if (listView.isTodoEmpty())
             toggleBtn.setVisible(false);
 
@@ -126,6 +130,7 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
         completedCheckBox.selectedProperty().addListener(this::onTaskCompleted_click);
         listView.setRootVertex(rootTask);
+
     }
 
     @FXML
@@ -137,10 +142,15 @@ public class TaskView extends GridPane implements Viewable {
     private void onArchive_click(ActionEvent e){
         if(_rootTask.getValue() == null)
             return;
-        Task task =((Task) _rootTask.getValue().getElement());
-        boolean curArchive = task.isArchived();
-        ((Task) _rootTask.getValue().getElement()).setArchive(!curArchive);
-        System.out.println("Setting archive on " + task.getName() + " to " + task.isArchived );
+
+        Task task = ((Task) _rootTask.getValue().getElement()); //Pulls the current task that is invoking this method
+
+        boolean curArchive = task.isArchived(); //Pulls the 'isArchived'
+
+        task.setArchive(!curArchive); //Sets the current task's archive boolean
+
+        System.out.println("Setting archive on " + task.getName() + " to " + task.isArchived.getValue());
+
     }
 
 
