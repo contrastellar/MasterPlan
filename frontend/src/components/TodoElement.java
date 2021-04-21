@@ -8,7 +8,8 @@ import java.util.Calendar;
 import java.util.HashSet;
 
 /**
- *
+ * Abstract class used in Task.java
+ * @Author (not Gabby)
  */
 public abstract class TodoElement implements Archival{
 
