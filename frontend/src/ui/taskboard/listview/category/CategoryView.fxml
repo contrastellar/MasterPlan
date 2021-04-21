@@ -46,13 +46,6 @@
                 <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" />
             </graphic>
         </Button>
-
-        <Button fx:id="bookmark" onAction="#onBookmark_click" styleClass="IconBtn">
-            <graphic>
-                <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="12" />
-            </graphic>
-        </Button>
-
         <Button fx:id="archive" onAction="#onArchive_click" styleClass="IconBtn">
             <graphic>
                 <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />

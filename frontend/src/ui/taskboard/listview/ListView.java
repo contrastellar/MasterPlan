@@ -173,7 +173,6 @@ public class ListView extends VBox implements Viewable {
     }
 
 
-
     private void sort(Comparator<TodoElement> c) {
         // TODO: Implement
         throw new UnsupportedOperationException("not yet implemented");

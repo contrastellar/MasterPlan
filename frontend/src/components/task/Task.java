@@ -16,6 +16,9 @@ public final class Task extends TodoElement implements Completable{
     private final Observable<Calendar> _dueDate = new Observable<>(null);
     public final IReadOnlyObservable<Calendar> dueDate = _dueDate;
 
+    private final Observable<Boolean> _isBookmarked = new Observable<>(false);
+    public  final IReadOnlyObservable<Boolean> isBookmarked = _isBookmarked;
+
 
     public Task() {
         super();
@@ -40,6 +43,14 @@ public final class Task extends TodoElement implements Completable{
 
     public Calendar getDueDate() {
         return _dueDate.getValue();
+    }
+
+    public void setBookmark(boolean isBookmarked) {
+        this._isBookmarked.setValue(isBookmarked);
+    }
+
+    public boolean isBookmarked() {
+        return this._isBookmarked.getValue();
     }
 
 }

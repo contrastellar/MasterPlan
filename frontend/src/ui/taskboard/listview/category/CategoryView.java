@@ -9,11 +9,16 @@ import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
@@ -24,6 +29,7 @@ import models.MainModel;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class CategoryView extends GridPane implements Viewable {
 
@@ -156,13 +162,11 @@ public class CategoryView extends GridPane implements Viewable {
             return;
         Category cat =((Category) _categoryVertex.getValue().getElement());
         boolean curArchive = cat.isArchived();
-        ((Category) _categoryVertex.getValue().getElement()).setArchive(!curArchive);
-        System.out.println("Setting archive on " + cat.getName() + " to " + cat.isArchived );
-    }
+        cat.setArchive(!curArchive);
 
-    @FXML
-    private void onBookmark_click(ActionEvent e)  {
-        throw new RuntimeException("Not yet implemented");
+        this.managedProperty().bindBidirectional(this.visibleProperty());
+        this.setVisible(curArchive); //Hides the task at hand
+
     }
 
 

@@ -1,5 +1,6 @@
 package ui.taskboard.listview.task;
 
+import components.Category;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
@@ -128,6 +129,7 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(_rootTask.getValue(), this::onRemainingTasksChange);
         observableManager.addListener(_rootTask.getValue().getElement().name, this::onTaskNameChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
+        observableManager.addListener(((Task) _rootTask.getValue().getElement()).isBookmarked, this::onBookMarkChange);
         completedCheckBox.selectedProperty().addListener(this::onTaskCompleted_click);
         listView.setRootVertex(rootTask);
 
@@ -135,7 +137,17 @@ public class TaskView extends GridPane implements Viewable {
 
     @FXML
     private void onBookmark_click(ActionEvent e)  {
-        throw new RuntimeException("Not yet implemented");
+        if(_rootTask.getValue() == null)
+            return;
+        Task task = ((Task) _rootTask.getValue().getElement());
+        task.setBookmark(!task.isBookmarked()); // toggles bookmark bool
+    }
+
+    private void onBookMarkChange(boolean completed) {
+        if(completed)
+            taskName.setTextFill(Color.GREEN);
+        else
+            taskName.setTextFill(Color.BLACK);
     }
 
     @FXML
