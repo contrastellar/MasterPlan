@@ -1,15 +1,12 @@
 package ui.taskboard;
 
-import components.Category;
-import components.TodoElement;
-import components.observable.ObservableManager;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
-import models.MainModel;
 import ui.custom.Viewable;
+import ui.taskboard.editbar.EditBarContainer;
 import ui.taskboard.listview.ListSpaceView;
-import util.graph.ObservableVertex;
 
 import java.io.IOException;
 
@@ -18,22 +15,15 @@ import java.io.IOException;
  */
 public class WorkSpaceView extends SplitPane implements Viewable {
 
-    public final ListSpaceView listSpaceView;
+    @FXML
+    private ListSpaceView listSpaceView;
 
-    private final MainModel mainModel;
-
-    private final ObservableManager observableManager = new ObservableManager();
-
+    @FXML
+    private EditBarContainer editBarContainer;
 
 
-    public WorkSpaceView(MainModel mainModel) {
-        this.mainModel = mainModel;
-
+    public WorkSpaceView() {
         loadFXML();
-
-        listSpaceView = new ListSpaceView(mainModel);
-
-        getItems().add(0, listSpaceView);
     }
 
 
@@ -42,13 +32,15 @@ public class WorkSpaceView extends SplitPane implements Viewable {
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
-
-
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    @FXML
+    private void initialize() {
     }
 
     @Override
@@ -58,13 +50,13 @@ public class WorkSpaceView extends SplitPane implements Viewable {
 
     @Override
     public void registerListeners() {
+        editBarContainer.registerListeners();
         listSpaceView.registerListeners();
-        observableManager.startListen();
     }
 
     @Override
     public void unregisterListeners() {
+        editBarContainer.unregisterListeners();
         listSpaceView.unregisterListeners();
-        observableManager.stopListen();
     }
 }

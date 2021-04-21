@@ -25,6 +25,7 @@ Icon:hover {
 }
 
 .removeCatBtn {
+
     -fx-background-color: #cecece;
     -fx-text-fill: white;
     -fx-font-weight: bold;

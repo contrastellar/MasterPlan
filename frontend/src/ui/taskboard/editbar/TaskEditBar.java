@@ -1,111 +1,147 @@
 package ui.taskboard.editbar;
 
 
-import components.Category;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import components.observable.ObservableManager;
 import components.task.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import models.MainModel;
-import util.graph.IVertex;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import util.graph.ObservableVertex;
 
-import java.util.List;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.util.Date;
 
-public class TaskEditBar {
+public class TaskEditBar extends VBox implements IEditBar {
 
-    private final MainModel mainModel;
     public final Observable<ObservableVertex<TodoElement>> _taskVertex = new Observable<>();
     private final IReadOnlyObservable<ObservableVertex<TodoElement>> taskVertex = _taskVertex;
 
+    private final ObservableManager observableManager = new ObservableManager();
+
+
     // DESCRIPTION inputs
     @FXML private TextField titleInput;
-    @FXML private TextField authorInput;
-    @FXML private TextArea notesInput;
-
-    // WORKSPACE input
-    @FXML private ChoiceBox<String> workspaceInput;
+    @FXML private TextArea description;
 
     // DATE inputs
-    @FXML private DatePicker createdDateInput;
+    @FXML private Label createdDateInput;
     @FXML private DatePicker dueDateInput;
 
     // STATUS
     @FXML private Label statusLabel;
     private static final String STATUS_LABEL_PATTERN = "Status: %s";
 
-    // TAGs input
-    @FXML private TextArea tagsInput;
 
-    public TaskEditBar(MainModel mainModel) {
-        this.mainModel = mainModel;
-        taskVertex.startListen(this::onTaskChange);
+    public TaskEditBar() {
+        loadFXML();
+    }
+
+    private void loadFXML() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TaskEditBar.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
 
     @FXML
-    private void onConfirmChangesBtn_click() {
+    private void initialize() {
+        observableManager.addListener(_taskVertex, this::onTaskChange);
+    }
+
+    @FXML
+    private void onConfirmChangesBtn_click(ActionEvent ae) {
         if(taskVertex.getValue() == null)
             return;
 
         Task task = (Task) this.taskVertex.getValue().getElement();
 
         task.setName(titleInput.getText());
-        task.setAuthor(authorInput.getText());
-        task.setNotes(notesInput.getText());
-        mainModel.obsGraph.addDirectedEdge(/* selected workspace*/null, taskVertex.getValue() );
-        // TODO: to set the workspace, we need the vertex corresponding to the task
-        // TODO: set due date
-        // TODO: retrieve from tagsInput
+        task.setDescription(description.getText());
+
+
+        LocalDate date = dueDateInput.getValue();
+        if (date != null) task.setDueDate(toCalendar(date));
+
     }
 
     private void onTaskChange(ObservableVertex<TodoElement> taskVertex) {
 
         if(taskVertex == null) {
             titleInput.setText("");
-            authorInput.setText("");
-            notesInput.setText("");
-            workspaceInput.getItems().clear();
-            // TODO: set createdDateInput
-            // TODO: set dueDateInput
+            description.setText("");
+            createdDateInput.setText("");
             statusLabel.setText("");
-            tagsInput.setText("");
         }
         else {
             Task task = (Task) taskVertex.getElement();
 
-            titleInput.setText(task.getNotes());
+            titleInput.setText(task.getName());
 
-            authorInput.setText(task.getAuthor());
+            description.setText(task.getDescription());
 
-            notesInput.setText(task.getNotes());
+            LocalDate date = dueDateInput.getValue();
+            if (date != null) task.setDueDate(toCalendar(date));
 
-            List<ObservableVertex<TodoElement>> workspaces = mainModel.obsGraph.query((element) -> {
-                return element instanceof Category;
-            });
-
-            workspaceInput.getItems().clear();
-            for(var workspace : workspaces) {
-                workspaceInput.getItems().add(workspace.getElement().name.getValue());
-            }
-
-            // TODO: set createdDateInput
-            // TODO: set dueDateInput
+            createdDateInput.setText(task.creationDate.toString());
 
             String status = task.isCompleted() ? String.format(STATUS_LABEL_PATTERN, "true") : String.format(STATUS_LABEL_PATTERN, "false");
             statusLabel.setText(status);
 
 
-            // TODO: set tagsInput (tagsInput shouldn't be a text area)
         }
     }
 
-    public void setTaskVertex(ObservableVertex<TodoElement> taskVertex) {
+    public static Calendar toCalendar(LocalDate localDate) {
+        Date date = localToDate(localDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar;
+    }
+
+    public static Date localToDate(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+          .atZone(ZoneId.systemDefault())
+          .toInstant());
+    }
+
+
+    public void setEditVertex(ObservableVertex<TodoElement> taskVertex) {
         if(taskVertex != null && !(taskVertex.getElement() instanceof Task))
             throw new IllegalArgumentException("EditBar.onTaskChange() - taskVertex.getElement() must be of type Task");
 
         this._taskVertex.setValue(taskVertex);
+    }
+
+
+    public Node node() {
+        return this;
+    }
+
+    public void registerListeners() {
+        observableManager.startListen();
+    }
+
+    public void unregisterListeners() {
+
+        observableManager.stopListen();
+
     }
 
 }

@@ -36,12 +36,18 @@
     <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
         <Button fx:id="removeVertexBtn"
                 onAction="#onRemoveVertexBtn_click"
-                styleClass="removeCatBtn" text="V">
+                styleClass="removeCatBtn">
+<!--            <graphic>-->
+<!--                <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="7" />-->
+<!--            </graphic>-->
             <HBox.margin><Insets right="5"/></HBox.margin>
         </Button>
         <Button fx:id="removeGraphBtn"
                 onAction="#onRemoveGraphBtn_click"
-                styleClass="removeCatBtn" text="G">
+                styleClass="removeCatBtn">
+<!--            <graphic>-->
+<!--                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="7" />-->
+<!--            </graphic>-->
             <HBox.margin><Insets right="5"/></HBox.margin>
         </Button>
         <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>

@@ -3,9 +3,6 @@ package ui.taskboard.listview;
 import components.Category;
 import components.TodoElement;
 import components.observable.ObservableManager;
-import components.task.Task;
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,7 +10,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 import models.MainModel;
-
 import ui.custom.Viewable;
 import util.graph.ObservableVertex;
 
@@ -30,14 +26,12 @@ public class ListSpaceView extends VBox implements Viewable {
     @FXML
     private ScrollPane scrollPane;
 
-    private final MainModel mainModel;
     private final double SCROLL_SPEED_MODIFIER = 6.0; // Modify single value to adjust scroll speed
 
     private final ObservableManager observableManager = new ObservableManager();
 
 
-    public ListSpaceView(MainModel mainModel) {
-        this.mainModel = mainModel;
+    public ListSpaceView() {
         loadFXML();
     }
 
@@ -55,7 +49,7 @@ public class ListSpaceView extends VBox implements Viewable {
 
     @FXML
     private void initialize() {
-        observableManager.addListener(mainModel.selectedVertex, this::onRootVertexChange);
+        observableManager.addListener(MainModel.model.selectedVertex, this::onRootVertexChange);
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {

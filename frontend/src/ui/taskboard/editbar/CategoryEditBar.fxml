@@ -7,7 +7,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ChoiceBox?>
 
-<VBox fx:id="editContainer" stylesheets="@TaskEditBar.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.Button?>
+<fx:root type="javafx.scene.layout.VBox"
+         fx:id="editContainer"
+         stylesheets="@TaskEditBar.css"
+         xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
     <!-- Description -->
     <VBox styleClass="groupContainer">
@@ -22,31 +26,13 @@
             <VBox.margin> <Insets bottom="5.0" /> </VBox.margin>
         </HBox>
 
-        <HBox styleClass="leftPadded" alignment="CENTER_RIGHT">
-            <VBox minWidth="50" alignment="CENTER">
-                <Label text="Author:"/>
-                <HBox.margin> <Insets right="5.0" /> </HBox.margin>
-            </VBox>
-            <TextField fx:id="authorInput" styleClass="inputBox" HBox.hgrow="ALWAYS"/>
-            <VBox.margin> <Insets bottom="5.0" /> </VBox.margin>
-        </HBox>
-
         <HBox styleClass="leftPadded" HBox.hgrow="ALWAYS">
             <VBox minWidth="50" alignment="TOP_CENTER">
                 <Label text="Notes:"/>
                 <HBox.margin> <Insets right="5.0" /> </HBox.margin>
             </VBox>
-            <TextArea fx:id="notesInput" styleClass="inputBox" HBox.hgrow="ALWAYS"/>
+            <TextArea fx:id="description" styleClass="inputBox" HBox.hgrow="ALWAYS"/>
             <VBox.margin> <Insets bottom="5.0" /> </VBox.margin>
-        </HBox>
-    </VBox>
-
-    <!-- Workspace -->
-    <VBox styleClass="groupContainer">
-        <Label text="WORKSPACE:"> <VBox.margin> <Insets bottom="10.0" /> </VBox.margin> </Label>
-
-        <HBox styleClass="leftPadded" alignment="CENTER">
-            <ChoiceBox fx:id="workspaceInput" styleClass="inputBox" HBox.hgrow="ALWAYS" />
         </HBox>
     </VBox>
 
@@ -56,35 +42,17 @@
 
         <HBox styleClass="leftPadded">
             <VBox minWidth="50" alignment="CENTER"> <Label text="Created:"/> </VBox>
-            <DatePicker fx:id="createdDateInput" promptText="Select Date" HBox.hgrow="ALWAYS">
+            <Label fx:id="createdDateInput" HBox.hgrow="ALWAYS">
                 <HBox.margin> <Insets bottom="5.0" left="5.0" /> </HBox.margin>
-            </DatePicker>
+            </Label>
         </HBox>
-
-        <HBox styleClass="leftPadded">
-            <VBox minWidth="50" alignment="CENTER"> <Label text="Due By:"/> </VBox>
-            <DatePicker fx:id="dueDateInput" promptText="Select Date" HBox.hgrow="ALWAYS">
-                <HBox.margin> <Insets bottom="5.0" left="5.0" /> </HBox.margin>
-            </DatePicker>
-        </HBox>
-    </VBox>
-
-    <!-- Completed Status -->
-    <VBox styleClass="groupContainer">
-        <Label text="STATUS:"> <VBox.margin> <Insets bottom="10.0" /> </VBox.margin> </Label>
-
-        <HBox styleClass="leftPadded" alignment="CENTER" prefHeight="30.0">
-            <Label fx:id="statusLabel" text="Default Status"/>
-        </HBox>
-
     </VBox>
 
     <!-- Tags -->
-    <VBox styleClass="groupContainer" VBox.vgrow="ALWAYS">
-        <Label text="TAGS:"> <VBox.margin> <Insets bottom="10.0" /> </VBox.margin> </Label>
-        <VBox styleClass="leftPadded">
-            <TextArea fx:id="tagsInput" styleClass="inputBox"/>
-        </VBox>
+    <VBox styleClass="groupContainer">
+        <Button text="Confirm" onAction="#onConfirmChangesBtn_click" >
+            <HBox.margin><Insets left="5"/></HBox.margin>
+        </Button>
     </VBox>
 
-</VBox>
+</fx:root>

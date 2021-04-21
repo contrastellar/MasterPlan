@@ -15,13 +15,14 @@ import javafx.scene.layout.VBox;
 import ui.custom.Viewable;
 import ui.taskboard.listview.category.CategoryView;
 import ui.taskboard.listview.task.TaskView;
-import util.graph.IVertex;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListView extends VBox implements Viewable {
 
@@ -37,7 +38,6 @@ public class ListView extends VBox implements Viewable {
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
 
-
     public final Map<ObservableVertex<TodoElement>, Viewable> vertexToViewable = new HashMap<>();
 
     private final ObservableManager observableManager = new ObservableManager();
@@ -46,6 +46,7 @@ public class ListView extends VBox implements Viewable {
     public ListView() {
         loadFXML();
     }
+
 
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListView.fxml"));

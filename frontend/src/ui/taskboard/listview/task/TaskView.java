@@ -21,6 +21,7 @@ import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
+import models.MainModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -53,6 +54,7 @@ public class TaskView extends GridPane implements Viewable {
 
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
+
     private ObservableVertex<TodoElement> taskVertex;
     private final ObservableManager observableManager = new ObservableManager();
 
@@ -79,6 +81,11 @@ public class TaskView extends GridPane implements Viewable {
     private void initialize() {
 
         _rootTask.startListen(this::onRootTaskChange);
+
+        setOnMouseClicked((e) -> {
+            MainModel.model.editVertex.setValue(_rootTask.getValue());
+        });
+
 
         if (listView.isTodoEmpty())
             toggleBtn.setVisible(false);
@@ -128,7 +135,7 @@ public class TaskView extends GridPane implements Viewable {
         if(_rootTask.getValue() == null)
             return;
         Task task = (Task) _rootTask.getValue().getElement();
-        task.setArchived(newVal);
+        task.setArchive(newVal);
     }
 
     private void onCheckBox_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
@@ -141,11 +148,7 @@ public class TaskView extends GridPane implements Viewable {
     }
 
     private void onArchiveChange(boolean completed){
-        if(completed){
-            System.out.printf("Archived set to 'true'\n");
-        }else{
-            System.out.printf("Archived set to 'false'\n");
-        }
+        System.out.println("Archived set: " + completed);
     }
 
     private void onTaskCompletedChange(boolean completed) {
@@ -157,6 +160,8 @@ public class TaskView extends GridPane implements Viewable {
         }
     }
 
+    // TODO: On vertex removal set edit vertex to null
+
     @FXML
     private void onRemoveVertexBtn_click(ActionEvent e) {
         if(_rootTask.getValue() == null)
@@ -165,6 +170,7 @@ public class TaskView extends GridPane implements Viewable {
         _rootTask.getValue().getGraph().removeVertex(_rootTask.getValue());
 
         System.out.println("Removing vertex. Graph size: " + _rootTask.getValue().getGraph().getVertices().size());
+
     }
 
     @FXML

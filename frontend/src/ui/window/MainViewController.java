@@ -2,8 +2,6 @@ package ui.window;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import models.MainModel;
 import ui.custom.Viewable;
 import ui.taskboard.WorkSpaceView;
 
@@ -15,8 +13,7 @@ public class MainViewController {
     @FXML
     private BorderPane mainContainer;
 
-    private final MainModel mainModel = new MainModel();
-    private final WorkSpaceView workSpaceView = new WorkSpaceView(mainModel);
+    private final WorkSpaceView workSpaceView = new WorkSpaceView();
 
     private Viewable viewable = null;
 

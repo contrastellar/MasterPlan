@@ -19,6 +19,8 @@ import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
+import models.MainModel;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,12 +46,15 @@ public class CategoryView extends GridPane implements Viewable {
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> categoryVertex = _categoryVertex;
 
+
+
     private final ObservableManager observableManager = new ObservableManager();
 
 
     public CategoryView() {
         loadFXML();
     }
+
 
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CategoryView.fxml"));
@@ -68,7 +73,9 @@ public class CategoryView extends GridPane implements Viewable {
 
         observableManager.addListener(_categoryVertex, this::onCategoryVertexChange);
 
-        // show();
+        setOnMouseClicked((e) -> {
+            MainModel.model.editVertex.setValue(_categoryVertex.getValue());
+        });
 
         if (listView.isTodoEmpty())
             toggleBtn.setVisible(false);
