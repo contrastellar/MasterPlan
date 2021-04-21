@@ -26,6 +26,13 @@ High Priority:
             - Profit
             - create user interface - Gabby
             - integrate user interface w/ observables- Gabby
+       -"Best way"
+        -List view is a view of our tasks overall -- our main model
+            -Archiving a list view
+            inside list space view -> "is it being displayed"
+            -Unreg node at "hide"
+
+
 
 
 Medium Priority:

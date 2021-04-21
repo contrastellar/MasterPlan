@@ -58,7 +58,6 @@ public class MainViewController {
             mainContainer.setCenter(null);
 
         this.viewable = viewable;
-        //mainContainer.setCenter(workSpaceView);
     }
 
 }
