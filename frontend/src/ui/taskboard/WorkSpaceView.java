@@ -43,6 +43,13 @@ public class WorkSpaceView extends SplitPane implements Viewable {
     private void initialize() {
     }
 
+    /**
+     *
+     */
+    public void showArchive(){
+
+    }
+
     @Override
     public Node node() {
         return this;

@@ -8,24 +8,22 @@ import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import models.MainModel;
 import ui.custom.Viewable;
-
-import ui.custom.icon.Icon;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
-import models.MainModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -156,15 +154,14 @@ public class TaskView extends GridPane implements Viewable {
             return;
 
         Task task = ((Task) _rootTask.getValue().getElement()); //Pulls the current task that is invoking this method
-
         boolean curArchive = task.isArchived(); //Pulls the 'isArchived'
-
         task.setArchive(!curArchive); //Sets the current task's archive boolean
-
         System.out.println("Setting archive on " + task.getName() + " to " + task.isArchived.getValue());
 
+        this.managedProperty().bindBidirectional(this.visibleProperty());
+        this.setVisible(curArchive); //Hides the task at hand
+        System.out.println("" + this.getRootTask().getElement());
     }
-
 
     private void onTaskCompleted_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
         if(_rootTask.getValue() == null)

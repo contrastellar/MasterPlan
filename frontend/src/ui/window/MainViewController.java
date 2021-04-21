@@ -3,6 +3,7 @@ package ui.window;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import ui.custom.Viewable;
+import ui.taskboard.ArchiveView;
 import ui.taskboard.WorkSpaceView;
 
 /**
@@ -43,7 +44,8 @@ public class MainViewController {
 
     @FXML
     private void switchViewToArchive() {
-        switchViewable(null);
+        ArchiveView archiveView = new ArchiveView(); //Declares 'new' archive view.
+        switchViewable(archiveView);
     }
 
     private void switchViewable(Viewable viewable) {

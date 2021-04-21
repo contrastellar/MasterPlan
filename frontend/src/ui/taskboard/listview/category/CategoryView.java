@@ -160,7 +160,8 @@ public class CategoryView extends GridPane implements Viewable {
     private void onArchive_click(ActionEvent e)  {
         if(_categoryVertex.getValue() == null)
             return;
-        Category cat =((Category) _categoryVertex.getValue().getElement());
+
+        Category cat = ((Category) _categoryVertex.getValue().getElement());
         boolean curArchive = cat.isArchived();
         cat.setArchive(!curArchive);
 
