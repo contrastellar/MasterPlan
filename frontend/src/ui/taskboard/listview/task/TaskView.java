@@ -80,12 +80,12 @@ public class TaskView extends GridPane implements Viewable {
     @FXML
     private void initialize() {
 
-        _rootTask.startListen(this::onRootTaskChange);
+        observableManager.addListener(_rootTask, this::onRootTaskChange);
 
         setOnMouseClicked((e) -> {
+            e.consume();
             MainModel.model.editVertex.setValue(_rootTask.getValue());
         });
-
 
         if (listView.isTodoEmpty())
             toggleBtn.setVisible(false);

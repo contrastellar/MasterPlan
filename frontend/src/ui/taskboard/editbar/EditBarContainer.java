@@ -22,6 +22,8 @@ public class EditBarContainer extends Region implements Viewable {
 
     private void onEditVertexChange(ObservableVertex<TodoElement> editVertex) {
 
+        System.out.println("EditVertex change");
+
         if(activeEditBar != null)
             activeEditBar.unregisterListeners();
 

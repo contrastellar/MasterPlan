@@ -74,6 +74,7 @@ public class CategoryView extends GridPane implements Viewable {
         observableManager.addListener(_categoryVertex, this::onCategoryVertexChange);
 
         setOnMouseClicked((e) -> {
+            e.consume();
             MainModel.model.editVertex.setValue(_categoryVertex.getValue());
         });
 

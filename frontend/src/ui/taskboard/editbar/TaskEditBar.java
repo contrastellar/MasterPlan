@@ -19,6 +19,7 @@ import util.graph.ObservableVertex;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class TaskEditBar extends VBox implements IEditBar {
 
     // STATUS
     @FXML private Label statusLabel;
-    private static final String STATUS_LABEL_PATTERN = "Status: %s";
+    private static final String STATUS_LABEL_PATTERN = "Completed: %s";
 
 
     public TaskEditBar() {
@@ -67,7 +68,7 @@ public class TaskEditBar extends VBox implements IEditBar {
 
     @FXML
     private void onConfirmChangesBtn_click(ActionEvent ae) {
-        if(taskVertex.getValue() == null)
+        if (taskVertex.getValue() == null)
             return;
 
         Task task = (Task) this.taskVertex.getValue().getElement();
@@ -77,7 +78,12 @@ public class TaskEditBar extends VBox implements IEditBar {
 
 
         LocalDate date = dueDateInput.getValue();
-        if (date != null) task.setDueDate(toCalendar(date));
+        if (date != null) {
+            task.setDueDate(toCalendar(date));
+            System.out.println(task.creationDate.getTime().toString());
+        }
+        else
+            System.out.println("Due date NULL");
 
     }
 
@@ -93,16 +99,15 @@ public class TaskEditBar extends VBox implements IEditBar {
             Task task = (Task) taskVertex.getElement();
 
             titleInput.setText(task.getName());
-
             description.setText(task.getDescription());
+            createdDateInput.setText(task.creationDate.getTime().toString());
 
-            LocalDate date = dueDateInput.getValue();
-            if (date != null) task.setDueDate(toCalendar(date));
+            if(task.getDueDate() != null) {
+                dueDateInput.setValue(LocalDateTime.ofInstant(task.getDueDate().toInstant(), task.getDueDate().getTimeZone().toZoneId()).toLocalDate());
+            }
 
-            createdDateInput.setText(task.creationDate.toString());
-
-            String status = task.isCompleted() ? String.format(STATUS_LABEL_PATTERN, "true") : String.format(STATUS_LABEL_PATTERN, "false");
-            statusLabel.setText(status);
+            String completed = task.isCompleted() ? String.format(STATUS_LABEL_PATTERN, "true") : String.format(STATUS_LABEL_PATTERN, "false");
+            statusLabel.setText(completed);
 
 
         }

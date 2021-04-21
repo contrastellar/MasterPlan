@@ -77,11 +77,10 @@ public class CategoryEditBar extends VBox implements IEditBar {
         }
         else {
             Category cat = (Category) this.categoryVertex.getValue().getElement();
+
             description.setText(cat.getDescription());
-
             titleInput.setText(cat.getName());
-
-            createdDateInput.setText(cat.creationDate.toString());
+            createdDateInput.setText(cat.creationDate.getTime().toString());
         }
     }
 

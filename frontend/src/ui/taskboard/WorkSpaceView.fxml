@@ -7,8 +7,7 @@
          stylesheets="@WorkSpaceView.css"
          xmlns="http://javafx.com/javafx/15.0.1"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:id="viewContainer"
-         dividerPositions="0.725">
+         fx:id="viewContainer">
 
     <!-- Runtime: ListView -->
     <ListSpaceView fx:id="listSpaceView" />

@@ -6,10 +6,7 @@ import components.TodoElement;
 import components.observable.IReadOnlyObservableList;
 import components.observable.Observable;
 import components.observable.ObservableList;
-import util.graph.Graph;
-import util.graph.IVertex;
-import util.graph.ObservableGraph;
-import util.graph.ObservableVertex;
+import util.graph.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,10 +26,19 @@ public class MainModel {
         // deserialize graph
         this.obsGraph = new ObservableGraph<>(new Graph<>());
         selectedVertex.setValue(obsGraph.addVertex(new Category("Main")));
+
+        obsGraph.startListen(this::onEditVertexRemoved);
+        obsGraph.startListen(this::onSelectedVertexRemoved);
     }
 
-    public void importGoogleCalendar(IVertex<TodoElement> rootVertex) {
+    private void onEditVertexRemoved(ObservableGraphChange<TodoElement> change) {
+        if(change.getRemovedVertices().contains(editVertex.getValue()))
+            editVertex.setValue(null);
+    }
 
+    private void onSelectedVertexRemoved(ObservableGraphChange<TodoElement> change) {
+        if(change.getRemovedVertices().contains(selectedVertex.getValue()))
+            selectedVertex.setValue(null);
     }
 
     public void addTag(Tag tag) {
@@ -45,6 +51,10 @@ public class MainModel {
 
     public void sortTags(Comparator<Tag> c) {
         _tags.sort(c);
+    }
+
+    public void importGoogleCalendar(IVertex<TodoElement> rootVertex) {
+
     }
 
     public void exportGoogleCalendar() {
