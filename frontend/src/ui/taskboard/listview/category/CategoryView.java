@@ -152,7 +152,12 @@ public class CategoryView extends GridPane implements Viewable {
 
     @FXML
     private void onArchive_click(ActionEvent e)  {
-        throw new RuntimeException("Not yet implemented");
+        if(_categoryVertex.getValue() == null)
+            return;
+        Category cat =((Category) _categoryVertex.getValue().getElement());
+        boolean curArchive = cat.isArchived();
+        ((Category) _categoryVertex.getValue().getElement()).setArchive(!curArchive);
+        System.out.println("Setting archive on " + cat.getName() + " to " + cat.isArchived );
     }
 
     @FXML

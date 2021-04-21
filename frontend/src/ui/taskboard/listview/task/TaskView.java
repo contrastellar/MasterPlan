@@ -124,8 +124,7 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(_rootTask.getValue(), this::onRemainingTasksChange);
         observableManager.addListener(_rootTask.getValue().getElement().name, this::onTaskNameChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
-        observableManager.addListener(((Task) _rootTask.getValue().getElement()).isArchived, this::onArchiveChange);
-        completedCheckBox.selectedProperty().addListener(this::onCheckBox_click);
+        completedCheckBox.selectedProperty().addListener(this::onTaskCompleted_click);
         listView.setRootVertex(rootTask);
     }
 
@@ -134,31 +133,23 @@ public class TaskView extends GridPane implements Viewable {
         throw new RuntimeException("Not yet implemented");
     }
 
-    private void onArchive_click(ObservableValue<? extends  Boolean> observableValue, Boolean oldVal, Boolean newVal){
+    @FXML
+    private void onArchive_click(ActionEvent e){
         if(_rootTask.getValue() == null)
             return;
-        Task task = (Task) _rootTask.getValue().getElement();
-        task.setArchive(newVal);
+        Task task =((Task) _rootTask.getValue().getElement());
+        boolean curArchive = task.isArchived();
+        ((Task) _rootTask.getValue().getElement()).setArchive(!curArchive);
+        System.out.println("Setting archive on " + task.getName() + " to " + task.isArchived );
     }
 
-    private void onCheckBox_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
+
+    private void onTaskCompleted_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
         if(_rootTask.getValue() == null)
             return;
 
         Task task = (Task) _rootTask.getValue().getElement();
         task.setCompleted(newVal);
-
-    }
-
-
-    private void onArchiveChange(boolean completed){
-        System.out.println("Archived set: " + completed);
-        if(completed){
-            System.out.printf("Archived set to 'true'\n");
-        }else{
-            System.out.printf("Archived set to 'false'\n");
-        }
-        System.out.println("Node that was set was " + _rootTask);
     }
 
     private void onTaskCompletedChange(boolean completed) {
@@ -170,8 +161,6 @@ public class TaskView extends GridPane implements Viewable {
         }
     }
 
-    // TODO: On vertex removal set edit vertex to null
-
     @FXML
     private void onRemoveVertexBtn_click(ActionEvent e) {
         if(_rootTask.getValue() == null)
@@ -180,7 +169,6 @@ public class TaskView extends GridPane implements Viewable {
         _rootTask.getValue().getGraph().removeVertex(_rootTask.getValue());
 
         System.out.println("Removing vertex. Graph size: " + _rootTask.getValue().getGraph().getVertices().size());
-
     }
 
     @FXML

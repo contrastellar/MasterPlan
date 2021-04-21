@@ -41,8 +41,7 @@
             </graphic>
         </Button>
 
-        <Button fx:id="removeGraphBtn"
-                onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
+        <Button fx:id="removeGraphBtn" onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
             <graphic>
                 <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" />
             </graphic>

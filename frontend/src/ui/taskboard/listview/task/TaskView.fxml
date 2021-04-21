@@ -58,7 +58,7 @@
             </graphic>
         </Button>
 
-        <Button fx:id="archive" styleClass="IconBtn">
+        <Button fx:id="archive" onAction="#onArchive_click" styleClass="IconBtn">
             <graphic>
                 <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />
             </graphic>
