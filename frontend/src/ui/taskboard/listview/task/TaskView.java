@@ -31,7 +31,7 @@ public class TaskView extends GridPane implements Viewable {
 
 
     @FXML
-    private CheckBox archiveCheckBox;
+    private Button archiveButton;
 
     @FXML
     private Button toggleBtn;
@@ -125,13 +125,16 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(_rootTask.getValue().getElement().name, this::onTaskNameChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isArchived, this::onArchiveChange);
-        archiveCheckBox.selectedProperty().addListener(this::onArchived_click);
         completedCheckBox.selectedProperty().addListener(this::onCheckBox_click);
-
         listView.setRootVertex(rootTask);
     }
 
-    private void onArchived_click(ObservableValue<? extends  Boolean> observableValue, Boolean oldVal, Boolean newVal){
+    @FXML
+    private void onBookmark_click(ActionEvent e)  {
+        throw new RuntimeException("Not yet implemented");
+    }
+
+    private void onArchive_click(ObservableValue<? extends  Boolean> observableValue, Boolean oldVal, Boolean newVal){
         if(_rootTask.getValue() == null)
             return;
         Task task = (Task) _rootTask.getValue().getElement();

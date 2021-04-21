@@ -34,24 +34,32 @@
 
     <!-- Category buttons (row 0, col 2) -->
     <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
-        <Button fx:id="removeVertexBtn"
-                onAction="#onRemoveVertexBtn_click"
-                styleClass="removeCatBtn">
-<!--            <graphic>-->
-<!--                <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="7" />-->
-<!--            </graphic>-->
-            <HBox.margin><Insets right="5"/></HBox.margin>
+
+        <Button fx:id="removeVertexBtn" onAction="#onRemoveVertexBtn_click" styleClass="IconBtn">
+            <graphic>
+                <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="13" />
+            </graphic>
         </Button>
+
         <Button fx:id="removeGraphBtn"
-                onAction="#onRemoveGraphBtn_click"
-                styleClass="removeCatBtn">
-<!--            <graphic>-->
-<!--                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="7" />-->
-<!--            </graphic>-->
-            <HBox.margin><Insets right="5"/></HBox.margin>
+                onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
+            <graphic>
+                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" />
+            </graphic>
         </Button>
-        <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="10"><HBox.margin><Insets right="5"/></HBox.margin></Icon>
-        <Icon icon="archive.svg" iconColor="#cccccc" iconSize="10"/>
+
+        <Button fx:id="bookmark" onAction="#onBookmark_click" styleClass="IconBtn">
+            <graphic>
+                <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="12" />
+            </graphic>
+        </Button>
+
+        <Button fx:id="archive" onAction="#onArchive_click" styleClass="IconBtn">
+            <graphic>
+                <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />
+            </graphic>
+        </Button>
+
     </HBox>
 
     <!-- Status of category (row 1, col 1) -->

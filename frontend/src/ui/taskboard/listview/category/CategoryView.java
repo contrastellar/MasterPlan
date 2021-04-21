@@ -150,6 +150,17 @@ public class CategoryView extends GridPane implements Viewable {
         System.out.println("Removing vertex. Graph size: " + _categoryVertex.getValue().getGraph().getVertices().size());
     }
 
+    @FXML
+    private void onArchive_click(ActionEvent e)  {
+        throw new RuntimeException("Not yet implemented");
+    }
+
+    @FXML
+    private void onBookmark_click(ActionEvent e)  {
+        throw new RuntimeException("Not yet implemented");
+    }
+
+
     private void onCategoryNameChange(String name) {
         categoryName.setText(name);
     }
