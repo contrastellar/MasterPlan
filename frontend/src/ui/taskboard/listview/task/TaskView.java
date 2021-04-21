@@ -147,8 +147,15 @@ public class TaskView extends GridPane implements Viewable {
 
     }
 
+
     private void onArchiveChange(boolean completed){
         System.out.println("Archived set: " + completed);
+        if(completed){
+            System.out.printf("Archived set to 'true'\n");
+        }else{
+            System.out.printf("Archived set to 'false'\n");
+        }
+        System.out.println("Node that was set was " + _rootTask);
     }
 
     private void onTaskCompletedChange(boolean completed) {
