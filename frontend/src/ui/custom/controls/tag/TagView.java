@@ -4,9 +4,12 @@ import components.Tag;
 import components.observable.IListener;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -14,14 +17,15 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import ui.custom.Viewable;
 
 import java.io.IOException;
 
-class TagView extends HBox {
+class TagView extends HBox implements Viewable {
 
     public final Tag tag;
-
     private IListener<TagView> removeTagCallback = null;
+    private final Button removeButton = new Button();
 
     @FXML
     private Label tagName;
@@ -46,12 +50,16 @@ class TagView extends HBox {
 
     @FXML
     private void initialize() {
-        tag.name.startListen(this::onTagNameChange);
-        tag.color.startListen(this::onTagColorChange);
+
     }
 
     public void setOnRemoveCallback(IListener<TagView> removeTagCallback) {
         this.removeTagCallback = removeTagCallback;
+    }
+
+    private void onRemoveButton_click(ActionEvent ae) {
+        if(removeTagCallback != null)
+            removeTagCallback.onChange(this);
     }
 
     private void onTagNameChange(String name) {
@@ -68,17 +76,29 @@ class TagView extends HBox {
 
     @FXML
     private void onMouseEnter(MouseEvent me) {
-        // TODO: add remove button
+        getChildren().add(removeButton);
     }
 
     @FXML
     private void onMouseExit(MouseEvent me) {
-        // TODO: remove remove button
+        getChildren().remove(removeButton);
     }
 
 
+    @Override
+    public Node node() {
+        return this;
+    }
 
+    @Override
+    public void registerListeners() {
+        tag.name.startListen(this::onTagNameChange);
+        tag.color.startListen(this::onTagColorChange);
+    }
 
-
-
+    @Override
+    public void unregisterListeners() {
+        tag.name.stopListen(this::onTagNameChange);
+        tag.color.stopListen(this::onTagColorChange);
+    }
 }
