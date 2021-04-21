@@ -5,12 +5,12 @@ import components.TodoElement;
 import components.observable.ObservableManager;
 import components.task.Task;
 import javafx.scene.Node;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import models.MainModel;
 import ui.custom.Viewable;
 import util.graph.ObservableVertex;
 
-public class EditBarContainer extends Region implements Viewable {
+public class EditBarContainer extends VBox implements Viewable {
 
     private final ObservableManager observableManager = new ObservableManager();
 
@@ -18,6 +18,10 @@ public class EditBarContainer extends Region implements Viewable {
 
     public EditBarContainer() {
         observableManager.addListener(MainModel.model.editVertex, this::onEditVertexChange);
+
+        this.setPrefWidth(200);
+        this.setMinWidth(200);
+        this.setMaxWidth(350);
     }
 
     private void onEditVertexChange(ObservableVertex<TodoElement> editVertex) {

@@ -1,5 +1,5 @@
 #remainingContainer, #buttonContainer {
-    -fx-border-width: 0 5 0 5;
+    -fx-border-width: 0 5 0 0;
     -fx-border-color: transparent;
 }
 
@@ -25,7 +25,7 @@ Icon:hover {
 }
 
 .IconBtn {
-
+    -fx-padding: 0 2 0 2;
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }

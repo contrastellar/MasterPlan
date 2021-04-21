@@ -43,6 +43,9 @@ public class CategoryView extends GridPane implements Viewable {
     private HBox buttonContainer;
 
     @FXML
+    private HBox remainingContainer;
+
+    @FXML
     private Label categoryName;
 
     @FXML
@@ -91,8 +94,14 @@ public class CategoryView extends GridPane implements Viewable {
         List<Node> gridChildren = new ArrayList<>(getChildren());
         gridChildren.remove(listView);
         gridChildren.forEach(e -> {
-            e.setOnMouseEntered(event -> buttonContainer.setStyle("-fx-border-color: cadetblue;"));
-            e.setOnMouseExited(event -> buttonContainer.setStyle("-fx-border-color: transparent;"));
+            e.setOnMouseEntered(event -> {
+                remainingContainer.setStyle("-fx-border-color: cadetblue;");
+                buttonContainer.setStyle("-fx-border-color: cadetblue;");
+            });
+            e.setOnMouseExited(event -> {
+                remainingContainer.setStyle("-fx-border-color: transparent;");
+                buttonContainer.setStyle("-fx-border-color: transparent;");
+            });
         });
     }
 
