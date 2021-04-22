@@ -6,7 +6,7 @@ import components.TodoElement;
 import observable.IReadOnlyObservableList;
 import observable.Observable;
 import observable.ObservableList;
-import ui.workspaces.Archiver;
+import ui.workspaces.archivespace.Archiver;
 import util.graph.*;
 
 import java.util.ArrayList;

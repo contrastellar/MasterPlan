@@ -3,7 +3,6 @@ package ui.window;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import ui.util.Viewable;
-import ui.workspaces.archivespace.ArchiveView;
 import ui.workspaces.WorkSpaceView;
 
 /**
@@ -16,7 +15,6 @@ public class MainViewController {
 
     private final WorkSpaceView workSpaceView = new WorkSpaceView();
 
-    private final ArchiveView archiveView = new ArchiveView();
 
     private Viewable viewable = null;
 
@@ -46,8 +44,7 @@ public class MainViewController {
 
     @FXML
     private void switchViewToArchive() {
-        archiveView.registerListeners();
-        mainContainer.setCenter(archiveView);
+        switchViewable(null);
     }
 
     private void switchViewable(Viewable viewable) {

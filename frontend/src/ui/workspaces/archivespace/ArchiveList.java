@@ -1,4 +1,4 @@
-package ui.workspaces.listspace;
+package ui.workspaces.archivespace;
 
 import components.Category;
 import components.TodoElement;

@@ -1,4 +1,4 @@
-package ui.workspaces;
+package ui.workspaces.archivespace;
 
 import components.task.Task;
 import util.graph.ObservableVertex;

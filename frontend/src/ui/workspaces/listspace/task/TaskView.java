@@ -18,7 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import models.MainModel;
 import ui.util.Viewable;
-import ui.workspaces.Archiver;
+import ui.workspaces.archivespace.Archiver;
 import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;

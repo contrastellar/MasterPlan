@@ -1,4 +1,4 @@
-package ui.workspaces.listspace;
+package ui.workspaces.archivespace;
 
 import components.Category;
 import components.TodoElement;
@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class ArchiveListSpaceView extends VBox implements Viewable {
     @FXML
-    private ui.workspaces.listspace.ArchiveList listView;
+    private ArchiveList listView;
 
     @FXML
     private ScrollPane scrollPane;
