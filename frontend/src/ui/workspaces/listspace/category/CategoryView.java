@@ -79,6 +79,7 @@ public class CategoryView extends GridPane implements Viewable {
     private void initialize() {
 
         observableManager.addListener(_categoryVertex, this::onCategoryVertexChange);
+        this.managedProperty().bindBidirectional(this.visibleProperty());
 
         setOnMouseClicked((e) -> {
             e.consume();

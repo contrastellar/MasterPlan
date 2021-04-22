@@ -82,9 +82,8 @@ public class TaskView extends GridPane implements Viewable {
     @FXML
     private void initialize() {
 
-
-
         observableManager.addListener(_rootTask, this::onRootTaskChange);
+        this.managedProperty().bindBidirectional(this.visibleProperty());
 
         setOnMouseClicked((e) -> {
             e.consume();
