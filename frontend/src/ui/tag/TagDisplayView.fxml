@@ -11,7 +11,7 @@
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          stylesheets="TagDisplayView.css"
-         vgap="5" hgap="5">
+         vgap="5" hgap="5" prefWidth="20">
 
     <Button fx:id="addTagBtn" onAction="#onAddTagBtn_click" >
         <graphic>
