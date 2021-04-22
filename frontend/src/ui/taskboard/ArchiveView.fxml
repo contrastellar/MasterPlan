@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.SplitPane?>
-<?import ui.taskboard.listview.ArchiveListSpaceView?>
-
-<fx:root type="javafx.scene.control.SplitPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" stylesheets="@ArchiveView.css" fx:id="listViewContainer">
-
-    <ArchiveListSpaceView fx:id="listSpaceView" />
-</fx:root>

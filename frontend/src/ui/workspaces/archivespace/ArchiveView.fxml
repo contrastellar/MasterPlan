@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import ui.taskboard.listview.ArchiveListSpaceView?>
+
+<<<<<<< HEAD:frontend/src/ui/taskboard/ArchiveView.fxml
+<fx:root type="javafx.scene.control.SplitPane" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" stylesheets="@ArchiveView.css" fx:id="listViewContainer">
+=======
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.workspaces.ArchiveView"
+            prefHeight="400.0" prefWidth="600.0">
+>>>>>>> 4484cf8bb705e210c237f23d40d86dd812a28dcb:frontend/src/ui/workspaces/archivespace/ArchiveView.fxml
+
+    <ArchiveListSpaceView fx:id="listSpaceView" />
+</fx:root>

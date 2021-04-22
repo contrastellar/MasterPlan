@@ -1,7 +1,5 @@
 package util.graph;
 
-import components.TodoElement;
-import components.observable.IListener;
 import util.collections.IReadOnlyList;
 import util.collections.ReadOnlyList;
 

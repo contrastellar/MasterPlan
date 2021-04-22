@@ -3,9 +3,9 @@ package models;
 import components.Category;
 import components.Tag;
 import components.TodoElement;
-import components.observable.IReadOnlyObservableList;
-import components.observable.Observable;
-import components.observable.ObservableList;
+import observable.IReadOnlyObservableList;
+import observable.Observable;
+import observable.ObservableList;
 import util.graph.*;
 
 import java.util.ArrayList;

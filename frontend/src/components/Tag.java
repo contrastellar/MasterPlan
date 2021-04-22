@@ -1,11 +1,8 @@
 package components;
 
-import components.observable.IReadOnlyObservable;
-import components.observable.Observable;
-import components.observable.ObservableCollection;
+import observable.IReadOnlyObservable;
+import observable.Observable;
 import javafx.scene.paint.Color;
-
-import java.util.HashSet;
 
 public final class Tag {
 
@@ -16,10 +13,11 @@ public final class Tag {
     public final IReadOnlyObservable<Color> color = _color;
 
 
+    public Tag() { }
+
     public Tag(String name, Color color) {
         if(name == null)
             throw new IllegalArgumentException("name cannot be null");
-
     }
 
 

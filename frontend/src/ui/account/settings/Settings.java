@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import models.MainModel;
-import ui.navigation.ParentInfo;
+
 
 import java.io.IOException;
 

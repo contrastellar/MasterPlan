@@ -2,9 +2,9 @@ package ui.window;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
-import ui.custom.Viewable;
-import ui.taskboard.ArchiveView;
-import ui.taskboard.WorkSpaceView;
+import ui.util.Viewable;
+import ui.workspaces.archivespace.ArchiveView;
+import ui.workspaces.WorkSpaceView;
 
 /**
  * MainView Controller

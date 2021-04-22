@@ -1,11 +1,10 @@
 package util.graph;
 
-import components.observable.IListener;
-import components.observable.IObservable;
+import observable.IListener;
+import observable.IObservable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ObservableVertex<T> implements IVertex<T>, IObservable<ObservableVertexChange<T>> {

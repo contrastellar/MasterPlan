@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
 <?import ui.window.toolbar.tab.Tab?>
-<?import ui.custom.icon.Icon?>
+<?import ui.util.icon.Icon?>
 
 <!-- Toolbar with tab menu and user bar -->
 <?import javafx.geometry.Insets?>
