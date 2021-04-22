@@ -16,10 +16,11 @@ public final class Tag {
     public final IReadOnlyObservable<Color> color = _color;
 
 
+    public Tag() { }
+
     public Tag(String name, Color color) {
         if(name == null)
             throw new IllegalArgumentException("name cannot be null");
-
     }
 
 

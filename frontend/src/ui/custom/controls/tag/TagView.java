@@ -4,6 +4,7 @@ import components.Tag;
 import components.observable.IListener;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
+import components.observable.ObservableManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,11 +28,16 @@ class TagView extends HBox implements Viewable {
     private IListener<TagView> removeTagCallback = null;
     private final Button removeButton = new Button();
 
+    private final ObservableManager observableManager = new ObservableManager();
+
     @FXML
     private Label tagName;
 
     public TagView(Tag tag) {
         this.tag = tag;
+
+        observableManager.addListener(tag.name, this::onTagNameChange);
+        observableManager.addListener(tag.color, this::onTagColorChange);
 
         loadFXML();
     }
@@ -50,7 +56,6 @@ class TagView extends HBox implements Viewable {
 
     @FXML
     private void initialize() {
-
     }
 
     public void setOnRemoveCallback(IListener<TagView> removeTagCallback) {
@@ -92,13 +97,11 @@ class TagView extends HBox implements Viewable {
 
     @Override
     public void registerListeners() {
-        tag.name.startListen(this::onTagNameChange);
-        tag.color.startListen(this::onTagColorChange);
+        observableManager.startListen();
     }
 
     @Override
     public void unregisterListeners() {
-        tag.name.stopListen(this::onTagNameChange);
-        tag.color.stopListen(this::onTagColorChange);
+        observableManager.stopListen();
     }
 }

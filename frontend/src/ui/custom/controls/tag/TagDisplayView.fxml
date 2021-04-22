@@ -6,9 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import ui.custom.icon.Icon?>
 <fx:root type="javafx.scene.layout.FlowPane"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         prefHeight="400.0" prefWidth="600.0">
+         stylesheets="TagDisplayView.css"
+         vgap="5" hgap="5">
+
+    <Button fx:id="addTagBtn" onAction="#onAddTagBtn_click" >
+        <graphic>
+            <Icon icon="plus.svg" />
+        </graphic>
+    </Button>
+
 
 </fx:root>
