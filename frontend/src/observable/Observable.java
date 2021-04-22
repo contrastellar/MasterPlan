@@ -1,5 +1,6 @@
 package observable;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Observable<T> implements IObservable<T>, IReadOnlyObservable<T>, IWriteOnlyObservable<T>
@@ -25,9 +26,7 @@ public class Observable<T> implements IObservable<T>, IReadOnlyObservable<T>, IW
 
     public void setValue(T value) {
         this.value = value;
-        for(IListener<T> listener : listeners)
+        for(IListener<T> listener : new ArrayList<>(listeners))
             listener.onChange(value);
     }
-
-
 }

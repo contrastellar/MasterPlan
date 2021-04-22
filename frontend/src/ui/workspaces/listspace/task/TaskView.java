@@ -151,10 +151,12 @@ public class TaskView extends GridPane implements Viewable {
 
     private void onBookMarkChange(boolean bookmarked) {
         if(bookmarked) { // set the Syt
-            taskName.setId("NameBookmarked");
+            taskName.getStyleClass().add("NameBookmarked");
+            taskName.getStyleClass().remove("Name");
         }
         else {
-            taskName.setId("Name"); // a css stile sheet, label node has two styleclasses
+            taskName.getStyleClass().add("Name");
+            taskName.getStyleClass().remove("NameBookmarked");
         }
 
     }

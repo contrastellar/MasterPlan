@@ -1,66 +1,25 @@
-Critical:
-	- unit test ObservableGraph and ObservableUnit - DH (DONE)
-	- finish list space
-		- (DONE) UI expand/contract ListView - Ben
-		- enhance and expand on listspace user interface - Ben
-			- shows tags
-			- show due date
-			- make look better (in general)
-	* edit tasks
-		- complete EditBar controller and integrate it with list space - TS
 
+finish list space
+    - enhance and expand on listspace user interface
+        - shows tags - Ben and TS
+        - show due date -
+edit tasks
+    - clean up UI - Ben and TS
 
-High Priority:
-	* select which category is viewed in the workspace
-	    - create user interface to select which workspace - Gabby
-	    - integrate user interface - TS
-	* search for tasks (globally and relative to workspace)
-	    - create search user interface - Ben
-	    - integrate user interface - Ben
-    * TODO archiving
-            - Create method of 'archiving' task
-            - Cry
-            - ???
-            - Profit
-            - create user interface - Gabby
-            - integrate user interface w/ observables- Gabby
-       -"Best way"
-        -List view is a view of our tasks overall -- our main model
-            -Archiving a list view
-            inside list space view -> "is it being displayed"
-            -Unreg node at "hide"
+select which category is viewed in the workspace
+    - create user interface to select which workspace - DH
+    - integrate user interface - TS
 
+search for tasks (globally and relative to workspace)
+    - create search user interface - Ben
+    - integrate user interface - Ben and TS
+gabby
 
+Mock Google Calendar API import
+    - mock json file
+    - read file
+    - parse string
+    - create task/category
+    - add to graph
 
-
-Medium Priority:
-	* send email notifications
-	    - create method which sends an email - DL
-	* import/export to Google Calendar
-		- user interface - Ben
-		- API functionality - DL and Ben
-	* TODO setting theme - Gabby
-            - each stylesheet property is bound to a stylesheet
-            - Light theme
-            - Dark theme
-
-Low Priority:
-	* settings
-	    - create user interface - TS
-	    - integrate user interface - TS
-	- TODO add in user interface adding/removing/viewing attachments - Gabby
-
-
-Forget about:
-	- multiple users
-	- calendar view
-	- integration with a database
-    - file permissions
-    - board space
-    - save to disk (serialize and de-serialize)
-    - customize user interface workspace background image/color
-
-
-
-
-
+ pls push this btw --Gabby -> will do

@@ -71,7 +71,6 @@ public class CategoryEditBar extends VBox implements IEditBar {
         cat.setName(titleInput.getText());
 
         cat.setBackgroundColor(colorPicker.getValue());
-        System.out.println("Setting Category Background to " + cat.getBackgroundColor().toString());
     }
 
 

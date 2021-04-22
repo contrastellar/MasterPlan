@@ -1,13 +1,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import ui.util.icon.Icon?>
-<?import ui.workspaces.listspace.ListView?>
+<?import ui.tag.TagDisplayView?>
+<?import ui.util.icon.*?>
+<?import ui.workspaces.listspace.ListView ?>
+
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@TaskView.css"
          styleClass="taskContainer, topBorder"
          xmlns="http://javafx.com/javafx/15.0.1"
-         xmlns:fx="http://javafx.com/fxml/1">
+         xmlns:fx="http://javafx.com/fxml/1" gridLinesVisible="true">
 
     <columnConstraints>
         <ColumnConstraints hgrow="NEVER" prefWidth="40.0" />
@@ -32,8 +34,7 @@
         <CheckBox fx:id="completedCheckBox" prefWidth="10" prefHeight="10" >
             <HBox.margin><Insets right="5"/></HBox.margin>
         </CheckBox>
-        <Label fx:id="taskName" text="Task Name Placeholder" styleClass="Name, NameBookmarked"/>
-
+        <Label fx:id="taskName" text="Task Name Placeholder" />
     </HBox>
 
     <!-- Category buttons (row 0, col 2) -->
@@ -63,12 +64,17 @@
                 <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />
             </graphic>
         </Button>
-
     </HBox>
-    <!-- Status of category (row 1, col 1) -->
-    <HBox fx:id="remainingContainer" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="2">
+
+    <!-- Category Tags (row 1, col 2)-->
+    <TagDisplayView fx:id="categoryTags" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+    <!-- Status of Task (row 1, col 1) -->
+    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" >
         <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder" textFill="#cecece"/>
     </HBox>
+
+
 
     <ListView fx:id="listView"
               GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>

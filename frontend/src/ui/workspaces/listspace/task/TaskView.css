@@ -3,7 +3,7 @@
     -fx-border-color: transparent;
 }
 
-#Name {
+.Name {
     -fx-font-size: 14;
     -fx-background-color-color: transparent;
     -fx-background-radius: 3;
@@ -11,7 +11,7 @@
     -fx-border-color: transparent;
 }
 
-#NameBookmarked {
+.NameBookmarked {
     -fx-font-size: 14;
     -fx-background-color: cadetblue;
     -fx-background-radius: 3;

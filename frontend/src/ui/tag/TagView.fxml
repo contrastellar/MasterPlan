@@ -18,7 +18,7 @@
 
     <Button fx:id="removeTagBtn" visible="false" onAction="#onRemoveButton_click">
         <graphic>
-            <Icon icon="trashcan.svg" />
+            <Icon icon="trashcan.svg" iconColor="black" iconSize="13"/>
         </graphic>
     </Button>
 

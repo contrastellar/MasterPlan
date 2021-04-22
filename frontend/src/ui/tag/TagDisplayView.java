@@ -2,7 +2,6 @@ package ui.tag;
 
 import components.Tag;
 import components.TodoElement;
-import observable.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -13,12 +12,11 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import observable.*;
 import ui.util.Viewable;
 import util.graph.ObservableVertex;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
 
 public class TagDisplayView extends FlowPane implements Viewable {
 
@@ -32,6 +30,7 @@ public class TagDisplayView extends FlowPane implements Viewable {
     private final IListener<ObservableList<Tag>> tagsListener = this::onTagsChange;
 
     public TagDisplayView() {
+        loadFXML();
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
@@ -72,7 +71,7 @@ public class TagDisplayView extends FlowPane implements Viewable {
         for(Node node : getChildren()) {
             if(node instanceof Viewable) {
                 ((Viewable) node).unregisterListeners();
-                getChildren().add(node);
+                getChildren().remove(node);
             }
         }
 
@@ -81,7 +80,7 @@ public class TagDisplayView extends FlowPane implements Viewable {
             tagView.setOnRemoveCallback(this::onTagRemoved);
             tagView.registerListeners();
 
-            getChildren().add(tagView);
+            getChildren().add(0, tagView);
         }
     }
 

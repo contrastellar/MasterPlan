@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.FlowPane?>
 <?import ui.util.icon.Icon?>
 <fx:root type="javafx.scene.layout.FlowPane"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         stylesheets="TagDisplayView.css"
-         vgap="5" hgap="5" prefWidth="20">
+         stylesheets="@TagDisplayView.css"
+         vgap="5" hgap="5" alignment="CENTER_LEFT">
+
+    <padding><Insets topRightBottomLeft="5"/></padding>
 
     <Button fx:id="addTagBtn" onAction="#onAddTagBtn_click" >
         <graphic>
-            <Icon icon="plus.svg" />
+            <Icon icon="plus.svg" iconSize="13" iconColor="black"/>
         </graphic>
     </Button>
-
 
 </fx:root>
