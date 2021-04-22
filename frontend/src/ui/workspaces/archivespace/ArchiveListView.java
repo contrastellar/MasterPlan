@@ -58,9 +58,9 @@ public class ArchiveListView extends VBox implements Viewable {
         }
 
         for(var v : change.getRemovedVertices()) {
-            var callBack = vertexToCallBack.get(v);
+            var callBack = vertexToCallBack.remove(v);
             callBack.unregisterListeners();
-            vertexToCallBack.remove(v);
+            removeVertex(v);
         }
 
         if(change.getSorted()) {
@@ -70,32 +70,36 @@ public class ArchiveListView extends VBox implements Viewable {
     }
 
     private void onArchiveCallBack(ArchiveVertexCallback.ChangeInfo change) {
-        if(change.isArchived) {
+        if(change.isArchived)
+            addVertex(change.getVertex());
+        else
+            removeVertex(change.getVertex());
+    }
 
-            Viewable viewable;
+    private void addVertex(ObservableVertex<TodoElement> vertex) {
+        Viewable viewable;
 
-            if (change.getVertex().getElement() instanceof Task) {
-                viewable = new ArchiveTaskView(change.getVertex());
-            }
-            else if (change.getVertex().getElement() instanceof Category) {
-                viewable = new ArchiveCategoryView(change.getVertex());
-            }
-            else
-                throw new UnsupportedOperationException("change.getVertex().getElement() is not of type Task or Category");
-
-            viewable.registerListeners();
-            vertexToViewable.put(change.getVertex(), viewable);
-            this.getChildren().add(viewable.node());
-
+        if (vertex.getElement() instanceof Task) {
+            viewable = new ArchiveTaskView(vertex);
         }
-        else {
-            Viewable viewable = vertexToViewable.get(change.getVertex());
+        else if (vertex.getElement() instanceof Category) {
+            viewable = new ArchiveCategoryView(vertex);
+        }
+        else
+            throw new UnsupportedOperationException("change.getVertex().getElement() is not of type Task or Category");
 
-            if(viewable != null) {
-                viewable.unregisterListeners();
-                vertexToViewable.remove(change.getVertex());
-                this.getChildren().remove(viewable.node());
-            }
+        viewable.registerListeners();
+        vertexToViewable.put(vertex, viewable);
+        this.getChildren().add(viewable.node());
+    }
+
+    private void removeVertex(ObservableVertex<TodoElement> vertex) {
+        Viewable viewable = vertexToViewable.get(vertex);
+
+        if(viewable != null) {
+            viewable.unregisterListeners();
+            vertexToViewable.remove(vertex);
+            this.getChildren().remove(viewable.node());
         }
     }
 
