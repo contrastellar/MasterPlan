@@ -18,6 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import models.MainModel;
 import ui.util.Viewable;
+import ui.workspaces.Archiver;
 import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
@@ -171,7 +172,16 @@ public class TaskView extends GridPane implements Viewable {
 
         this.managedProperty().bindBidirectional(this.visibleProperty());
         this.setVisible(curArchive); //Hides the task at hand
-        System.out.println("" + this.getRootTask().getElement());
+        callToAdd();
+
+        //We create a new value
+        Archiver newElement = new Archiver(this.getRootTask(), task);
+        MainModel.model.archiverList.add(newElement);
+        System.out.println(MainModel.model.archiverList.contains(newElement));
+    }
+
+    private void callToAdd(){
+
     }
 
     private void onTaskCompleted_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {

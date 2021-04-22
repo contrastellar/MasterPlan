@@ -16,6 +16,8 @@ public class MainViewController {
 
     private final WorkSpaceView workSpaceView = new WorkSpaceView();
 
+    private final ArchiveView archiveView = new ArchiveView();
+
     private Viewable viewable = null;
 
     /**
@@ -44,8 +46,8 @@ public class MainViewController {
 
     @FXML
     private void switchViewToArchive() {
-        ArchiveView archiveView = new ArchiveView(); //Declares 'new' archive view.
-        switchViewable(archiveView);
+        archiveView.registerListeners();
+        mainContainer.setCenter(archiveView);
     }
 
     private void switchViewable(Viewable viewable) {

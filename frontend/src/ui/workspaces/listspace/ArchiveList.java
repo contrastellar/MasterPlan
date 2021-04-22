@@ -2,16 +2,14 @@ package ui.workspaces.listspace;
 
 import components.Category;
 import components.TodoElement;
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableManager;
 import components.task.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+import observable.ObservableManager;
 import ui.util.Viewable;
 import ui.workspaces.listspace.category.CategoryView;
 import ui.workspaces.listspace.task.TaskView;
@@ -24,16 +22,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ListView extends VBox implements Viewable {
+public class ArchiveList extends VBox implements Viewable {
 
     @FXML
     private VBox todoContainer;
-
-    @FXML
-    private Button addTaskBtn;
-
-    @FXML
-    private Button addCategoryBtn;
 
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
@@ -42,14 +34,12 @@ public class ListView extends VBox implements Viewable {
 
     private final ObservableManager observableManager = new ObservableManager();
 
-
-    public ListView() {
+    public ArchiveList(){
         loadFXML();
     }
 
-
-    private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListView.fxml"));
+    private void loadFXML(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ArchiveList.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -58,21 +48,15 @@ public class ListView extends VBox implements Viewable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @FXML
-    private void initialize() {
+    private void initialize(){
         observableManager.addListener(_rootVertex, this::onRootVertexChange);
 
-        addTaskBtn.setOnAction(this::addTaskBtn_click);
-        addCategoryBtn.setOnAction(this::addCategoryBtn_click);
-
-        // Binds managed and visible property to hide and reset the layout by just setting
         todoContainer.managedProperty().bindBidirectional(todoContainer.visibleProperty());
     }
 
-    /** Getters and Setters for the visibility of the todoContainer **/
     public void hideTodo() { todoContainer.setVisible(false); };
     public void showTodo() { todoContainer.setVisible(true); };
     public boolean isTodoShown() { return todoContainer.isVisible(); }
@@ -82,27 +66,9 @@ public class ListView extends VBox implements Viewable {
         else showTodo();
     }
 
-    public boolean isTodoEmpty() {
-        return todoContainer.getChildren().isEmpty();
-    }
+    public boolean isTodoEmpty(){ return todoContainer.getChildren().isEmpty(); }
 
     private static int num_id = 0;
-
-    private void addTaskBtn_click(ActionEvent e) {
-        if(_rootVertex.getValue() == null)
-            return;
-
-        Task t = new Task("new task" + num_id++);
-        rootVertex.getValue().getGraph().addVertex(t, rootVertex.getValue());
-    }
-
-    private void addCategoryBtn_click(ActionEvent e) {
-        if(_rootVertex.getValue() == null)
-            return;
-
-        Category c = new Category("new category" + num_id++);
-        rootVertex.getValue().getGraph().addVertex(c, rootVertex.getValue());
-    }
 
     public void setRootVertex(ObservableVertex<TodoElement> rootVertex) {
         _rootVertex.setValue(rootVertex);
@@ -123,6 +89,7 @@ public class ListView extends VBox implements Viewable {
 
         observableManager.addListener(_rootVertex.getValue(), this::onRootVertexOutEdgesChange);
         observableManager.addListener(_rootVertex.getValue().getGraph(), this::onRootVertexRemoval);
+        //observableManager.addListener(MainModel.model.archiverList, this::onArchiverUpdate);
     }
 
     private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
@@ -179,35 +146,18 @@ public class ListView extends VBox implements Viewable {
         throw new UnsupportedOperationException("not yet implemented");
     }
 
-
     @Override
     public Node node() {
         return this;
     }
 
-
     @Override
     public void registerListeners() {
-        observableManager.startListen();
-        for(var viewable : vertexToViewable.values())
-            viewable.registerListeners();
+
     }
 
     @Override
     public void unregisterListeners() {
-        observableManager.stopListen();
-        for(var viewable : vertexToViewable.values())
-            viewable.unregisterListeners();
+
     }
 }
-
-
-
-
-
-
-
-
-
-
-

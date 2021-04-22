@@ -5,21 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import ui.util.Viewable;
-import ui.workspaces.listspace.ListSpaceView;
+import ui.workspaces.listspace.ArchiveListSpaceView;
 
 import java.io.IOException;
 
 /**
- * This class is 'created' every time its opened.
- * This is done to ensure that archived tasks are 'loaded'.
- * Doing this, allows us to save memory on the graph being used.
- * This class is very similar to WorkSpaceView
  * @Author Gabby S.
  */
 public class ArchiveView extends SplitPane implements Viewable {
 
     @FXML
-    private ListSpaceView listSpaceView;
+    private ArchiveListSpaceView listSpaceView;
 
     public ArchiveView() {
         loadFXML();
@@ -47,7 +43,7 @@ public class ArchiveView extends SplitPane implements Viewable {
      */
     @Override
     public void registerListeners() {
-
+        listSpaceView.registerListeners();
     }
 
     /**
@@ -55,6 +51,6 @@ public class ArchiveView extends SplitPane implements Viewable {
      */
     @Override
     public void unregisterListeners() {
-
+        listSpaceView.unregisterListeners();
     }
 }
