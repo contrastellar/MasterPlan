@@ -12,14 +12,13 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import ui.custom.Viewable;
-import util.collections.IReadOnlyList;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
 
-public class ListViewHeader extends HBox implements Viewable {
+public class ListSpaceViewHeader extends HBox implements Viewable {
 
     @FXML
     private Label headerName;
@@ -33,7 +32,7 @@ public class ListViewHeader extends HBox implements Viewable {
 
     private final ObservableManager observableManager = new ObservableManager();
 
-    public ListViewHeader() {
+    public ListSpaceViewHeader() {
         loadFXML();
     }
 

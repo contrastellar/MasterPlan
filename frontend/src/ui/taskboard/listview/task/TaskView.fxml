@@ -32,7 +32,7 @@
         <CheckBox fx:id="completedCheckBox" prefWidth="10" prefHeight="10" >
             <HBox.margin><Insets right="5"/></HBox.margin>
         </CheckBox>
-        <Label fx:id="taskName" text="Task Name Placeholder"/>
+        <Label fx:id="taskName" text="Task Name Placeholder" styleClass="Name, NameBookmarked"/>
 
     </HBox>
 

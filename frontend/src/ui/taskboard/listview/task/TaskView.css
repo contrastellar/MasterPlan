@@ -3,9 +3,22 @@
     -fx-border-color: transparent;
 }
 
-Label {
+#Name {
     -fx-font-size: 14;
+    -fx-background-color-color: transparent;
+    -fx-background-radius: 3;
+
+    -fx-border-color: transparent;
 }
+
+#NameBookmarked {
+    -fx-font-size: 14;
+    -fx-background-color: cadetblue;
+    -fx-background-radius: 3;
+
+    -fx-border-color: transparent;
+}
+
 
 HBox {
     -fx-padding: 0 5 0 5;

@@ -18,7 +18,7 @@ import java.io.IOException;
 public class ListSpaceView extends VBox implements Viewable {
 
     @FXML
-    private ListViewHeader listViewHeader;
+    private ListSpaceViewHeader listViewHeader;
 
     @FXML
     private ListView listView;
