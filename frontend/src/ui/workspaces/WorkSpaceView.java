@@ -58,7 +58,8 @@ public class WorkSpaceView extends SplitPane implements Viewable {
         else{
             System.out.println(vertex.getElement().getName());
             editBarContainer.registerListeners();
-            getItems().add(editBarContainer);
+            if(!getItems().contains(editBarContainer))
+                getItems().add(editBarContainer);
         }
     }
 
