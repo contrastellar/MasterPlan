@@ -2,10 +2,7 @@ package ui.tag;
 
 import components.Tag;
 import components.TodoElement;
-import observable.IListener;
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableManager;
+import observable.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -21,6 +18,7 @@ import util.graph.ObservableVertex;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.List;
 
 public class TagDisplayView extends FlowPane implements Viewable {
 
@@ -31,7 +29,7 @@ public class TagDisplayView extends FlowPane implements Viewable {
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> vertex = _vertex;
 
     private final ObservableManager observableManager = new ObservableManager();
-    private final IListener<Collection<Tag>> tagsListener = this::onTagsChange;
+    private final IListener<ObservableList<Tag>> tagsListener = this::onTagsChange;
 
     public TagDisplayView() {
         setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -70,13 +68,13 @@ public class TagDisplayView extends FlowPane implements Viewable {
     }
 
     // TODO: make this more efficient
-    private void onTagsChange(Collection<Tag> tags) {
+    private void onTagsChange(ObservableList<Tag> tags) {
         for(Node node : getChildren()) {
-            TagView tagView = (TagView) node;
-            tagView.unregisterListeners();
+            if(node instanceof Viewable) {
+                ((Viewable) node).unregisterListeners();
+                getChildren().add(node);
+            }
         }
-
-        getChildren().clear();
 
         for(Tag tag : tags) {
             TagView tagView = new TagView(tag);
@@ -89,6 +87,7 @@ public class TagDisplayView extends FlowPane implements Viewable {
 
     private void clearDisplayView() {
         getChildren().clear();
+        getChildren().add(addTagBtn);
     }
 
     public void setVertex(ObservableVertex<TodoElement> vertex) {

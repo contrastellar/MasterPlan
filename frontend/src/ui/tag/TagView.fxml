@@ -10,12 +10,13 @@
 <fx:root type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
+         fx:controller="ui.tag.TagView"
          stylesheets="TagView.css"
          onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" >
 
     <Label fx:id="tagName" />
 
-    <Button fx:id="removeTagBtn">
+    <Button fx:id="removeTagBtn" visible="false" onAction="#onRemoveButton_click">
         <graphic>
             <Icon icon="trashcan.svg" />
         </graphic>
