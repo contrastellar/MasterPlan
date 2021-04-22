@@ -2,7 +2,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<?import ui.taskboard.listview.ListViewHeader?>
+<?import ui.taskboard.listview.ListSpaceViewHeader?>
 
 <?import ui.taskboard.listview.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -13,7 +13,7 @@
          fx:id="listContainer">
 
       <!-- Runtime: listview header  -->
-      <ListViewHeader fx:id="listViewHeader" />
+      <ListSpaceViewHeader fx:id="listViewHeader" />
 
       <!-- Runtime: category view | ID is for scroll event handler  -->
       <ScrollPane fx:id="scrollPane">

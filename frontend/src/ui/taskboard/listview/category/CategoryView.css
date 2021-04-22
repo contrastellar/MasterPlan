@@ -3,7 +3,7 @@
     -fx-border-color: transparent;
 }
 
-Label {
+.Name {
     -fx-font-size: 14;
     -fx-text-fill: black;
 }
@@ -18,10 +18,6 @@ Icon:hover {
 
 .catContainer {
     -fx-padding: 5 0 5 0;
-}
-
-#tasksRemainingLabel {
-    -fx-text-fill: #cecece;
 }
 
 .IconBtn {

@@ -1,6 +1,5 @@
 package ui.taskboard.listview.task;
 
-import components.Category;
 import components.TodoElement;
 import components.observable.IReadOnlyObservable;
 import components.observable.Observable;
@@ -14,8 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -85,6 +82,8 @@ public class TaskView extends GridPane implements Viewable {
     @FXML
     private void initialize() {
 
+
+
         observableManager.addListener(_rootTask, this::onRootTaskChange);
 
         setOnMouseClicked((e) -> {
@@ -150,11 +149,14 @@ public class TaskView extends GridPane implements Viewable {
         task.setBookmark(!task.isBookmarked()); // toggles bookmark bool
     }
 
-    private void onBookMarkChange(boolean completed) {
-        if(completed)
-            taskName.setTextFill(Color.GREEN);
-        else
-            taskName.setTextFill(Color.BLACK);
+    private void onBookMarkChange(boolean bookmarked) {
+        if(bookmarked) { // set the Syt
+            taskName.setId("NameBookmarked");
+        }
+        else {
+            taskName.setId("Name"); // a css stile sheet, label node has two styleclasses
+        }
+
     }
 
     @FXML

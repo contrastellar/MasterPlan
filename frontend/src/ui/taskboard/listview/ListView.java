@@ -58,6 +58,7 @@ public class ListView extends VBox implements Viewable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 
     @FXML

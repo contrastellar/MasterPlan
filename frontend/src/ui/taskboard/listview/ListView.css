@@ -1,15 +1,28 @@
 #todoContainer {
-    -fx-background-color: transparent;
     -fx-padding: 5 0 0 0;
 }
 
 #listViewContainer {
     -fx-padding: 5 0 0 0;
+    -fx-background-color: transparent;
+}
+
+#listViewContainer_B {
+    -fx-padding: 5 0 0 0;
+    -fx-background-color: lightblue;
 }
 
 #btnContainer {
     -fx-padding: 0 5 0 5;
+    -fx-background-color: transparent;
+
+    -fx-border-width: 2;
+    -fx-border-color: transparent;
+    -fx-border-radius: 5;
+
+    -fx-background-radius: 5;
 }
+
 
 .todoAddBtn {
     -fx-background-color: #cecece;

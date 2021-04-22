@@ -9,22 +9,16 @@ import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import models.MainModel;
 import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
-
-import models.MainModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,9 +42,6 @@ public class CategoryView extends GridPane implements Viewable {
     @FXML
     private Label categoryName;
 
-    @FXML
-    private Label tasksRemainingLabel;
-    private static final String tasksRemainingPattern = "%d remaining";
 
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> categoryVertex = _categoryVertex;
@@ -95,11 +86,9 @@ public class CategoryView extends GridPane implements Viewable {
         gridChildren.remove(listView);
         gridChildren.forEach(e -> {
             e.setOnMouseEntered(event -> {
-                remainingContainer.setStyle("-fx-border-color: cadetblue;");
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
             });
             e.setOnMouseExited(event -> {
-                remainingContainer.setStyle("-fx-border-color: transparent;");
                 buttonContainer.setStyle("-fx-border-color: transparent;");
             });
         });
@@ -121,7 +110,6 @@ public class CategoryView extends GridPane implements Viewable {
     private void onCategoryVertexChange(ObservableVertex<TodoElement> categoryVertex) {
         if(categoryVertex == null) {
             categoryName.setText("No Category");
-            tasksRemainingLabel.setText("N/A");
             return;
         }
 
@@ -137,8 +125,6 @@ public class CategoryView extends GridPane implements Viewable {
                 (e) -> e instanceof Task,
                 _categoryVertex.getValue()
         );
-
-        tasksRemainingLabel.setText(String.format(tasksRemainingPattern, numTaskQueryRes.size()));
 
         int totalElements = _categoryVertex.getValue().getGraph().getOutDegree(_categoryVertex.getValue());
 
