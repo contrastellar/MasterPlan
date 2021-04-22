@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import models.MainModel;
 import ui.custom.Viewable;
 import ui.taskboard.listview.ListView;
@@ -112,14 +113,16 @@ public class CategoryView extends GridPane implements Viewable {
             categoryName.setText("No Category");
             return;
         }
+        Category cat = (Category) categoryVertex.getElement();
 
         listView.setRootVertex(categoryVertex);
 
-        observableManager.addListener(categoryVertex, this::onTaskRemainingTasksChange);
-        observableManager.addListener(categoryVertex.getElement().name, this::onCategoryNameChange);
+        observableManager.addListener(categoryVertex, this::onAdjacenceyListChange);
+        observableManager.addListener(cat.name, this::onCategoryNameChange);
+        observableManager.addListener(cat.backgroundColor, this::onCategoryColorChange);
     }
 
-    private void onTaskRemainingTasksChange(ObservableVertexChange<TodoElement> change) {
+    private void onAdjacenceyListChange(ObservableVertexChange<TodoElement> change) {
 
         List<ObservableVertex<TodoElement>> numTaskQueryRes = _categoryVertex.getValue().getGraph().query(
                 (e) -> e instanceof Task,
@@ -138,7 +141,7 @@ public class CategoryView extends GridPane implements Viewable {
 
         _categoryVertex.getValue().getGraph().removeVertex(_categoryVertex.getValue());
 
-        System.out.println("Removing vertex. Graph size: " + _categoryVertex.getValue().getGraph().getVertices().size());
+        System.out.println("Removing vertex. Graph size:" + _categoryVertex.getValue().getGraph().getVertices().size());
     }
 
     @FXML
@@ -162,12 +165,17 @@ public class CategoryView extends GridPane implements Viewable {
 
         this.managedProperty().bindBidirectional(this.visibleProperty());
         this.setVisible(curArchive); //Hides the task at hand
-
     }
 
 
     private void onCategoryNameChange(String name) {
         categoryName.setText(name);
+    }
+
+    private void onCategoryColorChange(Color color) {
+        if (color == null)
+            return;
+        this.setStyle(("-fx-background-color: " + color.toString()));
     }
 
     public void setCategory(ObservableVertex<TodoElement> categoryVertex) {

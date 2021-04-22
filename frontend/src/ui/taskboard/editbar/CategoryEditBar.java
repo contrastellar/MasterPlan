@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -32,6 +33,8 @@ public class CategoryEditBar extends VBox implements IEditBar {
 
     @FXML private TextArea description;
 
+    @FXML private ColorPicker colorPicker;
+
 
 
     public CategoryEditBar() {
@@ -50,6 +53,12 @@ public class CategoryEditBar extends VBox implements IEditBar {
         }
     }
 
+
+    @FXML
+    private void initialize() {
+        observableManager.addListener(_categoryVertex, this::onCategoryChange);
+    }
+
     @FXML
     private void onConfirmChangesBtn_click(ActionEvent ae) {
         if(categoryVertex.getValue() == null)
@@ -60,27 +69,26 @@ public class CategoryEditBar extends VBox implements IEditBar {
         cat.setDescription(description.getText());
 
         cat.setName(titleInput.getText());
+
+        cat.setBackgroundColor(colorPicker.getValue());
+        System.out.println("Setting Category Background to " + cat.getBackgroundColor().toString());
     }
 
 
-    @FXML
-    private void initialize() {
-        observableManager.addListener(_categoryVertex, this::onCategoryChange);
-    }
 
     private void onCategoryChange(ObservableVertex<TodoElement> catVertex) {
 
-        if (categoryVertex == null) {
+        if (catVertex == null) {
             description.setText("");
             titleInput.setText("");
             createdDateInput.setText("");
         }
         else {
-            Category cat = (Category) this.categoryVertex.getValue().getElement();
-
+            Category cat = (Category) catVertex.getElement();
             description.setText(cat.getDescription());
             titleInput.setText(cat.getName());
             createdDateInput.setText(cat.creationDate.getTime().toString());
+            colorPicker.setValue(cat.backgroundColor.getValue());
         }
     }
 
