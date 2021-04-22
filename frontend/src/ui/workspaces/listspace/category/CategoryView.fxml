@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import ui.util.icon.Icon?>
 <?import ui.workspaces.listspace.ListView?>
+<?import javafx.scene.Group?>
 <fx:root type="javafx.scene.layout.GridPane"
          stylesheets="@CategoryView.css"
          styleClass="topBorder, catContainer"
@@ -17,42 +18,43 @@
     <rowConstraints>
     </rowConstraints>
 
-    <!-- Drop down icon (row 0, col 0) -->
-    <HBox alignment="CENTER" >
-        <Button fx:id="toggleBtn" onAction="#toggleBtnHandler"
-                style="-fx-border-color: transparent; -fx-background-color: transparent;" >
-            <graphic>
-                <Icon icon="angle-down.svg" iconColor="#cccccc" iconSize="7" />
-            </graphic>
-        </Button>
-    </HBox>
 
-    <!-- Category title (row 0, col 1) -->
-    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1">
-        <Label fx:id="categoryName" text="Category Name Placeholder" styleClass="Name"/>
-    </HBox>
 
-    <!-- Category buttons (row 0, col 2) -->
-    <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
+        <!-- Drop down icon (row 0, col 0) -->
+        <HBox  fx:id="toggleContainer" alignment="CENTER">
+            <Button fx:id="toggleBtn" onAction="#toggleBtnHandler"
+                    style="-fx-border-color: transparent; -fx-background-color: transparent;" >
+                <graphic>
+                    <Icon icon="angle-down.svg" iconColor="#cccccc" iconSize="7" />
+                </graphic>
+            </Button>
+        </HBox>
 
-        <Button fx:id="removeVertexBtn" onAction="#onRemoveVertexBtn_click" styleClass="IconBtn">
-            <graphic>
-                <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="13" />
-            </graphic>
-        </Button>
+        <!-- Category title (row 0, col 1) -->
+        <HBox fx:id="titleContainer" alignment="CENTER_LEFT" GridPane.columnIndex="1">
+            <Label fx:id="categoryName" text="Category Name Placeholder" styleClass="Name"/>
+        </HBox>
 
-        <Button fx:id="removeGraphBtn" onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
-            <graphic>
-                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" />
-            </graphic>
-        </Button>
-        <Button fx:id="archive" onAction="#onArchive_click" styleClass="IconBtn">
-            <graphic>
-                <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />
-            </graphic>
-        </Button>
+        <!-- Category buttons (row 0, col 2) -->
+        <HBox fx:id="buttonContainer" alignment="CENTER_RIGHT" GridPane.columnIndex="2">
 
-    </HBox>
+            <Button fx:id="removeVertexBtn" onAction="#onRemoveVertexBtn_click" styleClass="IconBtn">
+                <graphic>
+                    <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="13" />
+                </graphic>
+            </Button>
+
+            <Button fx:id="removeGraphBtn" onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
+                <graphic>
+                    <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" />
+                </graphic>
+            </Button>
+            <Button fx:id="archive" onAction="#onArchive_click" styleClass="IconBtn">
+                <graphic>
+                    <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />
+                </graphic>
+            </Button>
+        </HBox>
 
     <!-- Status of category (row 1, col 1) -->
     <ListView fx:id="listView"

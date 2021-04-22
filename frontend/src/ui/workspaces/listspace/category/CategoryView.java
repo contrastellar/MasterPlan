@@ -2,9 +2,6 @@ package ui.workspaces.listspace.category;
 
 import components.Category;
 import components.TodoElement;
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableManager;
 import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +13,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import models.MainModel;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+import observable.ObservableManager;
 import ui.util.Viewable;
 import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
@@ -36,12 +36,18 @@ public class CategoryView extends GridPane implements Viewable {
 
     @FXML
     private HBox buttonContainer;
+    @FXML
+    private HBox toggleContainer;
+    @FXML
+    private HBox titleContainer;
 
     @FXML
     private HBox remainingContainer;
 
     @FXML
     private Label categoryName;
+
+
 
 
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
@@ -175,7 +181,9 @@ public class CategoryView extends GridPane implements Viewable {
     private void onCategoryColorChange(Color color) {
         if (color == null)
             return;
-        this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+        toggleContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+        buttonContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+        titleContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     public void setCategory(ObservableVertex<TodoElement> categoryVertex) {
