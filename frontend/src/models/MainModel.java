@@ -6,6 +6,7 @@ import components.TodoElement;
 import observable.IReadOnlyObservableList;
 import observable.Observable;
 import observable.ObservableList;
+import ui.workspaces.Archiver;
 import util.graph.*;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class MainModel {
 
     public final ObservableList<Tag> _tags = new ObservableList<>(new ArrayList<>());
     public final IReadOnlyObservableList<Tag> tags = _tags;
+    public ArrayList<Archiver> archiverList = new ArrayList<>();
 
     private MainModel() {
         // deserialize graph

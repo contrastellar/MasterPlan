@@ -146,7 +146,7 @@ public class ListView extends VBox implements Viewable {
                 removeView(vertex);
     }
 
-    private void addVertex(ObservableVertex<TodoElement> vertex) {
+    public void addVertex(ObservableVertex<TodoElement> vertex) {
         Viewable viewable;
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
