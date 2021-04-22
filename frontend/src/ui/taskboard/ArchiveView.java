@@ -10,10 +10,6 @@ import ui.taskboard.listview.ListSpaceView;
 import java.io.IOException;
 
 /**
- * This class is 'created' every time its opened.
- * This is done to ensure that archived tasks are 'loaded'.
- * Doing this, allows us to save memory on the graph being used.
- * This class is very similar to WorkSpaceView
  * @Author Gabby S.
  */
 public class ArchiveView extends SplitPane implements Viewable {
@@ -47,7 +43,7 @@ public class ArchiveView extends SplitPane implements Viewable {
      */
     @Override
     public void registerListeners() {
-
+        //TODO registerListeners
     }
 
     /**
@@ -55,6 +51,6 @@ public class ArchiveView extends SplitPane implements Viewable {
      */
     @Override
     public void unregisterListeners() {
-
+        //TODO unregListeners
     }
 }
