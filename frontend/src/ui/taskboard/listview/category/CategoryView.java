@@ -9,11 +9,11 @@ import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import models.MainModel;
 import ui.custom.Viewable;
@@ -175,7 +175,7 @@ public class CategoryView extends GridPane implements Viewable {
     private void onCategoryColorChange(Color color) {
         if (color == null)
             return;
-        this.setStyle(("-fx-background-color: " + color.toString()));
+        this.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     public void setCategory(ObservableVertex<TodoElement> categoryVertex) {
