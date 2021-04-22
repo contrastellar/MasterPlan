@@ -5,7 +5,8 @@
 <fx:root type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.taskboard.listview.ArchiveList"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="400.0" prefWidth="600.0"
+            fx:id="listViewContainer">
 
 
     <VBox fx:id="todoContainer"/>
