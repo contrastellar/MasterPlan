@@ -1,8 +1,8 @@
 package util.graph;
 
 
-import components.observable.IListener;
-import components.observable.IObservable;
+import observable.IListener;
+import observable.IObservable;
 import util.collections.IReadOnlyCollection;
 import util.collections.IReadOnlyList;
 import util.collections.ReadOnlyCollection;

@@ -2,8 +2,8 @@ package components.task;
 
 import components.Completable;
 import components.TodoElement;
-import components.observable.IReadOnlyObservable;
-import components.observable.Observable;
+import observable.IReadOnlyObservable;
+import observable.Observable;
 
 import java.util.Calendar;
 

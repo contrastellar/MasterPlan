@@ -8,7 +8,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
-import ui.custom.icon.Icon;
+import ui.util.icon.Icon;
 
 /**
  * Custom toolbar tab component containing a button with an icon

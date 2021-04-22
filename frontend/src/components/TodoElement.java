@@ -1,8 +1,8 @@
 package components;
 
-import components.observable.IReadOnlyObservable;
-import components.observable.Observable;
-import components.observable.ObservableCollection;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+import observable.ObservableCollection;
 
 import java.util.Calendar;
 import java.util.HashSet;

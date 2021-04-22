@@ -1,10 +1,10 @@
 package components;
 
-import java.net.URI;
-
-import components.observable.IReadOnlyObservable;
-import components.observable.Observable;
 import javafx.scene.paint.Color;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+
+import java.net.URI;
 
 public final class Category extends TodoElement {
 

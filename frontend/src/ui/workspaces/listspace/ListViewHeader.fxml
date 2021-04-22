@@ -1,0 +1,27 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<?import ui.util.icon.Icon?>
+<?import javafx.geometry.Insets?>
+<fx:root type="javafx.scene.layout.HBox"
+         xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         fx:id="topBar">
+        <padding><Insets topRightBottomLeft="5"/></padding>
+
+        <!-- Selected Category Info -->
+        <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+           <Label fx:id="headerName"
+                  text="Category Name" textFill="cadetblue">
+               <font> <Font name="Segoe UI Bold" size="18.0" /> </font>
+           </Label>
+           <Label fx:id="categoryContents" text="category contents placeholder" textFill="#cecece"/>
+        </VBox>
+
+        <!-- Category Icon -->
+        <VBox fx:id="catIcon" alignment="CENTER">
+            <Icon icon="home.svg" iconColor="cadetblue" prefHeight="22" prefWidth="25"/>
+        </VBox>
+
+</fx:root>

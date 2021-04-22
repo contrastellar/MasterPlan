@@ -1,11 +1,8 @@
 package components;
 
-import components.observable.IReadOnlyObservable;
-import components.observable.Observable;
-import components.observable.ObservableCollection;
+import observable.IReadOnlyObservable;
+import observable.Observable;
 import javafx.scene.paint.Color;
-
-import java.util.HashSet;
 
 public final class Tag {
 

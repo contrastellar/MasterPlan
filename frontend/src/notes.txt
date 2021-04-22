@@ -2,15 +2,13 @@ Critical:
 	- unit test ObservableGraph and ObservableUnit - DH (DONE)
 	- finish list space
 		- (DONE) UI expand/contract ListView - Ben
-		- remove tasks/categories (completely and remove edge) - DH
 		- enhance and expand on listspace user interface - Ben
 			- shows tags
 			- show due date
 			- make look better (in general)
 	* edit tasks
 		- complete EditBar controller and integrate it with list space - TS
-	- edit categories - DH
-	    - be able to manipulate all the variables in ToDoElement (UI and functionality)
+
 
 High Priority:
 	* select which category is viewed in the workspace
