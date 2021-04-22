@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import ui.util.Viewable;
 import ui.workspaces.WorkSpaceView;
+import ui.workspaces.archivespace.ArchiveListSpaceView;
 
 /**
  * MainView Controller
@@ -14,6 +15,8 @@ public class MainViewController {
     private BorderPane mainContainer;
 
     private final WorkSpaceView workSpaceView = new WorkSpaceView();
+
+    private final ArchiveListSpaceView archiveSpaceView = new ArchiveListSpaceView();
 
 
     private Viewable viewable = null;
@@ -44,7 +47,8 @@ public class MainViewController {
 
     @FXML
     private void switchViewToArchive() {
-        switchViewable(null);
+        archiveSpaceView.registerListeners();
+        mainContainer.setCenter(archiveSpaceView);
     }
 
     private void switchViewable(Viewable viewable) {

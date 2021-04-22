@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import models.MainModel;
 import observable.ObservableManager;
 import ui.util.Viewable;
@@ -15,9 +15,9 @@ import util.graph.ObservableVertex;
 
 import java.io.IOException;
 
-public class ArchiveListSpaceView extends VBox implements Viewable {
+public class ArchiveListSpaceView extends Pane implements Viewable {
     @FXML
-    private ArchiveList listView;
+    private ArchiveListView archiveListView;
 
     @FXML
     private ScrollPane scrollPane;
@@ -45,17 +45,14 @@ public class ArchiveListSpaceView extends VBox implements Viewable {
     @FXML
     private void initialize(){
         observableManager.addListener(MainModel.model.selectedVertex, this::onRootVertexChange);
+
+        // Set scroll event handler for scrollPane view
+        scrollPane.getContent().setOnScroll(this::scrollHandler);
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
         if(!(rootVertex.getElement() instanceof Category))
             throw new IllegalArgumentException("ListView() - rootVertex is not of type Category");
-
-        //listViewHeader.setRootCategory(rootVertex);
-        listView.setRootVertex(rootVertex);
-
-        // Set scroll event handler for scrollPane view
-        scrollPane.getContent().setOnScroll(this::scrollHandler);
     }
 
     /**
@@ -76,13 +73,13 @@ public class ArchiveListSpaceView extends VBox implements Viewable {
 
     @Override
     public void registerListeners() {
-        listView.registerListeners();
+        archiveListView.registerListeners();
         observableManager.startListen();
     }
 
     @Override
     public void unregisterListeners() {
-        listView.unregisterListeners();
+        archiveListView.unregisterListeners();
         observableManager.stopListen();
     }
 }

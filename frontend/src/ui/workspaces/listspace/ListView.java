@@ -189,8 +189,6 @@ public class ListView extends VBox implements Viewable {
     @Override
     public void registerListeners() {
         observableManager.startListen();
-        for(var viewable : vertexToViewable.values())
-            viewable.registerListeners();
     }
 
     @Override
@@ -198,6 +196,7 @@ public class ListView extends VBox implements Viewable {
         observableManager.stopListen();
         for(var viewable : vertexToViewable.values())
             viewable.unregisterListeners();
+        vertexToViewable.clear();
     }
 }
 

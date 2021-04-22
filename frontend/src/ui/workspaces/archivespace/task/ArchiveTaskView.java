@@ -1,9 +1,6 @@
-package ui.workspaces.listspace.task;
+package ui.workspaces.archivespace.task;
 
 import components.TodoElement;
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableManager;
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -17,17 +14,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import models.MainModel;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+import observable.ObservableManager;
 import ui.util.Viewable;
-import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-public class TaskView extends GridPane implements Viewable {
-
+public class ArchiveTaskView extends GridPane implements Viewable {
 
     @FXML
     private Button archiveButton;
@@ -51,24 +48,22 @@ public class TaskView extends GridPane implements Viewable {
     private Label tasksRemainingLabel;
     private static final String tasksRemainingFormat = "%d remaining";
 
-    @FXML
-    private ListView listView;
-
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
 
     private ObservableVertex<TodoElement> taskVertex;
     private final ObservableManager observableManager = new ObservableManager();
 
-    /**
-     * Constructs Category component with loader
-     */
-    public TaskView() {
+
+
+    public ArchiveTaskView() { loadFXML(); }
+    public ArchiveTaskView(ObservableVertex<TodoElement> vertex) {
         loadFXML();
+        setTask(vertex);
     }
 
     private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TaskView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ArchiveTaskView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -82,8 +77,6 @@ public class TaskView extends GridPane implements Viewable {
     @FXML
     private void initialize() {
 
-
-
         observableManager.addListener(_rootTask, this::onRootTaskChange);
 
         setOnMouseClicked((e) -> {
@@ -91,16 +84,9 @@ public class TaskView extends GridPane implements Viewable {
             MainModel.model.editVertex.setValue(_rootTask.getValue());
         });
 
-
-        if (listView.isTodoEmpty())
-            toggleBtn.setVisible(false);
-
-        // Set styling for hover
-        List<Node> gridChildren = new ArrayList<>(getChildren());
-        gridChildren.remove(listView);
-        gridChildren.forEach(e -> {
+        getChildren().forEach(e -> {
             e.setOnMouseEntered(event -> {
-                remainingContainer.setStyle("-fx-border-color: cadetblue;");
+                remainingContainer.setStyle ("-fx-border-color: cadetblue;");
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
             });
             e.setOnMouseExited(event -> {
@@ -110,18 +96,7 @@ public class TaskView extends GridPane implements Viewable {
         });
     }
 
-    /**
-     * handler for Toggling todos and rotating btn
-     * @param e mouse event
-     */
-    public void toggleBtnHandler(ActionEvent e) {
-        listView.toggleTodo();
 
-        if(listView.isTodoShown())
-            toggleBtn.setRotate(0);
-        else
-            toggleBtn.setRotate(270);
-    }
 
     private void onRootTaskChange(ObservableVertex<TodoElement> rootTask) {
 
@@ -136,9 +111,7 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(_rootTask.getValue().getElement().name, this::onTaskNameChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isBookmarked, this::onBookMarkChange);
-        observableManager.addListener( ((Task)_rootTask.getValue().getElement()).isArchived, this::onArchiveChange);
         completedCheckBox.selectedProperty().addListener(this::onTaskCompleted_click);
-        listView.setRootVertex(rootTask);
 
     }
 
@@ -157,7 +130,6 @@ public class TaskView extends GridPane implements Viewable {
         else {
             taskName.setId("Name"); // a css stile sheet, label node has two styleclasses
         }
-
     }
 
     @FXML
@@ -165,11 +137,12 @@ public class TaskView extends GridPane implements Viewable {
         if(_rootTask.getValue() == null)
             return;
 
-        _rootTask.getValue().getElement().setArchive(!_rootTask.getValue().getElement().isArchived());
-    }
+        Task task = (Task) rootTask.getValue().getElement();
+        boolean curArchive = task.isArchived();
+        task.setArchive(!curArchive);
 
-    private void onArchiveChange(boolean isArchived) {
-        this.setVisible(!isArchived);
+        this.managedProperty().bindBidirectional(this.visibleProperty());
+        this.setVisible(curArchive); //Hides the task at hand
     }
 
     private void onTaskCompleted_click(ObservableValue<? extends Boolean> observableValue, Boolean oldVal, Boolean newVal) {
@@ -228,7 +201,7 @@ public class TaskView extends GridPane implements Viewable {
         toggleBtn.setVisible(totalElements > 0);
     }
 
-    public void setRootTask(ObservableVertex<TodoElement> rootTask) {
+    public void setTask(ObservableVertex<TodoElement> rootTask) {
         if(!(rootTask.getElement() instanceof Task))
             throw new IllegalArgumentException("TaskView() - rootVertex.getElement() is not of type Task");
 
@@ -247,12 +220,10 @@ public class TaskView extends GridPane implements Viewable {
     @Override
     public void registerListeners() {
         observableManager.startListen();
-        listView.registerListeners();
     }
 
     @Override
     public void unregisterListeners() {
         observableManager.stopListen();
-        listView.unregisterListeners();
     }
 }

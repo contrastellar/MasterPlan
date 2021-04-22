@@ -1,4 +1,4 @@
-package ui.workspaces.listspace.category;
+package ui.workspaces.archivespace.category;
 
 import components.Category;
 import components.TodoElement;
@@ -17,19 +17,13 @@ import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
 import ui.util.Viewable;
-import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-
-public class CategoryView extends GridPane implements Viewable {
-
-    @FXML
-    private ListView listView;
+public class ArchiveCategoryView extends GridPane implements Viewable {
 
     @FXML
     private Button toggleBtn;
@@ -58,13 +52,18 @@ public class CategoryView extends GridPane implements Viewable {
     private final ObservableManager observableManager = new ObservableManager();
 
 
-    public CategoryView() {
+    public ArchiveCategoryView() {
         loadFXML();
+    }
+
+    public ArchiveCategoryView(ObservableVertex<TodoElement> vertex) {
+        loadFXML();
+        setCategory(vertex);
     }
 
 
     private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CategoryView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ArchiveCategoryView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -85,13 +84,9 @@ public class CategoryView extends GridPane implements Viewable {
             MainModel.model.editVertex.setValue(_categoryVertex.getValue());
         });
 
-        if (listView.isTodoEmpty())
-            toggleBtn.setVisible(false);
 
-        // Set styling for hover
-        List<Node> gridChildren = new ArrayList<>(getChildren());
-        gridChildren.remove(listView);
-        gridChildren.forEach(e -> {
+
+        getChildren().forEach(e -> {
             e.setOnMouseEntered(event -> {
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
             });
@@ -101,18 +96,6 @@ public class CategoryView extends GridPane implements Viewable {
         });
     }
 
-    /**
-     * handler for Toggling todos and rotating btn
-     * @param e mouse event
-     */
-    public void toggleBtnHandler(ActionEvent e) {
-        listView.toggleTodo();
-
-        if(listView.isTodoShown())
-            toggleBtn.setRotate(0);
-        else
-            toggleBtn.setRotate(270);
-    }
 
     private void onCategoryVertexChange(ObservableVertex<TodoElement> categoryVertex) {
         if(categoryVertex == null) {
@@ -121,13 +104,9 @@ public class CategoryView extends GridPane implements Viewable {
         }
         Category cat = (Category) categoryVertex.getElement();
 
-        listView.setRootVertex(categoryVertex);
-
         observableManager.addListener(categoryVertex, this::onAdjacenceyListChange);
         observableManager.addListener(cat.name, this::onCategoryNameChange);
         observableManager.addListener(cat.backgroundColor, this::onCategoryColorChange);
-        observableManager.addListener(cat.isArchived, this::onArchiveChange);
-
     }
 
     private void onAdjacenceyListChange(ObservableVertexChange<TodoElement> change) {
@@ -167,14 +146,13 @@ public class CategoryView extends GridPane implements Viewable {
         if(_categoryVertex.getValue() == null)
             return;
 
-        _categoryVertex.getValue().getElement().setArchive(!_categoryVertex.getValue().getElement().isArchived());
+        Category cat = ((Category) _categoryVertex.getValue().getElement());
+        boolean curArchive = cat.isArchived();
+        cat.setArchive(!curArchive);
+
+        this.managedProperty().bindBidirectional(this.visibleProperty());
+        this.setVisible(curArchive); //Hides the task at hand
     }
-
-    private void onArchiveChange(boolean isArchived) {
-        this.setVisible(!isArchived);
-    }
-
-
 
 
     private void onCategoryNameChange(String name) {
@@ -207,13 +185,11 @@ public class CategoryView extends GridPane implements Viewable {
 
     @Override
     public void registerListeners() {
-        listView.registerListeners();
         observableManager.startListen();
     }
 
     @Override
     public void unregisterListeners() {
-        listView.unregisterListeners();
         observableManager.stopListen();
     }
 }
