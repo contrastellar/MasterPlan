@@ -32,7 +32,7 @@ public class CategoryListSpaceView extends VBox implements Viewable {
     public CategoryListSpaceView() {
         observableManager.addListener(MainModel.model.obsGraph, this::onGraphChange);
         this.setMaxWidth(200);
-        this.setBackground(new Background(new BackgroundFill(Color.web("#666666"), CornerRadii.EMPTY, Insets.EMPTY)));
+        this.setBackground(new Background(new BackgroundFill(Color.web("#666666ff"), CornerRadii.EMPTY, Insets.EMPTY)));
 
 
 

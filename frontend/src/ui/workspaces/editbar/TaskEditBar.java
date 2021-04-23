@@ -2,6 +2,7 @@ package ui.workspaces.editbar;
 
 
 import components.TodoElement;
+import models.MainModel;
 import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
@@ -86,6 +87,11 @@ public class TaskEditBar extends VBox implements IEditBar {
             System.out.println("Due date NULL");
 
     }
+
+   @FXML
+   private void onMinimizeBtn_click(ActionEvent ae) {
+       MainModel.model.editVertex.setValue(null);
+   }
 
     private void onTaskChange(ObservableVertex<TodoElement> taskVertex) {
 
