@@ -6,6 +6,7 @@
 <?import ui.workspaces.categorybar.CategoryListView?>
 
 <?import ui.workspaces.categorybar.CategoryListSpaceView?>
+<?import javafx.geometry.Insets?>
 <fx:root type="javafx.scene.control.SplitPane"
          stylesheets="@WorkSpaceView.css"
          xmlns="http://javafx.com/javafx/15.0.1"
@@ -15,7 +16,9 @@
     <CategoryListSpaceView fx:id="categoryListSpaceView" />
 
     <!-- Runtime: ListView -->
-    <ListSpaceView fx:id="listSpaceView" />
+    <ListSpaceView fx:id="listSpaceView">
+            <padding><Insets topRightBottomLeft="5"/></padding>
+    </ListSpaceView>
 
     <!-- Task EditBar -->
     <EditBarContainer fx:id="editBarContainer"/>

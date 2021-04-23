@@ -32,7 +32,7 @@
     <!-- Search Bar -->
     <HBox alignment="center" spacing="5"
           GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" >
-        <padding><Insets top="5" bottom="5" left="10" right="10"/></padding>
+        <padding><Insets top="5" bottom="5" left="20" right="20"/></padding>
         <TextField fx:id="searchInput" onAction="#onSearchInput_action"
                    styleClass="inputBox" HBox.hgrow="ALWAYS" promptText="Search" />
         <Icon styleClass="searchIcon" icon="magnifier.svg" iconColor="black" iconSize="15" onMouseClicked="#onSearchInput_action"/>
@@ -40,10 +40,10 @@
 
     <!-- Category Icon -->
     <Icon icon="home.svg" iconColor="cadetblue" prefHeight="22" prefWidth="25"
-        GridPane.valignment="CENTER" GridPane.halignment="CENTER" GridPane.columnIndex="2" />
+        GridPane.valignment="CENTER" GridPane.halignment="RIGHT" GridPane.columnIndex="2" />
 
     <TagDisplayView fx:id="tagDisplayView" GridPane.columnIndex="1" GridPane.rowIndex="1">
-        <padding><Insets left="10" right="10"/></padding>
+        <padding><Insets left="20" right="20"/></padding>
     </TagDisplayView>
 
 </fx:root>

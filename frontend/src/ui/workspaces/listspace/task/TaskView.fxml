@@ -46,12 +46,12 @@
             </graphic>
         </Button>
 
-        <Button fx:id="removeGraphBtn"
-                onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
-            <graphic>
-                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" styleClass="taskViewIcon" />
-            </graphic>
-        </Button>
+<!--        <Button fx:id="removeGraphBtn"-->
+<!--                onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">-->
+<!--            <graphic>-->
+<!--                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" styleClass="taskViewIcon" />-->
+<!--            </graphic>-->
+<!--        </Button>-->
 
         <Button fx:id="bookmark" onAction="#onBookmark_click" styleClass="IconBtn">
             <graphic>
@@ -70,12 +70,12 @@
     <TagDisplayView fx:id="tagDisplayView" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <!-- Status of Task (row 1, col 1) -->
-    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="2" alignment="CENTER" >
+    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="2" alignment="CENTER_RIGHT" >
         <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder" textFill="#cecece"/>
     </HBox>
 
-    <HBox fx:id="dateContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER">
-        <Label fx:id="dateDueLabel" text="" textFill="#cecece"/>
+    <HBox fx:id="dateContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER_RIGHT">
+        <Label fx:id="dateDueLabel" text=""/>
     </HBox>
 
 

@@ -41,3 +41,12 @@ HBox {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
+
+#dateDueLabel {
+    -fx-text-fill: #ce535d;
+    -fx-font-size: 9;
+}
+
+#tasksRemainingLabel {
+    -fx-font-size: 9;
+}
