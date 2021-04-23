@@ -1,6 +1,7 @@
 package ui.tag;
 
 import components.Tag;
+import javafx.scene.layout.*;
 import observable.IListener;
 import observable.ObservableManager;
 import javafx.event.ActionEvent;
@@ -11,24 +12,24 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import ui.util.Viewable;
+import ui.util.icon.Icon;
 
 import java.io.IOException;
 
 public class TagView extends HBox implements Viewable {
 
-    public static final double CORNER_RADII_PERCENTAGE = 5.0;
+    public static final double CORNER_RADII = 5.0;
 
     @FXML
     private Button removeTagBtn;
 
     @FXML
     private Label tagName;
+
+    @FXML
+    private Icon removeIcon;
 
     public final Tag tag;
     private IListener<TagView> removeTagCallback = null;
@@ -47,6 +48,7 @@ public class TagView extends HBox implements Viewable {
     private void loadFXML() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TagView.fxml"));
         fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
 
         try {
             fxmlLoader.load();
@@ -56,7 +58,10 @@ public class TagView extends HBox implements Viewable {
     }
 
     @FXML
-    private void initialize() { }
+    private void initialize() {
+        setPadding(new Insets(2, 5, 2, 5));
+        getChildren().remove(removeTagBtn);
+    }
 
     public void setOnRemoveCallback(IListener<TagView> removeTagCallback) {
         this.removeTagCallback = removeTagCallback;
@@ -74,20 +79,24 @@ public class TagView extends HBox implements Viewable {
 
     private void onTagColorChange(Color color) {
         changeBackgroundColor(color);
+        removeIcon.setIconColor(color);
     }
 
     private void changeBackgroundColor(Color color) {
-        setBackground(new Background(new BackgroundFill(color, new CornerRadii(CORNER_RADII_PERCENTAGE, true), Insets.EMPTY)));
+        tagName.setTextFill(color);
+        setBorder(new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, new CornerRadii(CORNER_RADII, false), BorderWidths.DEFAULT)));
     }
 
     @FXML
     private void onMouseEnter(MouseEvent me) {
-        removeTagBtn.setVisible(true);
+        //removeTagBtn.setVisible(true);
+        getChildren().add(removeTagBtn);
     }
 
     @FXML
     private void onMouseExit(MouseEvent me) {
-        removeTagBtn.setVisible(false);
+        //removeTagBtn.setVisible(false);
+        getChildren().remove(removeTagBtn);
     }
 
     @Override

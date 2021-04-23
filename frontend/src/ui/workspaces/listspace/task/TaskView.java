@@ -17,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import models.MainModel;
+import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
@@ -62,6 +63,9 @@ public class TaskView extends GridPane implements Viewable {
 
     @FXML
     private ListView listView;
+
+    @FXML
+    private TagDisplayView tagDisplayView;
 
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
@@ -150,7 +154,7 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).dueDate, this::onTaskDueChange);
         completedCheckBox.selectedProperty().addListener(this::onTaskCompleted_click);
         listView.setRootVertex(rootTask);
-
+        tagDisplayView.setVertex(rootTask);
     }
 
     @FXML
@@ -268,11 +272,13 @@ public class TaskView extends GridPane implements Viewable {
     public void registerListeners() {
         observableManager.startListen();
         listView.registerListeners();
+        tagDisplayView.registerListeners();
     }
 
     @Override
     public void unregisterListeners() {
         observableManager.stopListen();
         listView.unregisterListeners();
+        tagDisplayView.unregisterListeners();
     }
 }
