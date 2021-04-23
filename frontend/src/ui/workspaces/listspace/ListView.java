@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import ui.util.Viewable;
+import ui.util.dialogue.task.CreateTaskDialog;
+import ui.util.dialogue.category.CreateCategoryDialog;
 import ui.workspaces.listspace.category.CategoryView;
 import ui.workspaces.listspace.task.TaskView;
 import util.graph.IQuery;
@@ -96,22 +98,26 @@ public class ListView extends VBox implements Viewable {
         return todoContainer.getChildren().isEmpty();
     }
 
-    private static int num_id = 0;
-
     private void addTaskBtn_click(ActionEvent e) {
         if(_rootVertex.getValue() == null)
             return;
 
-        Task t = new Task("new task" + num_id++);
-        rootVertex.getValue().getGraph().addVertex(t, rootVertex.getValue());
+        Task task = CreateTaskDialog.showAndWait();
+
+        if(task != null) {
+            _rootVertex.getValue().getGraph().addVertex(task, _rootVertex.getValue());
+        }
     }
 
     private void addCategoryBtn_click(ActionEvent e) {
         if(_rootVertex.getValue() == null)
             return;
 
-        Category c = new Category("new category" + num_id++);
-        rootVertex.getValue().getGraph().addVertex(c, rootVertex.getValue());
+        Category category = CreateCategoryDialog.showAndWait();
+
+        if(category != null) {
+            _rootVertex.getValue().getGraph().addVertex(category, _rootVertex.getValue());
+        }
     }
 
     public void setRootVertex(ObservableVertex<TodoElement> rootVertex) {

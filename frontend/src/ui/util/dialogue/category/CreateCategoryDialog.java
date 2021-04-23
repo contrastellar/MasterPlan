@@ -1,31 +1,31 @@
-package ui.tag;
+package ui.util.dialogue.category;
 
-import components.Tag;
+import components.Category;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class CreateTagDialogue {
+public class CreateCategoryDialog {
 
-    public static final String DIALOGUE_TITLE = "Add Tag";
+    public static final String DIALOGUE_TITLE = "Create Category";
 
     public static final double MIN_WIDTH = 250;
     public static final double MIN_HEIGHT = 300;
 
-    public static Tag showAndWait() {
+    public static Category showAndWait() {
 
         Stage stage = new Stage();
 
-        CreateTagView createTagView = new CreateTagView(stage);
+        CreateCategoryView createCategoryView = new CreateCategoryView(stage);
 
-        Scene scene = new Scene(createTagView);
+        Scene scene = new Scene(createCategoryView);
 
         stage.setTitle(DIALOGUE_TITLE);
         stage.initModality(Modality.NONE);
 
         stage.setScene(scene);
 
-        createTagView.registerListeners();
+        createCategoryView.registerListeners();
 
         stage.setMinWidth(MIN_WIDTH);
         stage.setMinHeight(MIN_HEIGHT);
@@ -34,9 +34,9 @@ public class CreateTagDialogue {
 
         stage.showAndWait();
 
-        createTagView.unregisterListeners();
+        createCategoryView.unregisterListeners();
 
-        return createTagView.getCreatedTag();
+        return createCategoryView.getCreatedCategory();
     }
-    
+
 }
