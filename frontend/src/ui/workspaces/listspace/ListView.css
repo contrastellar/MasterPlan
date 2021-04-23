@@ -14,11 +14,12 @@
 
 .todoAddBtn {
     -fx-background-color: #cecece;
+    -fx-opacity: 0.8;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 11;
+    -fx-font-size: 10;
 
-    -fx-padding: 0 7 0 7;
+    -fx-padding: 0 4 0 4;
 
     -fx-border-width: 2;
     -fx-border-color: transparent;

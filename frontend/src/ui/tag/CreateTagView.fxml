@@ -12,12 +12,13 @@
 <?import javafx.scene.text.Font?>
 
 
+<?import javafx.scene.paint.Color?>
 <fx:root type="javafx.scene.layout.VBox"
          xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
          alignment="TOP_CENTER" prefWidth="220" prefHeight="300" minWidth="220" minHeight="300" >
 
         <HBox alignment="CENTER">
-                <Label text="CREATE TAG DIALOG">
+                <Label text="CREATE TAG">
                     <font>
                         <Font name="Segoe UI Bold" size="12.0" />
                     </font>
@@ -52,7 +53,7 @@
             <Label text="Name:" />
             <Label text="Color:" GridPane.rowIndex="1" />
             <TextField fx:id="tagNameInput" GridPane.columnIndex="1" />
-            <ColorPicker fx:id="tagColorInput" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" maxWidth="Infinity" />
+            <ColorPicker fx:id="tagColorInput" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" maxWidth="Infinity"/>
 
 
         </GridPane>

@@ -19,9 +19,8 @@ public class EditBarContainer extends VBox implements Viewable {
     public EditBarContainer() {
         observableManager.addListener(MainModel.model.editVertex, this::onEditVertexChange);
 
-        this.setPrefWidth(200);
         this.setMinWidth(200);
-        this.setMaxWidth(350);
+        this.setMaxWidth(250);
     }
 
     private void onEditVertexChange(ObservableVertex<TodoElement> editVertex) {

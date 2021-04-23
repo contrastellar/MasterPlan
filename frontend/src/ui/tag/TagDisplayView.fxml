@@ -12,7 +12,7 @@
 
     <Button fx:id="addTagBtn" onAction="#onAddTagBtn_click" >
         <graphic>
-            <Icon icon="plus.svg" iconSize="13" iconColor="black"/>
+            <Icon icon="plus.svg" iconSize="10" iconColor="#dedede"/>
         </graphic>
     </Button>
 

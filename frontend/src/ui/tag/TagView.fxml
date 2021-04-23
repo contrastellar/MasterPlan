@@ -12,15 +12,16 @@
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          stylesheets="@TagView.css"
-         onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" >
+         onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit"
+         minHeight="22">
 
     <Label fx:id="tagName">
         <HBox.margin><Insets right="3" /></HBox.margin>
     </Label>
 
-    <Button fx:id="removeTagBtn" visible="true" onAction="#onRemoveButton_click">
+    <Button fx:id="removeTagBtn" visible="true" onAction="#onRemoveButton_click" alignment="CENTER">
         <graphic>
-            <Icon fx:id="removeIcon" icon="trashcan.svg" iconColor="black" iconSize="13"/>
+            <Icon fx:id="removeIcon" icon="trashcan.svg" iconColor="black" iconSize="8"/>
         </graphic>
     </Button>
 

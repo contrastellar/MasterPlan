@@ -70,12 +70,12 @@
     <TagDisplayView fx:id="tagDisplayView" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <!-- Status of Task (row 1, col 1) -->
-    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="2" >
+    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="2" alignment="CENTER" >
         <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder" textFill="#cecece"/>
     </HBox>
 
-    <HBox fx:id="dateContainer" GridPane.columnIndex="2" GridPane.rowIndex="1">
-        <Label fx:id="dateDueLabel" text="NO DATE SET" textFill="#cecece"/>
+    <HBox fx:id="dateContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER">
+        <Label fx:id="dateDueLabel" text="" textFill="#cecece"/>
     </HBox>
 
 

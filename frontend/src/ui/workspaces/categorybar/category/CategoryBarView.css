@@ -5,6 +5,8 @@
 
 Label {
     -fx-text-fill: white;
+    -fx-font-size: 11;
+    -fx-font-weight: bold;
 }
 
 .Name {
