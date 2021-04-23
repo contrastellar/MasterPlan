@@ -9,9 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 public class JSONWriteRead {
@@ -21,6 +20,9 @@ public class JSONWriteRead {
 
     //Array for task
     String[] arrayT = new String[2];
+
+    //Array for due dates
+    String[] arrayD = new String[2];
 
     public void JSONWrite() throws FileNotFoundException {
         // creating JSONObject
@@ -37,16 +39,18 @@ public class JSONWriteRead {
         // for tasks
         JSONArray jt = new JSONArray();
 
-        m = new LinkedHashMap(2);
+        m = new LinkedHashMap(3);
         m.put("Category", "Class");
         m.put("Task", "CS3331");
+        m.put("Due Date", "2021-04-20");
 
         // adding map to list
         jt.add(m);
 
-        m = new LinkedHashMap(2);
+        m = new LinkedHashMap(3);
         m.put("Category", "Meeting");
         m.put("Task", "TSP Meeting");
+        m.put("Due Date", "2021-04-21");
 
         // adding map to list
         jt.add(m);
@@ -97,6 +101,9 @@ public class JSONWriteRead {
         //int k
         int k = 0;
 
+        //int l
+        int l = 0;
+
         while(itr2.hasNext())
         {
             itr1 = ((Map) itr2.next()).entrySet().iterator();
@@ -113,6 +120,11 @@ public class JSONWriteRead {
                     k++;
                 }
 
+                if(pair.getKey().equals("Due Date")) {
+                    arrayD[l] = (String) pair.getValue();
+                    l++;
+                }
+
                 //System.out.println(pair.getKey() + " : " + pair.getValue());
             }
         }
@@ -125,6 +137,9 @@ public class JSONWriteRead {
     public String[] getArrayT() {
         return arrayT;
     }
+
+    public String[] getArrayD() { return arrayD; }
+
 
 //    public static void main(String[] args) throws IOException, ParseException {
 //        JSONWriteRead json = new JSONWriteRead();
