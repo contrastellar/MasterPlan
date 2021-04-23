@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -140,13 +139,6 @@ public class JSONWriteRead {
 
     public String[] getArrayD() { return arrayD; }
 
-
-//    public static void main(String[] args) throws IOException, ParseException {
-//        JSONWriteRead json = new JSONWriteRead();
-//        json.JSONWrite();
-//        json.JSONRead();
-//        System.out.println(Arrays.toString(json.getArrayT()));
-//    }
 }
 
 
