@@ -66,9 +66,8 @@
     </VBox>
 
     <!-- Tags -->
-    <VBox styleClass="groupContainer">
-        <Button text="Confirm" onAction="#onConfirmChangesBtn_click" >
-        <HBox.margin><Insets left="5"/></HBox.margin>
-        </Button>
-    </VBox>
+    <HBox styleClass="groupContainer" spacing="10">
+        <Button text="Confirm" onAction="#onConfirmChangesBtn_click"/>
+        <Button text="-" onAction="#onMinimizeBtn_click" > </Button>
+    </HBox>
 </fx:root>

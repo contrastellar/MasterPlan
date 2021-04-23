@@ -2,6 +2,7 @@ package ui.workspaces.editbar;
 
 import components.Category;
 import components.TodoElement;
+import models.MainModel;
 import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
@@ -71,6 +72,11 @@ public class CategoryEditBar extends VBox implements IEditBar {
         cat.setName(titleInput.getText());
 
         cat.setBackgroundColor(colorPicker.getValue());
+    }
+
+    @FXML
+    private void onMinimizeBtn_click(ActionEvent ae) {
+        MainModel.model.editVertex.setValue(null);
     }
 
 
