@@ -2,7 +2,7 @@
 *  Scrollbar classes: https://guigarage.com/2015/11/styling-a-javafx-scrollbar/
 */
 .scroll-pane {
-    -fx-background: transparent;
+    -fx-background-c-molor: transparent;
     -fx-focus-color: transparent;
     -fx-faint-focus-color: transparent;
 
