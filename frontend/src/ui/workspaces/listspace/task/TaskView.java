@@ -45,6 +45,9 @@ public class TaskView extends GridPane implements Viewable {
     private HBox remainingContainer;
 
     @FXML
+    private HBox dateContainer;
+
+    @FXML
     private Label dateDueLabel;
 
     @FXML
@@ -107,10 +110,12 @@ public class TaskView extends GridPane implements Viewable {
             e.setOnMouseEntered(event -> {
                 remainingContainer.setStyle("-fx-border-color: cadetblue;");
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
+                dateContainer.setStyle("-fx-border-color: cadetblue;");
             });
             e.setOnMouseExited(event -> {
                 remainingContainer.setStyle("-fx-border-color: transparent;");
                 buttonContainer.setStyle("-fx-border-color: transparent;");
+                dateContainer.setStyle("-fx-border-color: transparent;");
             });
         });
     }
