@@ -14,7 +14,7 @@ public class ObservableList<T> implements IObservable<ObservableList<T>>, List<T
 
 
     private void updateListeners() {
-        for(IListener<ObservableList<T>> listener : listeners)
+        for(IListener<ObservableList<T>> listener : new ArrayList<>(listeners))
             listener.onChange(this);
     }
 

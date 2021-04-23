@@ -6,10 +6,12 @@ import components.TodoElement;
 import observable.IReadOnlyObservableList;
 import observable.Observable;
 import observable.ObservableList;
+import observable.ObservableSet;
 import util.graph.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 
 public class MainModel {
 
@@ -19,8 +21,7 @@ public class MainModel {
     public final Observable<ObservableVertex<TodoElement>> selectedVertex = new Observable<>();
     public final Observable<ObservableVertex<TodoElement>> editVertex = new Observable<>();
 
-    public final ObservableList<Tag> _tags = new ObservableList<>(new ArrayList<>());
-    public final IReadOnlyObservableList<Tag> tags = _tags;
+    public final ObservableSet<Tag> tags = new ObservableSet<>(new HashSet<>());
 
     private MainModel() {
         // deserialize graph
@@ -39,18 +40,6 @@ public class MainModel {
     private void onSelectedVertexRemoved(ObservableGraphChange<TodoElement> change) {
         if(change.getRemovedVertices().contains(selectedVertex.getValue()))
             selectedVertex.setValue(null);
-    }
-
-    public void addTag(Tag tag) {
-        _tags.add(tag);
-    }
-
-    public void removeTag(Tag tag) {
-        _tags.remove(tag);
-    }
-
-    public void sortTags(Comparator<Tag> c) {
-        _tags.sort(c);
     }
 
     public void importGoogleCalendar(IVertex<TodoElement> rootVertex) {

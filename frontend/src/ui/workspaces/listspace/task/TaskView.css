@@ -19,12 +19,11 @@
     -fx-border-color: transparent;
 }
 
-
 HBox {
     -fx-padding: 0 5 0 5;
 }
 
-Icon:hover {
+.taskViewIcon:hover {
     -fx-background-color: cadetblue;
     -fx-border-color: transparent;
 }

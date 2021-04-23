@@ -7,18 +7,20 @@
 <?import javafx.scene.layout.*?>
 
 <?import ui.util.icon.Icon?>
+<?import javafx.geometry.Insets?>
 <fx:root type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
-         fx:controller="ui.tag.TagView"
-         stylesheets="TagView.css"
+         stylesheets="@TagView.css"
          onMouseEntered="#onMouseEnter" onMouseExited="#onMouseExit" >
 
-    <Label fx:id="tagName" />
+    <Label fx:id="tagName">
+        <HBox.margin><Insets right="3" /></HBox.margin>
+    </Label>
 
-    <Button fx:id="removeTagBtn" visible="false" onAction="#onRemoveButton_click">
+    <Button fx:id="removeTagBtn" visible="true" onAction="#onRemoveButton_click">
         <graphic>
-            <Icon icon="trashcan.svg" iconColor="black" iconSize="13"/>
+            <Icon fx:id="removeIcon" icon="trashcan.svg" iconColor="black" iconSize="13"/>
         </graphic>
     </Button>
 

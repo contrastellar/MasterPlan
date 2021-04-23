@@ -24,7 +24,7 @@
         <Button fx:id="toggleBtn" onAction="#toggleBtnHandler"
                 style="-fx-border-color: transparent; -fx-background-color: transparent;" >
             <graphic>
-                <Icon icon="angle-down.svg" iconColor="#cccccc" iconSize="7" />
+                <Icon icon="angle-down.svg" iconColor="#cccccc" iconSize="7" styleClass="taskViewIcon" />
             </graphic>
         </Button>
     </HBox>
@@ -42,35 +42,34 @@
 
         <Button fx:id="removeVertexBtn" onAction="#onRemoveVertexBtn_click" styleClass="IconBtn">
             <graphic>
-                <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="13" />
+                <Icon icon="trashcan.svg" iconColor="#cccccc" iconSize="13" styleClass="taskViewIcon" />
             </graphic>
         </Button>
-
         <Button fx:id="removeGraphBtn"
                 onAction="#onRemoveGraphBtn_click" styleClass="IconBtn">
             <graphic>
-                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" />
+                <Icon icon="dumptruck.svg" iconColor="#cccccc" iconSize="13" styleClass="taskViewIcon" />
             </graphic>
         </Button>
 
         <Button fx:id="bookmark" onAction="#onBookmark_click" styleClass="IconBtn">
             <graphic>
-                <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="12" />
+                <Icon icon="bookmark.svg" iconColor="#cccccc" iconSize="12" styleClass="taskViewIcon" />
             </graphic>
         </Button>
 
         <Button fx:id="archive" onAction="#onArchive_click" styleClass="IconBtn">
             <graphic>
-                <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" />
+                <Icon icon="archive.svg" iconColor="#cccccc" iconSize="12" styleClass="taskViewIcon"/>
             </graphic>
         </Button>
     </HBox>
 
     <!-- Category Tags (row 1, col 2)-->
-    <TagDisplayView fx:id="categoryTags" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TagDisplayView fx:id="tagDisplayView" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
     <!-- Status of Task (row 1, col 1) -->
-    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" >
+    <HBox fx:id="remainingContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" alignment="CENTER">
         <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder" textFill="#cecece"/>
     </HBox>
 

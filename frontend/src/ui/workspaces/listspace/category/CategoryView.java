@@ -16,6 +16,7 @@ import models.MainModel;
 import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
+import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import ui.workspaces.listspace.ListView;
 import util.graph.ObservableVertex;
@@ -47,7 +48,8 @@ public class CategoryView extends GridPane implements Viewable {
     @FXML
     private Label categoryName;
 
-
+    @FXML
+    private TagDisplayView tagDisplayView;
 
 
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
@@ -120,6 +122,7 @@ public class CategoryView extends GridPane implements Viewable {
             categoryName.setText("No Category");
             return;
         }
+
         Category cat = (Category) categoryVertex.getElement();
 
         listView.setRootVertex(categoryVertex);
@@ -128,6 +131,7 @@ public class CategoryView extends GridPane implements Viewable {
         observableManager.addListener(cat.name, this::onCategoryNameChange);
         observableManager.addListener(cat.backgroundColor, this::onCategoryColorChange);
         observableManager.addListener(cat.isArchived, this::onArchiveChange);
+        tagDisplayView.setVertex(categoryVertex);
 
     }
 
@@ -209,12 +213,14 @@ public class CategoryView extends GridPane implements Viewable {
     @Override
     public void registerListeners() {
         listView.registerListeners();
+        tagDisplayView.registerListeners();
         observableManager.startListen();
     }
 
     @Override
     public void unregisterListeners() {
         listView.unregisterListeners();
+        tagDisplayView.unregisterListeners();
         observableManager.stopListen();
     }
 }

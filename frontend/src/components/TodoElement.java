@@ -1,9 +1,6 @@
 package components;
 
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableCollection;
-import observable.ObservableList;
+import observable.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +18,7 @@ public abstract class TodoElement implements Archival{
     private final Observable<String> _description = new Observable<>("");
     public  final IReadOnlyObservable<String> description = _description;
 
-    public  final ObservableList<Tag> tags = new ObservableList<>(new ArrayList<>());
+    public  final ObservableSet<Tag> tags = new ObservableSet<>(new HashSet<>());
 
     private final Observable<Boolean> _isArchived = new Observable<>(false);
     public  final IReadOnlyObservable<Boolean> isArchived = _isArchived;

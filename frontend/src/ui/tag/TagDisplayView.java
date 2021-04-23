@@ -2,11 +2,13 @@ package ui.tag;
 
 import components.Tag;
 import components.TodoElement;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -15,8 +17,10 @@ import javafx.scene.paint.Color;
 import observable.*;
 import ui.util.Viewable;
 import util.graph.ObservableVertex;
+import models.MainModel;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TagDisplayView extends FlowPane implements Viewable {
 
@@ -27,7 +31,7 @@ public class TagDisplayView extends FlowPane implements Viewable {
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> vertex = _vertex;
 
     private final ObservableManager observableManager = new ObservableManager();
-    private final IListener<ObservableList<Tag>> tagsListener = this::onTagsChange;
+    private final IListener<ObservableSet<Tag>> tagsListener = this::onTagsChange;
 
     public TagDisplayView() {
         loadFXML();
@@ -52,14 +56,22 @@ public class TagDisplayView extends FlowPane implements Viewable {
     }
 
     @FXML
-    private void onAddTagBtn_click() {
+    private void onAddTagBtn_click(ActionEvent ae) {
+        System.out.println("Add Tag Btn clicked");
+
         if(_vertex.getValue() == null)
             return;
 
         Tag tag = CreateTagDialogue.showAndWait();
 
-        if(tag != null)
+        if(tag != null) {
+            System.out.println("Tag Create: " + tag.getName());
+            MainModel.model.tags.add(tag);
             _vertex.getValue().getElement().tags.add(tag);
+        }
+        else {
+            System.out.println("Tag no created");
+        }
     }
 
     private void onTagRemoved(TagView tagView) {
@@ -67,8 +79,8 @@ public class TagDisplayView extends FlowPane implements Viewable {
     }
 
     // TODO: make this more efficient
-    private void onTagsChange(ObservableList<Tag> tags) {
-        for(Node node : getChildren()) {
+    private void onTagsChange(ObservableSet<Tag> tags) {
+        for(Node node : new ArrayList<>(getChildren())) {
             if(node instanceof Viewable) {
                 ((Viewable) node).unregisterListeners();
                 getChildren().remove(node);
