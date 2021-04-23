@@ -7,3 +7,7 @@
     -fx-background-radius: 5;
     -fx-max-width: INFINITY;
 }
+
+.searchIcon:hover {
+    -fx-background-color: cadetblue;
+}

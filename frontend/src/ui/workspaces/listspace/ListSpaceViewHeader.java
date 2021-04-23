@@ -3,7 +3,7 @@ package ui.workspaces.listspace;
 import components.Category;
 import components.TodoElement;
 import components.task.Task;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -68,7 +68,7 @@ public class ListSpaceViewHeader extends GridPane implements Viewable {
     }
 
     @FXML
-    private void onSearchInput_action(ActionEvent ae) {
+    private void onSearchInput_action(Event ae) {
         if(searchQueryCallBack == null)
             return;
 

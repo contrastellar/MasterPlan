@@ -4,4 +4,6 @@
     -fx-background-color: transparent;
 }
 
-
+Icon:hover {
+    -fx-background-color: cadetblue;
+}
