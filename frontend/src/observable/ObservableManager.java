@@ -1,5 +1,6 @@
 package observable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class ObservableManager {
         else
             listening = true;
 
-        for(ObservableListenerPair<?> pair : observableToPair.values())
+        for(ObservableListenerPair<?> pair : new ArrayList<>(observableToPair.values()))
             pair.startListen();
     }
 
@@ -66,7 +67,7 @@ public class ObservableManager {
         else
             listening = false;
 
-        for(ObservableListenerPair<?> pair : observableToPair.values())
+        for(ObservableListenerPair<?> pair : new ArrayList<>(observableToPair.values()))
             pair.stopListen();
     }
 

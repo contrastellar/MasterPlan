@@ -15,11 +15,13 @@ import javafx.scene.layout.VBox;
 import ui.util.Viewable;
 import ui.workspaces.listspace.category.CategoryView;
 import ui.workspaces.listspace.task.TaskView;
+import util.graph.IQuery;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +39,9 @@ public class ListView extends VBox implements Viewable {
 
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
+
+    private final Observable<IQuery<TodoElement>> _query = new Observable<>();
+    public final IReadOnlyObservable<IQuery<TodoElement>> query = _query;
 
     public final Map<ObservableVertex<TodoElement>, Viewable> vertexToViewable = new HashMap<>();
 
@@ -64,6 +69,7 @@ public class ListView extends VBox implements Viewable {
     @FXML
     private void initialize() {
         observableManager.addListener(_rootVertex, this::onRootVertexChange);
+        observableManager.addListener(_query, this::onQueryChange);
 
         addTaskBtn.setOnAction(this::addTaskBtn_click);
         addCategoryBtn.setOnAction(this::addCategoryBtn_click);
@@ -112,6 +118,23 @@ public class ListView extends VBox implements Viewable {
         return _rootVertex.getValue();
     }
 
+    private void onQueryChange(IQuery<TodoElement> query) {
+        if(_rootVertex.getValue() == null)
+            return;
+
+        for(var vertices : new ArrayList<>(vertexToViewable.keySet()))
+            removeView(vertices);
+
+        vertexToViewable.clear();
+
+        if(query != null) {
+            for(var vertex : _rootVertex.getValue().getGraph().query(_query.getValue(), _rootVertex.getValue())) {
+                addVertex(vertex);
+            }
+        }
+
+    }
+
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
 
         vertexToViewable.clear();
@@ -127,7 +150,9 @@ public class ListView extends VBox implements Viewable {
 
     private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
         for(var vertex : change.getAddedEdges()) {
-            addVertex(vertex);
+            if(_query.getValue() != null && _query.getValue().query(vertex.getElement())) {
+                addVertex(vertex);
+            }
         }
         for(var vertex : change.getRemovedEdges()) {
             removeView(vertex);
@@ -150,12 +175,14 @@ public class ListView extends VBox implements Viewable {
         Viewable viewable;
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
+            cView.setQuery(_query.getValue());
             cView.setCategory(vertex);
             cView.registerListeners();
             viewable = cView;
         }
         else if(vertex.getElement() instanceof Task) {
             TaskView tView = new TaskView();
+            tView.setQuery(_query.getValue());
             tView.setRootTask(vertex);
             tView.registerListeners();
             viewable = tView;
@@ -168,15 +195,25 @@ public class ListView extends VBox implements Viewable {
 
     private void removeView(ObservableVertex<TodoElement> vertex) {
         Viewable viewable = vertexToViewable.get(vertex);
-        viewable.unregisterListeners();
-        todoContainer.getChildren().remove(viewable.node());
-        vertexToViewable.remove(vertex);
+        if(viewable != null) {
+            viewable.unregisterListeners();
+            todoContainer.getChildren().remove(viewable.node());
+            vertexToViewable.remove(vertex);
+        }
     }
 
 
     private void sort(Comparator<TodoElement> c) {
         // TODO: Implement
         throw new UnsupportedOperationException("not yet implemented");
+    }
+
+    public void setQuery(IQuery<TodoElement> query) {
+        this._query.setValue(query);
+    }
+
+    public IQuery<TodoElement> getQuery() {
+        return this._query.getValue();
     }
 
 

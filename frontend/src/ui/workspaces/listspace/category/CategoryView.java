@@ -19,6 +19,7 @@ import observable.ObservableManager;
 import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import ui.workspaces.listspace.ListView;
+import util.graph.IQuery;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -55,6 +56,8 @@ public class CategoryView extends GridPane implements Viewable {
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> categoryVertex = _categoryVertex;
 
+    private final Observable<IQuery<TodoElement>> _query = new Observable<>();
+    public final IReadOnlyObservable<IQuery<TodoElement>> query = _query;
 
 
     private final ObservableManager observableManager = new ObservableManager();
@@ -81,6 +84,9 @@ public class CategoryView extends GridPane implements Viewable {
     private void initialize() {
 
         observableManager.addListener(_categoryVertex, this::onCategoryVertexChange);
+        observableManager.addListener(_query, this::onQueryChange);
+
+
         this.managedProperty().bindBidirectional(this.visibleProperty());
 
         setOnMouseClicked((e) -> {
@@ -102,6 +108,10 @@ public class CategoryView extends GridPane implements Viewable {
                 buttonContainer.setStyle("-fx-border-color: transparent;");
             });
         });
+    }
+
+    private void onQueryChange(IQuery<TodoElement> query) {
+        listView.setQuery(query);
     }
 
     /**
@@ -203,6 +213,14 @@ public class CategoryView extends GridPane implements Viewable {
 
     public ObservableVertex<TodoElement> getCategory() {
         return _categoryVertex.getValue();
+    }
+
+    public void setQuery(IQuery<TodoElement> query) {
+        this._query.setValue(query);
+    }
+
+    public IQuery<TodoElement> getQuery() {
+        return this._query.getValue();
     }
 
     @Override

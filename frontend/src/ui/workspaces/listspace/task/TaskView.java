@@ -20,6 +20,7 @@ import models.MainModel;
 import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import ui.workspaces.listspace.ListView;
+import util.graph.IQuery;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
@@ -70,6 +71,9 @@ public class TaskView extends GridPane implements Viewable {
     private final Observable<ObservableVertex<TodoElement>> _rootTask = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootTask = _rootTask;
 
+    private final Observable<IQuery<TodoElement>> _query = new Observable<>();
+    public final IReadOnlyObservable<IQuery<TodoElement>> query = _query;
+
     private ObservableVertex<TodoElement> taskVertex;
     private final ObservableManager observableManager = new ObservableManager();
 
@@ -96,6 +100,8 @@ public class TaskView extends GridPane implements Viewable {
     private void initialize() {
 
         observableManager.addListener(_rootTask, this::onRootTaskChange);
+        observableManager.addListener(_query, this::onQueryChange);
+
         this.managedProperty().bindBidirectional(this.visibleProperty());
 
         setOnMouseClicked((e) -> {
@@ -122,6 +128,10 @@ public class TaskView extends GridPane implements Viewable {
                 dateContainer.setStyle("-fx-border-color: transparent;");
             });
         });
+    }
+
+    private void onQueryChange(IQuery<TodoElement> query) {
+        listView.setQuery(query);
     }
 
     /**
@@ -257,6 +267,14 @@ public class TaskView extends GridPane implements Viewable {
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
             dateDueLabel.setText(dateFormat.format(rootDate.getTime()));
         }
+    }
+
+    public void setQuery(IQuery<TodoElement> query) {
+        this._query.setValue(query);
+    }
+
+    public IQuery<TodoElement> getQuery() {
+        return this._query.getValue();
     }
 
     public ObservableVertex<TodoElement> getRootTask() {

@@ -58,6 +58,7 @@ public class ListSpaceView extends VBox implements Viewable {
 
         listViewHeader.setRootCategory(rootVertex);
         listView.setRootVertex(rootVertex);
+        listView.setQuery((e) -> true);
 
         // Set scroll event handler for scrollPane view
         scrollPane.getContent().setOnScroll(this::scrollHandler);
