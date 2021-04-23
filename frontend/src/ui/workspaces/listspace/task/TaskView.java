@@ -12,6 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import models.MainModel;
 import observable.IReadOnlyObservable;
@@ -43,10 +44,7 @@ public class TaskView extends GridPane implements Viewable {
     private HBox buttonContainer;
 
     @FXML
-    private HBox remainingContainer;
-
-    @FXML
-    private HBox dateContainer;
+    private VBox remainingContainer;
 
     @FXML
     private Label dateDueLabel;
@@ -119,11 +117,11 @@ public class TaskView extends GridPane implements Viewable {
         gridChildren.forEach(e -> {
             e.setOnMouseEntered(event -> {
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
-                dateContainer.setStyle("-fx-border-color: cadetblue;");
+                remainingContainer.setStyle("-fx-border-color: cadetblue;");
             });
             e.setOnMouseExited(event -> {
                 buttonContainer.setStyle("-fx-border-color: transparent;");
-                dateContainer.setStyle("-fx-border-color: transparent;");
+                remainingContainer.setStyle("-fx-border-color: transparent;");
             });
         });
     }
