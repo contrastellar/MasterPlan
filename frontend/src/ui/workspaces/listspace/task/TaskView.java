@@ -23,7 +23,10 @@ import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TaskView extends GridPane implements Viewable {
@@ -40,6 +43,9 @@ public class TaskView extends GridPane implements Viewable {
 
     @FXML
     private HBox remainingContainer;
+
+    @FXML
+    private Label dateDueLabel;
 
     @FXML
     private Label taskName;
@@ -136,6 +142,7 @@ public class TaskView extends GridPane implements Viewable {
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isCompleted, this::onTaskCompletedChange);
         observableManager.addListener(((Task) _rootTask.getValue().getElement()).isBookmarked, this::onBookMarkChange);
         observableManager.addListener( ((Task)_rootTask.getValue().getElement()).isArchived, this::onArchiveChange);
+        observableManager.addListener(((Task) _rootTask.getValue().getElement()).dueDate, this::onTaskDueChange);
         completedCheckBox.selectedProperty().addListener(this::onTaskCompleted_click);
         listView.setRootVertex(rootTask);
 
@@ -234,6 +241,13 @@ public class TaskView extends GridPane implements Viewable {
             throw new IllegalArgumentException("TaskView() - rootVertex.getElement() is not of type Task");
 
         _rootTask.setValue(rootTask);
+    }
+
+    private void onTaskDueChange(Calendar rootDate){
+        if(rootDate != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
+            dateDueLabel.setText(dateFormat.format(rootDate.getTime()));
+        }
     }
 
     public ObservableVertex<TodoElement> getRootTask() {
