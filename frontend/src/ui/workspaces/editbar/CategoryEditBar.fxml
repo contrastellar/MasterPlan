@@ -30,7 +30,7 @@
             <VBox minWidth="50" alignment="CENTER">
                 <Label text="Color:"/>
             </VBox>
-            <ColorPicker fx:id="colorPicker" HBox.hgrow="ALWAYS"/>
+            <ColorPicker fx:id="colorPicker" styleClass="inputBox" HBox.hgrow="ALWAYS"/>
         </HBox>
 
         <HBox styleClass="leftPadded" VBox.vgrow="ALWAYS">
@@ -38,7 +38,7 @@
                 <Label text="Notes:"/>
                 <HBox.margin> <Insets right="5.0" /> </HBox.margin>
             </VBox>
-            <TextArea fx:id="description" styleClass="inputBox" HBox.hgrow="ALWAYS"/>
+            <TextArea fx:id="description" HBox.hgrow="ALWAYS"/>
         </HBox>
     </VBox>
 
@@ -51,7 +51,7 @@
             <VBox HBox.hgrow="ALWAYS" alignment="CENTER_LEFT">
                 <HBox.margin><Insets left="5" /></HBox.margin>
                 <VBox styleClass="inputBox" alignment="CENTER_LEFT">
-                    <padding><Insets top="2" bottom="2" left="5" right="5"/></padding>
+                    <padding><Insets topRightBottomLeft="5"/></padding>
                     <Label fx:id="createdDateInput"/>
                 </VBox>
             </VBox>
@@ -59,9 +59,9 @@
     </VBox>
 
     <!-- Tags -->
-    <HBox styleClass="groupContainer" spacing="10">
+    <HBox styleClass="groupContainer" spacing="10" alignment="CENTER">
         <Button text="Confirm" onAction="#onConfirmChangesBtn_click"/>
-        <Button text="-" onAction="#onMinimizeBtn_click" > </Button>
+        <Button text="Cancel" onAction="#onMinimizeBtn_click" > </Button>
     </HBox>
 
 </fx:root>
