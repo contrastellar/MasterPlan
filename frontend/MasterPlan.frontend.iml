@@ -6,10 +6,10 @@
       <sourceFolder url="file://$MODULE_DIR$/assets" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/testsuite" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/lib/javafx-sdk-15.0.1" />
       <excludeFolder url="file://$MODULE_DIR$/lib/commons-collections4-4.4" />
-      <excludeFolder url="file://$MODULE_DIR$/lib/junit-4.13.2" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/javafx-sdk-15.0.1" />
       <excludeFolder url="file://$MODULE_DIR$/lib/json-simple-1.1" />
+      <excludeFolder url="file://$MODULE_DIR$/lib/junit-4.13.2" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
