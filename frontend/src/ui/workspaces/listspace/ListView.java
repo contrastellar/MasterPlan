@@ -183,6 +183,9 @@ public class ListView extends VBox implements Viewable {
 
     public void addVertex(ObservableVertex<TodoElement> vertex) {
         Viewable viewable;
+
+        if (vertexToViewable.containsKey(vertex))
+                return;
         if(vertex.getElement() instanceof Category) {
             CategoryView cView = new CategoryView();
             cView.setQuery(_query.getValue());
