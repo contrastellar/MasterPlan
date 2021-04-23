@@ -1,0 +1,9 @@
+/* Class to style inputs */
+.inputBox {
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-border-color: #dedede;
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-max-width: INFINITY;
+}

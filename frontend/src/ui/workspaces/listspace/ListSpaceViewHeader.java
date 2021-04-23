@@ -2,6 +2,7 @@ package ui.workspaces.listspace;
 
 import components.Category;
 import components.TodoElement;
+import javafx.scene.layout.GridPane;
 import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
@@ -10,7 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.GridPane;
+import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
@@ -18,7 +20,7 @@ import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
 
-public class ListSpaceViewHeader extends HBox implements Viewable {
+public class ListSpaceViewHeader extends GridPane implements Viewable {
 
     @FXML
     private Label headerName;
@@ -26,6 +28,9 @@ public class ListSpaceViewHeader extends HBox implements Viewable {
     @FXML
     private Label categoryContents;
     private static final String categoryContentsPattern = "%d Categories | %d Tasks";
+
+    @FXML
+    private TagDisplayView tagDisplayView = new TagDisplayView();
 
     private final Observable<ObservableVertex<TodoElement>> _rootCategory = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootCategory = _rootCategory;
@@ -38,7 +43,7 @@ public class ListSpaceViewHeader extends HBox implements Viewable {
 
 
     private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListViewHeader.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ListSpaceViewHeader.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -67,6 +72,7 @@ public class ListSpaceViewHeader extends HBox implements Viewable {
         observableManager.addListener(rootCategory, this::onRootCategoryOutVerticesChange);
         observableManager.addListener(rootCategory.getGraph(), this::onRootCategoryOutVerticesRemoved);
         observableManager.addListener(rootCategory.getElement().name, this::onRootCategoryNameChange);
+        tagDisplayView.setVertex(rootCategory);
     }
 
     private void onRootCategoryNameChange(String name) {
@@ -115,10 +121,12 @@ public class ListSpaceViewHeader extends HBox implements Viewable {
     @Override
     public void registerListeners() {
         observableManager.startListen();
+        tagDisplayView.registerListeners();
     }
 
     @Override
     public void unregisterListeners() {
         observableManager.stopListen();
+        tagDisplayView.unregisterListeners();
     }
 }

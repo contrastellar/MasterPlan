@@ -1,11 +1,4 @@
 
-finish list space
-    - enhance and expand on listspace user interface
-        - shows tags - Ben and TS
-        - show due date -
-edit tasks
-    - clean up UI - Ben and TS
-
 select which category is viewed in the workspace
     - create user interface to select which workspace - DH
     - integrate user interface - TS
@@ -13,13 +6,3 @@ select which category is viewed in the workspace
 search for tasks (globally and relative to workspace)
     - create search user interface - Ben
     - integrate user interface - Ben and TS
-gabby
-
-Mock Google Calendar API import
-    - mock json file
-    - read file
-    - parse string
-    - create task/category
-    - add to graph
-
- pls push this btw --Gabby -> will do
