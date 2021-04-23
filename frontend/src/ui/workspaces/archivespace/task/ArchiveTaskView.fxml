@@ -72,7 +72,4 @@
         <Label fx:id="tasksRemainingLabel" text="num tasks remaining placeholder" textFill="#cecece"/>
     </HBox>
 
-    <ListView fx:id="listView"
-              GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
-
 </fx:root>

@@ -3,9 +3,14 @@
     -fx-border-color: transparent;
 }
 
+Label {
+    -fx-text-fill: white;
+}
+
 .Name {
     -fx-font-size: 14;
-    -fx-background-color-color: transparent;
+
+    -fx-background-color-color: cadetblue;
     -fx-background-radius: 3;
 
     -fx-border-color: transparent;

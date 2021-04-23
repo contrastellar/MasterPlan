@@ -1,6 +1,5 @@
 package ui.workspaces;
 
-import components.Category;
 import components.TodoElement;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +8,9 @@ import javafx.scene.control.SplitPane;
 import models.MainModel;
 import observable.ObservableManager;
 import ui.util.Viewable;
-import ui.workspaces.categorybar.CategoryListView;
+import ui.workspaces.categorybar.CategoryListSpaceView;
 import ui.workspaces.editbar.EditBarContainer;
 import ui.workspaces.listspace.ListSpaceView;
-import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 
 import java.io.IOException;
@@ -29,7 +27,7 @@ public class WorkSpaceView extends SplitPane implements Viewable {
     private EditBarContainer editBarContainer;
 
     @FXML
-    private CategoryListView categoryListView;
+    private CategoryListSpaceView categoryListSpaceView;
 
     private final ObservableManager observableManager = new ObservableManager();
 
@@ -53,7 +51,6 @@ public class WorkSpaceView extends SplitPane implements Viewable {
     @FXML
     private void initialize() {
         observableManager.addListener(MainModel.model.editVertex, this::onEditVertexChange);
-        observableManager.addListener(MainModel.model.obsGraph, this::onCategoryChange);
     }
 
     private void onEditVertexChange(ObservableVertex<TodoElement> vertex) {
@@ -69,18 +66,6 @@ public class WorkSpaceView extends SplitPane implements Viewable {
                 getItems().add(editBarContainer);
         }
     }
-
-    private void onCategoryChange(ObservableGraphChange<TodoElement> change) {
-        if (categoryListView.getRootVertex() ==null )
-            return;
-        else if(!(categoryListView.getRootVertex().getElement() instanceof Category))
-            return;
-
-            categoryListView.setRootVertex( categoryListView.getRootVertex());
-    }
-
-
-
 
     /**
      *
@@ -99,7 +84,7 @@ public class WorkSpaceView extends SplitPane implements Viewable {
         observableManager.startListen();
         editBarContainer.registerListeners();
         listSpaceView.registerListeners();
-        categoryListView.registerListeners();
+        categoryListSpaceView.registerListeners();
     }
 
     @Override
@@ -107,6 +92,6 @@ public class WorkSpaceView extends SplitPane implements Viewable {
         observableManager.stopListen();
         editBarContainer.unregisterListeners();
         listSpaceView.unregisterListeners();
-        categoryListView.unregisterListeners();
+        categoryListSpaceView.unregisterListeners();
     }
 }

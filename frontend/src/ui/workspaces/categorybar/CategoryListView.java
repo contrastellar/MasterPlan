@@ -2,30 +2,22 @@ package ui.workspaces.categorybar;
 
 import components.Category;
 import components.TodoElement;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
 import ui.util.Viewable;
-import ui.workspaces.listspace.category.CategoryView;
+import ui.workspaces.categorybar.category.CategoryBarView;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CategoryListView extends VBox implements Viewable {
-
-    @FXML
-    private VBox todoContainer;
-
-
 
     private final Observable<ObservableVertex<TodoElement>> _rootVertex = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootVertex = _rootVertex;
@@ -36,43 +28,24 @@ public class CategoryListView extends VBox implements Viewable {
 
 
     public CategoryListView() {
-        loadFXML();
-    }
-
-
-    private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CategoryListView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-    @FXML
-    private void initialize() {
         observableManager.addListener(_rootVertex, this::onRootVertexChange);
 
         // Binds managed and visible property to hide and reset the layout by just setting
-        todoContainer.managedProperty().bindBidirectional(todoContainer.visibleProperty());
+        this.managedProperty().bindBidirectional(this.visibleProperty());
     }
 
     /** Getters and Setters for the visibility of the todoContainer **/
-    public void hideTodo() { todoContainer.setVisible(false); };
-    public void showTodo() { todoContainer.setVisible(true); };
-    public boolean isTodoShown() { return todoContainer.isVisible(); }
-    public boolean isTodoHidden() { return !isTodoShown(); }
-    public void toggleTodo() {
-        if (isTodoShown()) hideTodo();
-        else showTodo();
+    public void hide() { this.setVisible(false); };
+    public void show() { this.setVisible(true); };
+    public boolean isShown() { return this.isVisible(); }
+    public boolean isHidden() { return !isShown(); }
+    public void toggleVisible() {
+        if (isShown()) hide();
+        else show();
     }
 
-    public boolean isTodoEmpty() {
-        return todoContainer.getChildren().isEmpty();
+    public boolean isEmpty() {
+        return this.getChildren().isEmpty();
     }
 
     public void setRootVertex(ObservableVertex<TodoElement> rootVertex) {
@@ -86,7 +59,7 @@ public class CategoryListView extends VBox implements Viewable {
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {
 
         vertexToViewable.clear();
-        todoContainer.getChildren().clear();
+        this.getChildren().clear();
 
         if(rootVertex == null)
             return;
@@ -98,10 +71,12 @@ public class CategoryListView extends VBox implements Viewable {
 
     private void onRootVertexOutEdgesChange(ObservableVertexChange<TodoElement> change) {
         for(var vertex : change.getAddedEdges()) {
-            addVertex(vertex);
+            if (vertex.getElement() instanceof Category)
+                addVertex(vertex);
         }
         for(var vertex : change.getRemovedEdges()) {
-            removeView(vertex);
+            if (vertex.getElement() instanceof Category)
+                removeView(vertex);
         }
         if(change.getSorted()) {
             sort(change.getSortingComparator());
@@ -120,21 +95,21 @@ public class CategoryListView extends VBox implements Viewable {
     public void addVertex(ObservableVertex<TodoElement> vertex) {
         Viewable viewable;
         if(vertex.getElement() instanceof Category) {
-            CategoryView cView = new CategoryView();
+            CategoryBarView cView = new CategoryBarView();
             cView.setCategory(vertex);
             cView.registerListeners();
             viewable = cView;
         } else
-            throw new UnsupportedOperationException("not implemented");
+            throw new IllegalArgumentException("addVertex(vertex) - vertex.getElement() must be of type Category");
 
-        todoContainer.getChildren().add(viewable.node());
+        this.getChildren().add(viewable.node());
         vertexToViewable.put(vertex, viewable);
     }
 
     private void removeView(ObservableVertex<TodoElement> vertex) {
         Viewable viewable = vertexToViewable.get(vertex);
         viewable.unregisterListeners();
-        todoContainer.getChildren().remove(viewable.node());
+        this.getChildren().remove(viewable.node());
         vertexToViewable.remove(vertex);
     }
 

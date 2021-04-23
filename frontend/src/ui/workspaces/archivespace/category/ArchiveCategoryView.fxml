@@ -57,8 +57,4 @@
         </Button>
     </HBox>
 
-    <!-- Status of category (row 1, col 1) -->
-    <ListView fx:id="listView"
-              GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>
-
 </fx:root>

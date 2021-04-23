@@ -3,8 +3,6 @@ package ui.workspaces.archivespace;
 import components.Category;
 import components.TodoElement;
 import components.task.Task;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import models.MainModel;
@@ -15,7 +13,6 @@ import ui.workspaces.archivespace.task.ArchiveTaskView;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 
-import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,23 +26,6 @@ public class ArchiveListView extends VBox implements Viewable {
     private final Map<ObservableVertex<TodoElement>, ArchiveVertexCallback> vertexToCallBack = new HashMap<>();
 
     public ArchiveListView() {
-        loadFXML();
-    }
-
-    private void loadFXML() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ArchiveListView.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-    }
-
-    @FXML
-    private void initialize() {
         observableManager.addListener(MainModel.model.obsGraph, this::onGraphChange);
     }
 

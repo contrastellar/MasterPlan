@@ -5,13 +5,14 @@
 <?import ui.workspaces.editbar.EditBarContainer?>
 <?import ui.workspaces.categorybar.CategoryListView?>
 
+<?import ui.workspaces.categorybar.CategoryListSpaceView?>
 <fx:root type="javafx.scene.control.SplitPane"
          stylesheets="@WorkSpaceView.css"
          xmlns="http://javafx.com/javafx/15.0.1"
          xmlns:fx="http://javafx.com/fxml/1"
          fx:id="viewContainer">
 
-    <CategoryListView fx:id="categoryListView" />
+    <CategoryListSpaceView fx:id="categoryListSpaceView" />
 
     <!-- Runtime: ListView -->
     <ListSpaceView fx:id="listSpaceView" />

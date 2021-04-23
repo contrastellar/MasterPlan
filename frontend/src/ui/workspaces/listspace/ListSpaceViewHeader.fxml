@@ -11,7 +11,7 @@
          xmlns="http://javafx.com/javafx"
          xmlns:fx="http://javafx.com/fxml"
          stylesheets="@ListSpaceViewHeader.css"
-         fx:id="topBar" gridLinesVisible="true" >
+         fx:id="topBar"  >
         <padding><Insets topRightBottomLeft="5"/></padding>
 
     <columnConstraints>
@@ -34,7 +34,7 @@
           GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" >
         <padding><Insets topRightBottomLeft="5"/></padding>
         <TextField fx:id="searchInput" styleClass="inputBox" HBox.hgrow="ALWAYS" promptText="Search" />
-        <Icon icon="home.svg" iconColor="black" iconSize="12"/>
+        <Icon icon="home.svg" iconColor="black" iconSize="15"/>
     </HBox>
 
     <!-- Category Icon -->

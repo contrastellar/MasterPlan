@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import models.MainModel;
 import observable.ObservableManager;
 import ui.util.Viewable;
@@ -15,7 +15,7 @@ import util.graph.ObservableVertex;
 
 import java.io.IOException;
 
-public class ArchiveListSpaceView extends Pane implements Viewable {
+public class ArchiveListSpaceView extends VBox implements Viewable {
     @FXML
     private ArchiveListView archiveListView;
 

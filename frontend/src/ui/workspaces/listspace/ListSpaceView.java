@@ -31,6 +31,7 @@ public class ListSpaceView extends VBox implements Viewable {
     private final ObservableManager observableManager = new ObservableManager();
 
 
+
     public ListSpaceView() {
         loadFXML();
     }

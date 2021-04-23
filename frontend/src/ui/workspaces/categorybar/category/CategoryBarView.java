@@ -1,8 +1,7 @@
-package ui.workspaces.categorybar;
+package ui.workspaces.categorybar.category;
 
 import components.Category;
 import components.TodoElement;
-import components.task.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,13 +15,12 @@ import models.MainModel;
 import observable.IReadOnlyObservable;
 import observable.Observable;
 import observable.ObservableManager;
-import ui.tag.TagDisplayView;
 import ui.util.Viewable;
+import ui.workspaces.categorybar.CategoryListView;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,20 +33,13 @@ public class CategoryBarView extends GridPane implements Viewable {
     private Button toggleBtn;
 
     @FXML
-    private HBox buttonContainer;
-    @FXML
-    private HBox toggleContainer;
-    @FXML
     private HBox titleContainer;
-
-    @FXML
-    private HBox remainingContainer;
 
     @FXML
     private Label categoryName;
 
     @FXML
-    private TagDisplayView tagDisplayView;
+    private HBox toggleContainer;
 
 
     private final Observable<ObservableVertex<TodoElement>> _categoryVertex = new Observable<>();
@@ -79,39 +70,22 @@ public class CategoryBarView extends GridPane implements Viewable {
 
     @FXML
     private void initialize() {
-
         observableManager.addListener(_categoryVertex, this::onCategoryVertexChange);
         this.managedProperty().bindBidirectional(this.visibleProperty());
 
         setOnMouseClicked((e) -> {
             e.consume();
-            MainModel.model.editVertex.setValue(_categoryVertex.getValue());
+            MainModel.model.selectedVertex.setValue(_categoryVertex.getValue());
         });
 
-        if (categoryListView.isTodoEmpty())
-            toggleBtn.setVisible(false);
 
-        // Set styling for hover
-        List<Node> gridChildren = new ArrayList<>(getChildren());
-        gridChildren.remove(categoryListView);
-        gridChildren.forEach(e -> {
-            e.setOnMouseEntered(event -> {
-                buttonContainer.setStyle("-fx-border-color: cadetblue;");
-            });
-            e.setOnMouseExited(event -> {
-                buttonContainer.setStyle("-fx-border-color: transparent;");
-            });
-        });
     }
 
-    /**
-     * handler for Toggling todos and rotating btn
-     * @param e mouse event
-     */
-    public void toggleBtnHandler(ActionEvent e) {
-        categoryListView.toggleTodo();
+    @FXML
+    private void toggleBtnHandler(ActionEvent e) {
+        categoryListView.toggleVisible();
 
-        if(categoryListView.isTodoShown())
+        if(categoryListView.isShown())
             toggleBtn.setRotate(0);
         else
             toggleBtn.setRotate(270);
@@ -131,29 +105,23 @@ public class CategoryBarView extends GridPane implements Viewable {
         observableManager.addListener(cat.name, this::onCategoryNameChange);
         observableManager.addListener(cat.backgroundColor, this::onCategoryColorChange);
         observableManager.addListener(cat.isArchived, this::onArchiveChange);
-        tagDisplayView.setVertex(categoryVertex);
 
     }
 
     private void onAdjacenceyListChange(ObservableVertexChange<TodoElement> change) {
 
-        List<ObservableVertex<TodoElement>> numTaskQueryRes = _categoryVertex.getValue().getGraph().query(
-                (e) -> e instanceof Task,
+        List<ObservableVertex<TodoElement>> numCategoryQueryRes = _categoryVertex.getValue().getGraph().query(
+                (e) -> e instanceof Category,
                 _categoryVertex.getValue()
         );
 
-        int totalElements = _categoryVertex.getValue().getGraph().getOutDegree(_categoryVertex.getValue());
-
-        toggleBtn.setVisible(totalElements > 0);
+        toggleBtn.setVisible(numCategoryQueryRes.size() > 0);
     }
 
 
     private void onArchiveChange(boolean isArchived) {
         this.setVisible(!isArchived);
     }
-
-
-
 
     private void onCategoryNameChange(String name) {
         categoryName.setText(name);
@@ -162,9 +130,8 @@ public class CategoryBarView extends GridPane implements Viewable {
     private void onCategoryColorChange(Color color) {
         if (color == null)
             return;
-        toggleContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
-        buttonContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
         titleContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
+        toggleContainer.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     public void setCategory(ObservableVertex<TodoElement> categoryVertex) {
@@ -186,14 +153,12 @@ public class CategoryBarView extends GridPane implements Viewable {
     @Override
     public void registerListeners() {
         categoryListView.registerListeners();
-        tagDisplayView.registerListeners();
         observableManager.startListen();
     }
 
     @Override
     public void unregisterListeners() {
         categoryListView.unregisterListeners();
-        tagDisplayView.unregisterListeners();
         observableManager.stopListen();
     }
 }
