@@ -6,18 +6,13 @@ import components.TodoElement;
 import components.task.Task;
 import observable.Observable;
 import observable.ObservableSet;
-import ui.workspaces.editbar.TaskEditBar;
 import util.graph.*;
 
-import observable.Observable;
-import observable.ObservableSet;
-import util.graph.*;
 
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
