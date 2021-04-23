@@ -11,7 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import observable.ObservableManager;
 import ui.util.Viewable;
 
 import java.io.IOException;
@@ -21,8 +20,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CreateTaskView extends VBox implements Viewable {
-
-    private final ObservableManager observableManager = new ObservableManager();
 
 
     // DESCRIPTION inputs
@@ -105,13 +102,7 @@ public class CreateTaskView extends VBox implements Viewable {
         return this;
     }
 
-    public void registerListeners() {
-        observableManager.startListen();
-    }
+    public void registerListeners() { }
 
-    public void unregisterListeners() {
-
-        observableManager.stopListen();
-
-    }
+    public void unregisterListeners() { }
 }
