@@ -6,6 +6,7 @@ import components.TodoElement;
 import components.task.Task;
 import observable.Observable;
 import observable.ObservableSet;
+import ui.workspaces.editbar.TaskEditBar;
 import util.graph.*;
 
 import observable.Observable;
@@ -13,6 +14,12 @@ import observable.ObservableSet;
 import util.graph.*;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 public class MainModel {
@@ -59,6 +66,8 @@ public class MainModel {
         String arrayC[] = json.getArrayC();
         String arrayT[] = json.getArrayT();
 
+        String arrayD[] = json.getArrayD();
+
         Category notCompleted = new Category("NOT COMPLETED");
         var notCompletedVertex = obsGraph.addVertex(notCompleted, rootVertex);
 
@@ -67,17 +76,45 @@ public class MainModel {
 
         for(int i = 0; i < arrayC.length; i++) {
             if(arrayC[i].equals("Class")) {
-                Task task = new Task(arrayT[i]);
-                obsGraph.addVertex(task, classesVertex);
+
+                try {
+                    Task task = new Task(arrayT[i]);
+                    String str= arrayD[i];
+                    DateFormat formatter;
+                    Date date;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    date = (Date) formatter.parse(str);
+                    Calendar cal=Calendar.getInstance();
+                    cal.setTime(date);
+                    task.setDueDate(cal);
+                    obsGraph.addVertex(task, classesVertex);
+
+                } catch (ParseException e)
+                {System.out.println("Exception :" + e);  }
+
             }
+
         }
+
         Category meetings = new Category("Meetings");
         var meetingsVertex = obsGraph.addVertex(meetings, notCompletedVertex);
 
         for(int i = 0; i < arrayC.length; i++) {
             if(arrayC[i].equals("Meeting")) {
-                Task task = new Task(arrayT[i]);
-                obsGraph.addVertex(task, meetingsVertex);
+                try {
+                    Task task = new Task(arrayT[i]);
+                    String str= arrayD[i];
+                    DateFormat formatter;
+                    Date date;
+                    formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    date = (Date) formatter.parse(str);
+                    Calendar cal=Calendar.getInstance();
+                    cal.setTime(date);
+                    task.setDueDate(cal);
+                    obsGraph.addVertex(task, meetingsVertex);
+
+                } catch (ParseException e)
+                {System.out.println("Exception :" + e);  }
             }
         }
     }
