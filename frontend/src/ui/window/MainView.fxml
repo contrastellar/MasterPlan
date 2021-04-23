@@ -29,13 +29,13 @@
                                 <ToggleGroup fx:id="tabToggleGroup" />
                             </fx:define>
 
-                            <Tab text="HOME" icon="home.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="25"
+                            <Tab text="HOME" icon="home.svg" unselectedIconColor="cadetblue" iconHeight="19" iconWidth="21"
                                  onAction="#switchViewToListSpace" toggleGroup="$tabToggleGroup" selected="true" />
-                            <Tab text="WORKSPACE" icon="folder-open.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="25"
+                            <Tab text="WORKSPACE" icon="folder-open.svg" unselectedIconColor="cadetblue" iconHeight="19" iconWidth="21"
                                  onAction="#switchViewToWorkspace" toggleGroup="$tabToggleGroup" />
-                            <Tab text="SETTINGS" icon="cogs.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="29"
+                            <Tab text="SETTINGS" icon="cogs.svg" unselectedIconColor="cadetblue" iconHeight="19" iconWidth="21"
                                  onAction="#switchViewToSettings" toggleGroup="$tabToggleGroup"  />
-                            <Tab text="ARCHIVE" icon="archive.svg" unselectedIconColor="cadetblue" iconHeight="23" iconWidth="25"
+                            <Tab text="ARCHIVE" icon="archive.svg" unselectedIconColor="cadetblue" selectedIconColor="green" iconHeight="19" iconWidth="21"
                                  onAction="#switchViewToArchive" toggleGroup="$tabToggleGroup" />
 
                         </VBox>
@@ -44,7 +44,7 @@
                     <!-- User Bar -->
                     <bottom>
                         <HBox alignment="CENTER" prefHeight="30.0">
-                            <Icon icon="account_circle.svg" iconColor="white" iconSize="30"/>
+                            <Icon icon="account_circle.svg" iconColor="white" iconSize="20"/>
                         </HBox>
                     </bottom>
 

@@ -7,22 +7,11 @@
     -fx-background-radius: 0;
     -fx-border-width: 0;
 
-    -fx-font-size: 10;
+    -fx-font-size: 8;
     -fx-font-weight: bold;
     -fx-text-fill: white;
 
     -fx-content-display: Top;
-}
-
-/* Active class for Tab Button */
-.active {
-    -fx-background-color: white;
-    -fx-text-fill: black;
-}
-
-/* Active Tab Button hover */
-.active:hover {
-    -fx-border-width: 0;
 }
 
 .toggle-button:selected:hover {
@@ -30,12 +19,12 @@
 }
 
 .toggle-button:selected {
-    -fx-background-color: white;
-    -fx-text-fill: black;
+    -fx-background-color: #666666;
+    -fx-text-fill: white;
 }
 
 .toggle-button:selected > Icon {
-    -fx-background-color: black;
+    -fx-background-color: cadetblue;
 }
 
 /* Tab Button hover */

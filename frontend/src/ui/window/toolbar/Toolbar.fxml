@@ -14,7 +14,7 @@
     <!-- Tab Bar -->
     <center>
             <VBox fx:id="tabBar">
-                <Tab fx:id="homeTab" icon="home.svg" text="HOME" />
+                <Tab fx:id="homeTab" icon="home.svg" text="HOME" iconSize="4"/>
                 <Tab fx:id="workspaceTab" icon="folder-open.svg" text="WORKSPACE"/>
                 <Tab fx:id="settingsTab" icon="cogs.svg" text="SETTINGS" />
                 <Tab icon="archive.svg" text="ARCHIVE" />

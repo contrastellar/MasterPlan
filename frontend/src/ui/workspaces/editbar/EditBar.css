@@ -1,4 +1,4 @@
-Label {
+VBox > Label {
     -fx-text-fill: white;
 }
 
@@ -14,13 +14,17 @@ Label {
     -fx-padding: 10;
 }
 
+#createdDateInput {
+    -fx-text-fill: black;
+}
+
 /* Class to style inputs */
 .inputBox, TextArea .content, DatePicker > .text-field {
     -fx-border-width: 1;
     -fx-border-radius: 5;
     -fx-border-color: #dedede;
     -fx-background-color: white;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-background-radius: 5;
     -fx-max-width: INFINITY;
 }
@@ -41,11 +45,6 @@ VBox.groupContainer > Label {
     -fx-font-weight: bold;
 }
 
-#createdDateInput {
-    -fx-font-family: "Segoe UI";
-    -fx-text-fill: white;
-}
-
 
 DatePicker {
     -fx-max-width: INFINITY;
@@ -56,4 +55,5 @@ ColorPicker {
     -fx-background-color: white;
     -fx-max-width: INFINITY;
     -fx-min-width: 100;
+    -fx-text-fill: black;
 }
