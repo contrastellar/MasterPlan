@@ -1,31 +1,31 @@
-package ui.tag;
+package ui.util.dialogue.task;
 
-import components.Tag;
+import components.task.Task;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class CreateTagDialogue {
+public class CreateTaskDialog {
 
-    public static final String DIALOGUE_TITLE = "Add Tag";
+    public static final String DIALOGUE_TITLE = "Create Task";
 
     public static final double MIN_WIDTH = 250;
     public static final double MIN_HEIGHT = 300;
 
-    public static Tag showAndWait() {
+    public static Task showAndWait() {
 
         Stage stage = new Stage();
 
-        CreateTagView createTagView = new CreateTagView(stage);
+        CreateTaskView createTaskView = new CreateTaskView(stage);
 
-        Scene scene = new Scene(createTagView);
+        Scene scene = new Scene(createTaskView);
 
         stage.setTitle(DIALOGUE_TITLE);
         stage.initModality(Modality.NONE);
 
         stage.setScene(scene);
 
-        createTagView.registerListeners();
+        createTaskView.registerListeners();
 
         stage.setMinWidth(MIN_WIDTH);
         stage.setMinHeight(MIN_HEIGHT);
@@ -34,9 +34,9 @@ public class CreateTagDialogue {
 
         stage.showAndWait();
 
-        createTagView.unregisterListeners();
+        createTaskView.unregisterListeners();
 
-        return createTagView.getCreatedTag();
+        return createTaskView.getCreatedTask();
     }
-    
+
 }
