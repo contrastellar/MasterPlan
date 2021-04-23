@@ -33,7 +33,8 @@
     <HBox alignment="center" HBox.hgrow="ALWAYS" spacing="5"
           GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" >
         <padding><Insets topRightBottomLeft="5"/></padding>
-        <TextField fx:id="searchInput" styleClass="inputBox" HBox.hgrow="ALWAYS" promptText="Search" />
+        <TextField fx:id="searchInput" onAction="#onSearchInput_action"
+                   styleClass="inputBox" HBox.hgrow="ALWAYS" promptText="Search" />
         <Icon icon="home.svg" iconColor="black" iconSize="15"/>
     </HBox>
 

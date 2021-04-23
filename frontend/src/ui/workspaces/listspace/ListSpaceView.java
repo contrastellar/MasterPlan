@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import models.MainModel;
 import ui.util.Viewable;
 import util.graph.ObservableVertex;
+import util.graph.IQuery;
 
 import java.io.IOException;
 
@@ -51,6 +52,11 @@ public class ListSpaceView extends VBox implements Viewable {
     @FXML
     private void initialize() {
         observableManager.addListener(MainModel.model.selectedVertex, this::onRootVertexChange);
+        listViewHeader.setSearchQueryCallBack(this::onSearchCallBack);
+    }
+
+    private void onSearchCallBack(IQuery<TodoElement> queryFunc) {
+        listView.setQuery(queryFunc);
     }
 
     private void onRootVertexChange(ObservableVertex<TodoElement> rootVertex) {

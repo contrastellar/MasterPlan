@@ -57,6 +57,7 @@
     <!-- Category Tags (row 1, col 1)-->
     <TagDisplayView fx:id="tagDisplayView" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
+    <HBox fx:id="fillerContainer" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="2" />
 
     <ListView fx:id="listView"
               GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2"/>

@@ -2,21 +2,24 @@ package ui.workspaces.listspace;
 
 import components.Category;
 import components.TodoElement;
-import javafx.scene.layout.GridPane;
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableManager;
 import components.task.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+import observable.ObservableManager;
 import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import util.graph.ObservableGraphChange;
 import util.graph.ObservableVertex;
 import util.graph.ObservableVertexChange;
+import util.graph.IQuery;
+import observable.IListener;
 
 import java.io.IOException;
 
@@ -32,8 +35,13 @@ public class ListSpaceViewHeader extends GridPane implements Viewable {
     @FXML
     private TagDisplayView tagDisplayView = new TagDisplayView();
 
+    @FXML
+    private TextField searchInput;
+
     private final Observable<ObservableVertex<TodoElement>> _rootCategory = new Observable<>();
     public final IReadOnlyObservable<ObservableVertex<TodoElement>> rootCategory = _rootCategory;
+
+    private IListener<IQuery<TodoElement>> searchQueryCallBack = null;
 
     private final ObservableManager observableManager = new ObservableManager();
 
@@ -57,6 +65,26 @@ public class ListSpaceViewHeader extends GridPane implements Viewable {
     @FXML
     private void initialize() {
         _rootCategory.startListen(this::onRootCategoryChange);
+    }
+
+    @FXML
+    private void onSearchInput_action(ActionEvent ae) {
+        if(searchQueryCallBack == null)
+            return;
+
+        IQuery<TodoElement> queryFunc = (e) -> {
+            if(e.getName().toLowerCase().contains(searchInput.getText().toLowerCase()))
+                return true;
+
+            for(var tag : e.tags) {
+                if(tag.getName().toLowerCase().contains(searchInput.getText().toLowerCase()))
+                    return true;
+            }
+
+            return false;
+        };
+
+        searchQueryCallBack.onChange(queryFunc);
     }
 
     private void onRootCategoryChange(ObservableVertex<TodoElement> rootCategory) {
@@ -112,6 +140,13 @@ public class ListSpaceViewHeader extends GridPane implements Viewable {
         return _rootCategory.getValue();
     }
 
+    public void setSearchQueryCallBack(IListener<IQuery<TodoElement>> searchQueryCallBack) {
+        this.searchQueryCallBack = searchQueryCallBack;
+    }
+
+    public IListener<IQuery<TodoElement>> getSearchQueryCallBack() {
+        return this.searchQueryCallBack;
+    }
 
     @Override
     public Node node() {

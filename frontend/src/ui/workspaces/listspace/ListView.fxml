@@ -10,7 +10,7 @@
          fx:id="listViewContainer">
 
     <!-- task and category add buttons -->
-    <HBox fx:id="btnContainer" alignment="CENTER_LEFT">
+    <HBox fx:id="addBtnContainer" alignment="CENTER_LEFT">
         <Button fx:id="addTaskBtn" styleClass="todoAddBtn" text="TASK +"/>
         <Button fx:id="addCategoryBtn" styleClass="todoAddBtn" text="CATEGORY +">
             <HBox.margin><Insets left="5"/></HBox.margin>

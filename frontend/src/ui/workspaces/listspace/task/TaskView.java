@@ -1,9 +1,6 @@
 package ui.workspaces.listspace.task;
 
 import components.TodoElement;
-import observable.IReadOnlyObservable;
-import observable.Observable;
-import observable.ObservableManager;
 import components.task.Task;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -17,6 +14,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import models.MainModel;
+import observable.IReadOnlyObservable;
+import observable.Observable;
+import observable.ObservableManager;
 import ui.tag.TagDisplayView;
 import ui.util.Viewable;
 import ui.workspaces.listspace.ListView;
@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class TaskView extends GridPane implements Viewable {
@@ -116,14 +115,13 @@ public class TaskView extends GridPane implements Viewable {
         // Set styling for hover
         List<Node> gridChildren = new ArrayList<>(getChildren());
         gridChildren.remove(listView);
+
         gridChildren.forEach(e -> {
             e.setOnMouseEntered(event -> {
-                remainingContainer.setStyle("-fx-border-color: cadetblue;");
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
                 dateContainer.setStyle("-fx-border-color: cadetblue;");
             });
             e.setOnMouseExited(event -> {
-                remainingContainer.setStyle("-fx-border-color: transparent;");
                 buttonContainer.setStyle("-fx-border-color: transparent;");
                 dateContainer.setStyle("-fx-border-color: transparent;");
             });

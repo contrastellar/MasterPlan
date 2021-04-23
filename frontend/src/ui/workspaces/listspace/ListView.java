@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 import ui.util.Viewable;
 import ui.workspaces.listspace.category.CategoryView;
 import ui.workspaces.listspace.task.TaskView;
@@ -33,6 +34,9 @@ public class ListView extends VBox implements Viewable {
 
     @FXML
     private Button addTaskBtn;
+
+    @FXML
+    public HBox addBtnContainer;
 
     @FXML
     private Button addCategoryBtn;

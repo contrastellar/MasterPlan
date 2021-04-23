@@ -42,6 +42,8 @@ public class CategoryView extends GridPane implements Viewable {
     private HBox toggleContainer;
     @FXML
     private HBox titleContainer;
+    @FXML
+    private HBox fillerContainer;
 
     @FXML
     private HBox remainingContainer;
@@ -100,12 +102,15 @@ public class CategoryView extends GridPane implements Viewable {
         // Set styling for hover
         List<Node> gridChildren = new ArrayList<>(getChildren());
         gridChildren.remove(listView);
+
         gridChildren.forEach(e -> {
             e.setOnMouseEntered(event -> {
                 buttonContainer.setStyle("-fx-border-color: cadetblue;");
+                fillerContainer.setStyle("-fx-border-color: cadetblue;");
             });
             e.setOnMouseExited(event -> {
                 buttonContainer.setStyle("-fx-border-color: transparent;");
+                fillerContainer.setStyle("-fx-border-color: transparent;");
             });
         });
     }
