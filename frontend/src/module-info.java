@@ -5,6 +5,7 @@ module MasterPlan {
     requires json.simple;
 
     opens ui                                  to javafx.graphics, javafx.controls, javafx.fxml;
+    opens ui.workspaces.categorybar           to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.workspaces.archivespace.task     to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.workspaces.archivespace.category to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.tag                              to javafx.graphics, javafx.controls, javafx.fxml;
