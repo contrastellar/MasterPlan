@@ -2,6 +2,7 @@ module MasterPlan {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.graphics;
+    requires json.simple;
 
     opens ui                                  to javafx.graphics, javafx.controls, javafx.fxml;
     opens ui.workspaces.archivespace.task     to javafx.graphics, javafx.controls, javafx.fxml;

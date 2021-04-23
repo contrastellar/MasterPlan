@@ -3,14 +3,10 @@ package models;
 import components.Category;
 import components.Tag;
 import components.TodoElement;
-import observable.IReadOnlyObservableList;
+import components.task.Task;
 import observable.Observable;
-import observable.ObservableList;
 import observable.ObservableSet;
 import util.graph.*;
-
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashSet;
 
 public class MainModel {
@@ -23,6 +19,8 @@ public class MainModel {
 
     public final ObservableSet<Tag> tags = new ObservableSet<>(new HashSet<>());
 
+    public final JSONWriteRead json = new JSONWriteRead();
+
     private MainModel() {
         // deserialize graph
         this.obsGraph = new ObservableGraph<>(new Graph<>());
@@ -30,6 +28,8 @@ public class MainModel {
 
         obsGraph.startListen(this::onEditVertexRemoved);
         obsGraph.startListen(this::onSelectedVertexRemoved);
+
+        importGoogleCalendar(selectedVertex.getValue());
     }
 
     private void onEditVertexRemoved(ObservableGraphChange<TodoElement> change) {
@@ -42,15 +42,38 @@ public class MainModel {
             selectedVertex.setValue(null);
     }
 
-    public void importGoogleCalendar(IVertex<TodoElement> rootVertex) {
+    public void importGoogleCalendar(ObservableVertex<TodoElement> rootVertex) {
+        try{
+            json.JSONWrite();
+            json.JSONRead();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
 
+        String arrayC[] = json.getArrayC();
+        String arrayT[] = json.getArrayT();
+
+        Category notCompleted = new Category("NOT COMPLETED");
+        var notCompletedVertex = obsGraph.addVertex(notCompleted, rootVertex);
+
+        Category classes = new Category("Class");
+        var classesVertex = obsGraph.addVertex(classes, notCompletedVertex);
+
+        for(int i = 0; i < arrayC.length; i++) {
+            if(arrayC[i].equals("Class")) {
+                Task task = new Task(arrayT[i]);
+                obsGraph.addVertex(task, classesVertex);
+            }
+        }
+        Category meetings = new Category("Meetings");
+        var meetingsVertex = obsGraph.addVertex(meetings, notCompletedVertex);
+
+        for(int i = 0; i < arrayC.length; i++) {
+            if(arrayC[i].equals("Meeting")) {
+                Task task = new Task(arrayT[i]);
+                obsGraph.addVertex(task, meetingsVertex);
+            }
+        }
     }
-
-    public void exportGoogleCalendar() {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
-
-
-
 
 }
